@@ -1,0 +1,5 @@
+[default.extend-words]
+# Don't count them as typos
+rto = "rto"
+Missings = "Missings"
+Vave = "Vave"
