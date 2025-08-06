@@ -1,4 +1,4 @@
-# MT.jl
+# Porosity.jl
 
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://ayushinav.github.io/MT.jl/stable/)
 [![Dev](https://img.shields.io/badge/docs-dev-blue.svg)](https://ayushinav.github.io/MT.jl/dev/)
@@ -6,35 +6,69 @@
 [![Coverage](https://codecov.io/gh/ayushinav/MT.jl/branch/main/graph/badge.svg)](https://codecov.io/gh/ayushinav/MT.jl)
 [![Coverage](https://coveralls.io/repos/github/ayushinav/MT.jl/badge.svg?branch=main)](https://coveralls.io/github/ayushinav/MT.jl?branch=main)
 
-`MT.jl` is supposed to be a high performance code for doing forward and inverse modeling in geophysics using julia. We hope to write the code structure such that any other geophysical survey can also be used and we can tend towards a joint forward and inverse modeling library.
+`Porosity.jl` is a rock physics modeling and inference library written in julia, providing performant, AD compatible and scalable codes.
 
-## Forward modeling
+Available methods are : 
 
-While forward modeling typically requires solving a PDE obtained using the quasi-static approximation, in 1D, we are fortunate to have the solution for surface impedance in a more analytical form. Currently, this is what is supported.
+## Conductivity models
 
-Supported methods:
+### olivine
 
-  - 1D Magnetotellurics (MT)
+* Jones2012
+* Poe2010
+* SEO3
+* UHO2014
+* Wang2006
+* Yang2011
+* Yoshino2009
 
-## Inverse modeling
+### melt
+* Gaillard2008
+* Ni2011
+* Sifre2014
 
-No surprises here that we are almost always trying to solve for an under-determined system.
+### orthopyroxene
 
-Deterministic schemes supported:
+* Dai_Karato2009
+* Zhang2012
 
-  - Occam
-  - Nonlinear schemes using NonlinearSolve.jl
-  - Nonlinear schemes using Optimization.jl
+## Elastic models
 
-Probabilistic schemes supported:'
+* anharmonic
+* anhormonic_poro
+* SLB2005
 
-  - MCMC with fixed grids
-  - MCMC with flexible grids
-  - RTO-TKO
+## Viscosity models
 
-## Rock physics
+* HK2003
+* HZK2011
+* xfit_premelt
 
-  - conductivity models
-  - elasticity models
-  - viscosity models
-  - anelasticity models
+```mermaid
+graph TD;
+    subgraph L[ ]
+        AbstractCondModel
+        AbstractElasticModel
+        AbstractViscousModel
+        AbstractAnelasticModel
+    end
+
+    AbstractCondModel --> Matrix_conductivity;
+    AbstractCondModel --> Melt_conductivity;
+    AbstractCondModel -.-> m1[" "];
+    AbstractCondModel -.-> m2[" "];
+    AbstractCondModel -.-> multi_phase_model;
+    m1 -.-> multi_phase_model
+    m2 -.-> multi_phase_model
+    multi_phase_model --> combine_rp_model
+    Matrix_conductivity --> two_phase_model;
+    Melt_conductivity --> two_phase_model;
+    two_phase_model --> combine_rp_model;
+    AbstractCondModel --> combine_rp_model;
+    AbstractElasticModel --> combine_rp_model;
+    AbstractViscousModel --> combine_rp_model;
+    AbstractAnelasticModel --> combine_rp_model;
+    combine_rp_model --> tune_rp_model;
+
+    style L fill:#fff,stroke:#fff
+```
