@@ -1,1 +1,0 @@
-# Tuning rock physics hyperparameters
