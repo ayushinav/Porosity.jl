@@ -238,7 +238,7 @@ function ΔT_h2o_Blatter2022(ps_nt)
 
     X_OH = @. 2M * Ch2o_m_ / 100 / (18.02 + Ch2o_m_ / 100 * (2M - 18.02))
     T_wet = @. 273 +
-               (T_solidus - 273) * inv(1 - MT.gas_R * 1.0f3 / (M * ΔS) * log(1 - X_OH))
+               (T_solidus - 273) * inv(1 - gas_R * 1.0f3 / (M * ΔS) * log(1 - X_OH))
 
     return (; T_solidus=T_wet)
 end
@@ -310,21 +310,23 @@ function get_Ch2o_m(ps_nt)
 end
 
 function get_melt_fraction_core(
-        Ch2o, Cco2, T_solidus, P, D, H2O_suppress_fn, CO2_suppress_fn)
+        T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D, H2O_suppress_fn, CO2_suppress_fn)
     function f(u, p)
         Ch2o_m = get_Ch2o_m((; ϕ=u, p.Ch2o, p.D)).Ch2o_m
-        Cco2_m = get_Cco2_m((; ϕ=u, p.Cco2)).Cco2_m
+        Cco2_m = get_Cco2_m((; ϕ=u, p.Cco2, p.Cco2_sat)).Cco2_m
 
         T_new_H2O = H2O_suppress_fn((; p..., Ch2o_m)).T_solidus
-        T_new_CO2 = H2O_suppress_fn((; p..., Cco2_m)).T_solidus
-        ΔT = 2p.T_solidus - T_new_H2O - T_new_CO2
+        T_new_CO2 = CO2_suppress_fn((; p..., Cco2_m)).T_solidus
+        T_solidus_new = 3p.T_solidus - T_new_H2O - T_new_CO2
+        ΔT = max(0f0, T - T_solidus_new)
         dTdF = -40 * p.P + 450
 
-        return u * dTdF / ΔT - 1
+        return u -  ΔT / dTdF
+        # return u * dTdF / ΔT - 1
     end
 
     prob_init = IntervalNonlinearProblem(
-        f, (1.0f-15, 1.0f0), (; Ch2o, Cco2, T_solidus, P, D))
+        f, (1.0f-15, 1.0f0), (; T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D))
     sol = solve(prob_init)
     return sol.u
 end
@@ -362,21 +364,27 @@ get_melt_fraction(ps_nt)
 """
 function get_melt_fraction(
         ps_nt; H2O_suppress_fn=ΔT_h2o_Blatter2022, CO2_suppress_fn=ΔT_co2_Dasgupta2013)
-    @unpack Cco2, Ch2o, T_solidus, P, D = ps_nt
+    @unpack Cco2, Ch2o, T, T_solidus, P, D = ps_nt
 
-    if Ch2o ∈ keys(ps_nt)
+    if :Ch2o ∈ keys(ps_nt)
         Ch2o = ps_nt.Ch2o
     else
         Ch2o = 0.0f0
     end
 
-    if Cco2 ∈ keys(ps_nt)
+    if :Cco2 ∈ keys(ps_nt)
         Cco2 = ps_nt.Cco2
     else
         Cco2 = 0.0f0
     end
 
-    ϕ = broadcast(get_melt_fraction_core, Ch2o, Cco2, T_solidus,
+    if :Cco2_sat ∈ keys(ps_nt)
+        Cco2_sat = ps_nt.Cco2_sat
+    else
+        Cco2_sat = 38f4
+    end
+
+    ϕ = broadcast(get_melt_fraction_core, T, T_solidus, Ch2o, Cco2, Cco2_sat,
         P, D, H2O_suppress_fn, CO2_suppress_fn)
 
     return (; ϕ)

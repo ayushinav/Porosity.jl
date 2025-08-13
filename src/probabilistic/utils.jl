@@ -1,10 +1,3 @@
-for m in subtypes(AbstractGeophyModel)
-    mstring = string(m)
-    dstring = mstring * "Distribution"
-    eval(Meta.parse("SubsurfaceCore.sample_type(d::$dstring) = $mstring"))
-    eval(Meta.parse("SubsurfaceCore.sample_type(::Type{T}) where {T <:$dstring} = $mstring"))
-end
-
 for m in subtypes(AbstractCondModel)
     mstring = string(m)
     dstring = mstring * "Distribution"
@@ -85,9 +78,19 @@ function SubsurfaceCore.sample_type(::multi_rp_modelDistribution{
 end
 
 function SubsurfaceCore.sample_type(d::tune_rp_modelDistribution{K, M}) where {K, M}
-    m_ = sample_type(d.model)
+    @show d.model
+    @show M
+    m_ = sample_type2(M)
+    # @show m_
     tune_rp_modelType{Vector{Function}, m_}
 end
+
+sample_type2(x) = sample_type(x)
+
+function sample_type2(::Type{two_phase_modelDistributionType{T1, T2, M}}) where {T1, T2, M}
+    return two_phase_modelType{sample_type(T1), sample_type(T2), M}
+end
+
 
 # NamedTuple manipulation
 

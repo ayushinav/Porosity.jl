@@ -10,9 +10,10 @@ using QuadGK
 using Enzyme
 using DifferentiationInterface
 using UnPack
+using NonlinearSolve
 import Base: show
 
-import SubsurfaceCore: to_resp_nt, forward_helper, forward, sample_type, to_dist_nt, from_nt
+import SubsurfaceCore: to_resp_nt, forward_helper, forward, sample_type, to_dist_nt, from_nt, default_params
 
 include("models/conductivity/cache.jl")
 include("models/conductivity/types.jl")

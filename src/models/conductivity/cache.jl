@@ -197,3 +197,5 @@ const default_params_Dai_Karato2009 =deepcopy(params_Dai_Karato2009)
 const default_params_Zhang2012 = deepcopy(params_Zhang2012)
 #clinopyroxene
 const default_params_Yang2011 =deepcopy(params_Yang2011)
+
+const default_params_const_matrix = (;)

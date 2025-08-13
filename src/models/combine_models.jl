@@ -108,10 +108,10 @@ function SubsurfaceCore.from_nt(m::Type{T}, nt::NamedTuple) where {T <: multi_rp
     m3 = T.parameters[3]
     m4 = T.parameters[4]
 
-    model1 = MT.from_nt(m1, nt)
-    model2 = MT.from_nt(m2, nt)
-    model3 = MT.from_nt(m3, nt)
-    model4 = MT.from_nt(m4, nt)
+    model1 = from_nt(m1, nt)
+    model2 = from_nt(m2, nt)
+    model3 = from_nt(m3, nt)
+    model4 = from_nt(m4, nt)
 
     return multi_rp_model(model1, model2, model3, model4)
 end

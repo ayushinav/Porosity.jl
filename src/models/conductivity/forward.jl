@@ -30,7 +30,7 @@ function SubsurfaceCore.forward(m::UHO2014, p, params=default_params_UHO2014)
     return RockphyCond(log10.(σ))
 end
 
-forward(m::const_matrix, p) = log10(m.σ)
+SubsurfaceCore.forward(m::const_matrix, p, params=default_params_const_matrix) = RockphyCond(log10.(m.σ))
 
 function SubsurfaceCore.forward(m::Jones2012, p, params=default_params_Jones2012)
     @unpack S, r, H, a, params_SEO3 = params
@@ -179,8 +179,4 @@ function SubsurfaceCore.forward(m::Yang2011, p, params=default_params_Yang2011)
     σ = @. σ_dry + σ_wet
 
     return RockphyCond(log10.(σ))
-end
-
-function SubsurfaceCore.forward(::Type{M}) where {M <: AbstractCondModel}
-    return RockphyCond
 end

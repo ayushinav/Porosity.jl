@@ -399,3 +399,4 @@ default_params(::Type{T}) where {T <: Gaillard2008} = default_params_Gaillard200
 default_params(::Type{T}) where {T <: Dai_Karato2009} = default_params_Dai_Karato2009
 default_params(::Type{T}) where {T <: Zhang2012} = default_params_Zhang2012
 default_params(::Type{T}) where {T <: Yang2011} = default_params_Yang2011
+default_params(::Type{T}) where {T <: const_matrix} = default_params_const_matrix

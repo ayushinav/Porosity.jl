@@ -71,8 +71,8 @@ function from_nt(m::Type{T}, nt::NamedTuple) where {T <: two_phase_modelDistribu
     m2 = m.types[2].parameters[1]
     # mix = m.types[3] #.parameters[1]
 
-    model1 = MT.from_nt(m1, nt)
-    model2 = MT.from_nt(m2, nt)
+    model1 = from_nt(m1, nt)
+    model2 = from_nt(m2, nt)
 
     mix = from_nt(m.types[3], nt)
 
@@ -151,14 +151,14 @@ function from_nt(m::Type{T}, nt::NamedTuple) where {T <: multi_phase_modelDistri
     m7 = m.types[7].parameters[1]
     m8 = m.types[8].parameters[1]
 
-    model1 = MT.from_nt(m1, nt)
-    model2 = MT.from_nt(m2, nt)
-    model3 = MT.from_nt(m3, nt)
-    model4 = MT.from_nt(m4, nt)
-    model5 = MT.from_nt(m5, nt)
-    model6 = MT.from_nt(m6, nt)
-    model7 = MT.from_nt(m7, nt)
-    model8 = MT.from_nt(m8, nt)
+    model1 = from_nt(m1, nt)
+    model2 = from_nt(m2, nt)
+    model3 = from_nt(m3, nt)
+    model4 = from_nt(m4, nt)
+    model5 = from_nt(m5, nt)
+    model6 = from_nt(m6, nt)
+    model7 = from_nt(m7, nt)
+    model8 = from_nt(m8, nt)
 
     mix = from_nt(m.types[9], nt)
 

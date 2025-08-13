@@ -62,7 +62,7 @@ function (model::two_phase_modelType)(ps::NamedTuple)
     return two_phase_model(ϕ, v1, v2, mix)
 end
 
-function forward(model::two_phase_model{V, T1, T2, M},
+function SubsurfaceCore.forward(model::two_phase_model{V, T1, T2, M},
         p) where {
         V, M <: two_phase_mix_types, T1 <: AbstractCondModel, T2 <: AbstractCondModel}
     σ1 = forward(model.m1, []).σ
@@ -77,7 +77,7 @@ function forward(model::two_phase_model{V, T1, T2, M},
     return RockphyCond(log10.(σ))
 end
 
-function forward(model::two_phase_model{V, T1, T2, M}, p,
+function SubsurfaceCore.forward(model::two_phase_model{V, T1, T2, M}, p,
         params) where {V, M, T1 <: AbstractCondModel, T2 <: AbstractCondModel}
     σ1 = forward(model.m1, [], params.m1).σ
     σ2 = forward(model.m2, [], params.m2).σ
@@ -91,7 +91,7 @@ function forward(model::two_phase_model{V, T1, T2, M}, p,
     return RockphyCond(log10.(σ))
 end
 
-function default_params(::Type{two_phase_modelType{T1, T2, M}}) where {T1, T2, M}
+function SubsurfaceCore.default_params(::Type{two_phase_modelType{T1, T2, M}}) where {T1, T2, M}
     (; zip([:m1, :m2], [default_params(T1), default_params(T2)])...)
 end
 
@@ -195,7 +195,7 @@ function (model::multi_phase_modelType)(ps::NamedTuple)
     return multi_phase_model(ϕ_vec, v1, v2, v3, v4, v5, v6, v7, v8, mix)
 end
 
-function forward(model::multi_phase_model{V, T1, T2, T3, T4, T5, T6, T7, T8, M},
+function SubsurfaceCore.forward(model::multi_phase_model{V, T1, T2, T3, T4, T5, T6, T7, T8, M},
         p) where {
         V, M <: multi_phase_mix_types, T1 <: AbstractCondModel, T2, T3, T4, T5, T6, T7, T8}
     σ1 = (isnothing(model.m1)) ? nothing : forward(model.m1, []).σ .|> exp10
@@ -214,7 +214,7 @@ function forward(model::multi_phase_model{V, T1, T2, T3, T4, T5, T6, T7, T8, M},
     return RockphyCond(log10.(σ))
 end
 
-function forward(model::multi_phase_model{V, T1, T2, T3, T4, T5, T6, T7, T8, M},
+function SubsurfaceCore.forward(model::multi_phase_model{V, T1, T2, T3, T4, T5, T6, T7, T8, M},
         p,
         params) where {
         V, M <: multi_phase_mix_types, T1 <: AbstractCondModel, T2, T3, T4, T5, T6, T7, T8}
