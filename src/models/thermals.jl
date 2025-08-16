@@ -237,18 +237,19 @@ function ΔT_h2o_Blatter2022(ps_nt)
     ΔS = 0.4
 
     X_OH = @. 2M * Ch2o_m_ / 100 / (18.02 + Ch2o_m_ / 100 * (2M - 18.02))
-    T_wet = @. 273 +
-               (T_solidus - 273) * inv(1 - gas_R * 1.0f3 / (M * ΔS) * log(1 - X_OH))
+    T_wet = @. 273 + (T_solidus - 273) * inv(1 - gas_R * 1.0f3 / (M * ΔS) * log(1 - X_OH))
 
     return (; T_solidus=T_wet)
 end
 
 function get_Cco2_m_core(ϕ, Cco2, Cco2_sat)
-    Cco2_m = Cco2 * inv(ϕ)
-    if Cco2_m > Cco2_sat
-        return Cco2_sat
+    type_ = typeof(ϕ + Cco2 + Cco2_sat)
+    if ϕ == 0
+        return type_(0.0f0)
+    elseif Cco2 * inv(ϕ) > Cco2_sat
+        return type_(Cco2_sat)
     else
-        return Cco2_m
+        return type_(Cco2 * inv(ϕ))
     end
 end
 
@@ -304,31 +305,42 @@ get_Cco2_m(ps_nt)
 function get_Ch2o_m(ps_nt)
     @unpack ϕ, Ch2o, D = ps_nt
     Ch2o_m = @. Ch2o * inv(D + ϕ * (1 - D))
-    Ch2o_ol = @. 0 * Ch2o_m
     Ch2o_ol = @. D * Ch2o_m
     return (; Ch2o_m, Ch2o_ol)
 end
 
+function f_melt(u, p, H2O_suppress_fn, CO2_suppress_fn)
+    T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D = p
+    ps = (; T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D)
+
+    Ch2o_m = Ch2o * inv(D + u * (1 - D))
+    Cco2_m = get_Cco2_m((; ϕ=u, Cco2, Cco2_sat)).Cco2_m
+
+    T_new_H2O = H2O_suppress_fn((; ps..., Ch2o_m)).T_solidus
+    T_new_CO2 = CO2_suppress_fn((; ps..., Cco2_m)).T_solidus
+    T_solidus_new = 3T_solidus - T_new_H2O - T_new_CO2
+    ΔT = T - T_solidus_new
+    dTdF = -40 * P + 450
+    return u * dTdF / ΔT - 1
+end
+
 function get_melt_fraction_core(
         T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D, H2O_suppress_fn, CO2_suppress_fn)
-    function f(u, p)
-        Ch2o_m = get_Ch2o_m((; ϕ=u, p.Ch2o, p.D)).Ch2o_m
-        Cco2_m = get_Cco2_m((; ϕ=u, p.Cco2, p.Cco2_sat)).Cco2_m
+    f(u, p) = f_melt(u, p, H2O_suppress_fn, CO2_suppress_fn)
 
-        T_new_H2O = H2O_suppress_fn((; p..., Ch2o_m)).T_solidus
-        T_new_CO2 = CO2_suppress_fn((; p..., Cco2_m)).T_solidus
-        T_solidus_new = 3p.T_solidus - T_new_H2O - T_new_CO2
-        ΔT = max(0f0, T - T_solidus_new)
-        dTdF = -40 * p.P + 450
+    f1 = f(1.0f-15, (; T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D))
+    f2 = f(1.0f0, (; T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D))
+    p = [T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D]
 
-        return u -  ΔT / dTdF
-        # return u * dTdF / ΔT - 1
+    if f1 * f2 > 0
+        return 0.0f0
+    else
+        prob_init = IntervalNonlinearProblem(f, (1.0f-15, 1.0f0), p)
+        sol = solve(prob_init)
+        return sol.u
     end
 
-    prob_init = IntervalNonlinearProblem(
-        f, (1.0f-15, 1.0f0), (; T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D))
-    sol = solve(prob_init)
-    return sol.u
+    # return x3
 end
 
 """
@@ -381,11 +393,11 @@ function get_melt_fraction(
     if :Cco2_sat ∈ keys(ps_nt)
         Cco2_sat = ps_nt.Cco2_sat
     else
-        Cco2_sat = 38f4
+        Cco2_sat = 38.0f4
     end
 
-    ϕ = broadcast(get_melt_fraction_core, T, T_solidus, Ch2o, Cco2, Cco2_sat,
-        P, D, H2O_suppress_fn, CO2_suppress_fn)
+    ϕ = broadcast(get_melt_fraction_core, T, T_solidus, Ch2o, Cco2,
+        Cco2_sat, P, D, H2O_suppress_fn, CO2_suppress_fn)
 
     return (; ϕ)
 end

@@ -91,7 +91,6 @@ function sample_type2(::Type{two_phase_modelDistributionType{T1, T2, M}}) where 
     return two_phase_modelType{sample_type(T1), sample_type(T2), M}
 end
 
-
 # NamedTuple manipulation
 
 function SubsurfaceCore.to_dist_nt(d::T) where {T <: two_phase_modelDistribution}
