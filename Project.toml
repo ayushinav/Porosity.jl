@@ -1,47 +1,42 @@
-name = "MT"
-uuid = "333b7055-2ef7-4b1e-a2ef-5fb1688f630d"
-authors = ["Abhinav Pratap Singh"]
-version = "0.6.4"
+name = "Porosity"
+uuid = "35db7a65-4993-4cb4-8bbd-c48e232b3666"
+authors = ["Abhinav Pratap Singh <abhinavps0905@gmail.com>"]
+version = "0.1.0"
 
 [deps]
-BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
-CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
-ConcreteStructs = "2569d6c7-a4a2-43d3-a901-331e8e4be471"
 DifferentiationInterface = "a0c0ee7d-e4b9-4e03-894e-1c5f64a51d63"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 Enzyme = "7da242da-08ed-463a-9acd-ee780be4f1d9"
 InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
-JET = "c3a54625-cd67-489e-a8e7-0a5a0ff4e31b"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
-LinearSolve = "7ed4a6bd-45f5-4d41-b270-4a48e9bafcae"
 NonlinearSolve = "8913a72c-1f9b-4ce2-8d82-65094dcecaec"
-Optimization = "7f7a1694-90dd-40f0-9382-eb1efda571ba"
-OptimizationOptimJL = "36348300-93cb-4f02-beb5-3c3902f8871e"
-Pigeons = "0eb8d820-af6a-4919-95ae-11206f830c31"
-ProgressMeter = "92933f4c-e287-5a05-a399-4b506db050ca"
-PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
 QuadGK = "1fd47b50-473d-5c70-9696-f719f8f3bcdc"
-ReTestItems = "817f1d60-ba6b-4fd5-9520-3cf149f6a823"
-Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
+Reexport = "189a3867-3050-52da-a836-e630ba90ab69"
 SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
 Statistics = "10745b16-79ce-11e8-11f9-7d13ad32a3b2"
-Turing = "fce5fe82-541a-59a6-adf8-730c64b5f9a0"
+SubsurfaceCore = "3a78539b-9dce-42c5-be8d-f3fa4153f7a3"
 UnPack = "3a884ed6-31ef-47d7-9d2a-63182c4928ed"
 
 [compat]
-BenchmarkTools = "1.6.0"
-PyCall = "1.96.4"
-Revise = "3.7.2"
-julia = "1"
+DifferentiationInterface = "0.6.54"
+Distributions = "0.25.120"
+Enzyme = "0.13.66"
+QuadGK = "2.11.2"
+Reexport = "1.2.2"
+SpecialFunctions = "2.5.1"
+Statistics = "1.10.0"
+SubsurfaceCore = "0.7.0"
+UnPack = "1.0.2"
+julia = "1.10"
 
 [extras]
 BenchmarkTools = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
 Hwloc = "0e44f5e4-bd66-52a0-8798-143a42290a1d"
+InteractiveUtils = "b77e0a4c-d291-57a0-90e8-8db25a27a240"
 JET = "c3a54625-cd67-489e-a8e7-0a5a0ff4e31b"
-PyCall = "438e738f-606a-5dbb-bf0a-cddfbfd45ab0"
 ReTestItems = "817f1d60-ba6b-4fd5-9520-3cf149f6a823"
 Revise = "295af30f-e4ad-537b-8983-00126c2a3abe"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Test", "BenchmarkTools", "ReTestItems", "JET", "Hwloc"]
+test = ["BenchmarkTools", "Test", "ReTestItems", "JET", "Hwloc", "InteractiveUtils"]
