@@ -1,36 +1,87 @@
-# `MT.jl`
+```@raw html
+---
+# https://vitepress.dev/reference/default-theme-home-page
+layout: home
 
-`MT.jl` is supposed to be a high performance code for doing forward and inverse modeling in geophysics using julia. We hope to write the code structure such that any other geophysical survey can also be used and we can tend towards a joint forward and inverse modeling library.
+hero:
+  name: Porosity.jl
+  text: Rock physics parameter inference in Julia
+  tagline: Automatic Differentiation enabled probabalistic inference of rock physics
+  image:
+    src: logo.png
+    alt: Porosity.jl
+  actions:
+    - theme: alt
+      text: View on Github
+      link: https://github.com/ayushinav/Porosity.jl
+    
+features:
+  - icon: 🔢
+    title: Modeling
+    details: Estimate geophysical observables using rock physics
+    link: tutorials/getting_started
 
-## Forward modeling
+  - icon: 📊
+    title: Probabilstic inference
+    details: Perform probablistic inference of parameters
+    link: /tutorials/stochastic_inverse
 
-While forward modeling typically requires solving a PDE obtained using the quasi-static approximation, in 1D, we are fortunate to have the solution for surface impedance in a more analytical form. Currently, this is what is supported.
+  - icon: ∂
+    title: Differentiability
+    details: Get derivatives using automatic differntiation
+    link: /tutorials/ad
+---
+```
 
-Supported methods:
+## Installation
 
-  - 1D Magnetotellurics (MT)
+`Porosity.jl` can be installed in julia as :
 
-## Inverse modeling
+```julia
+using Pkg
+Pkg.add("Porosity.jl")
+```
 
-No surprises here that we are almost always trying to solve for an under-determined system.
+or if you are using REPL-mode : 
 
-Deterministic schemes supported:
+```repl
+julia>
+```
 
-  - Occam
-  - Nonlinear schemes using NonlinearSolve.jl
-  - Nonlinear schemes using Optimization.jl
+Enter the package mode by pressing `]`
 
-Probabilistic schemes supported:
+```repl
+pkg>
+```
 
-  - MCMC with fixed grids
-  - MCMC with flexible grids
-  - RTO-TKO
+then
 
-## Rock physics
+```repl
+pkg> add Porosity
+```
 
-We support multiple rock physics models :
 
-  - Conductivity models
-  - Elasticity models
-  - Viscosity models
-  - Anelasticity models
+## Types and subtypes
+
+```mermaid
+graph TD;
+    subgraph L[ ]
+        AbstractCondModel
+        AbstractElasticModel
+        AbstractViscousModel
+        AbstractAnelasticModel
+    end
+
+    AbstractCondModel["AbstractCondModel <br/> (eg., SEO3, Ni2011) "] --> Matrix_conductivity;
+    AbstractCondModel --> Melt_conductivity;
+    Matrix_conductivity -.-> two_phase_model;
+    Melt_conductivity -.-> two_phase_model;
+    two_phase_model --> combine_rp_model;
+    AbstractCondModel --> combine_rp_model;
+    AbstractElasticModel --> combine_rp_model;
+    AbstractViscousModel --> combine_rp_model;
+    AbstractAnelasticModel --> combine_rp_model;
+    combine_rp_model --> tune_rp_model;
+
+    style L fill:#fff,stroke:#fff
+```

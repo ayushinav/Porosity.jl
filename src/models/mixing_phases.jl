@@ -115,6 +115,29 @@ end
 # ==============================================================================
 # multi-phase 
 
+"""
+    two_phase_model(ϕ, m1, m2, mix)
+
+Rock physics model to combine two phases, usually constructed through `two_phase_modelType`[@ref]
+
+## Arguments
+
+  - `ϕ` : Vol. fraction of the **second** phase
+  - `m1` : model corresponding to phase 1
+  - `m2` : model corresponding to phase 2
+  - `mix` : mixing type, available options are `HS_1962_plus()`, `HS1962_minus`, `MAL(m)`
+
+## Usage
+
+```julia
+m = two_phase_modelType(SEO3, Ni2011, HS1962_plus())
+ps_nt = ps_nt = (;
+    T=[800.0f0, 1000.0f0] .+ 273, P=3.0f0, ρ=3300.0f0, Ch2o_m=1000.0f0, ϕ=0.1f0)
+model = m(ps_nt)
+
+resp = forward(model)
+```
+"""
 mutable struct multi_phase_modelType{T1, T2, T3, T4, T5, T6, T7, T8, M}
     m1::Type{T1}
     m2::Type{T2}
@@ -142,6 +165,29 @@ for i in 2:7
     eval(expr)
 end
 
+"""
+    two_phase_model(ϕ, m1, m2, mix)
+
+Rock physics model to combine two phases, usually constructed through `two_phase_modelType`[@ref]
+
+## Arguments
+
+  - `ϕ` : Vol. fraction of the **second** phase
+  - `m1` : model corresponding to phase 1
+  - `m2` : model corresponding to phase 2
+  - `mix` : mixing type, available options are `HS_1962_plus()`, `HS1962_minus`, `MAL(m)`
+
+## Usage
+
+```julia
+m = two_phase_modelType(SEO3, Ni2011, HS1962_plus())
+ps_nt = ps_nt = (;
+    T=[800.0f0, 1000.0f0] .+ 273, P=3.0f0, ρ=3300.0f0, Ch2o_m=1000.0f0, ϕ=0.1f0)
+model = m(ps_nt)
+
+resp = forward(model)
+```
+"""
 mutable struct multi_phase_model{T, T1, T2, T3, T4, T5, T6, T7, T8, M} <:
                AbstractRockphyModel
     ϕ::T

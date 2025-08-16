@@ -1,25 +1,29 @@
-using Pkg
-Pkg.activate("../MT.jl/docs/.")
+# using Pkg
+# Pkg.activate("docs/.")
 
-using MT
-using Documenter
+using Porosity
+using Documenter, DocumenterVitepress, DocumenterMermaid
 
 include("pages.jl")
-DocMeta.setdocmeta!(MT, :DocTestSetup, :(using MT); recursive=true)
+DocMeta.setdocmeta!(Porosity, :DocTestSetup, :(using Porosity); recursive = true)
 
 makedocs(;
-    modules=[MT],
-    authors="Abhinav Pratap Singh",
-    repo="https://github.com/ayushinav/MT.jl", #.jl/blob/{commit}{path}#{line}",
-    sitename="MT.jl",
-    doctest=true,
-    format=Documenter.HTML(;
-        prettyurls=get(ENV, "CI", "false") == "true",
-        canonical="https://ayushinav.github.io/MT.jl",
-        edit_link="main",
-        assets=String[]
+    modules = [Porosity],
+    authors = "Abhinav Pratap Singh",
+    repo = "https://github.com/ayushinav/Porosity.jl", #.jl/blob/{commit}{path}#{line}",
+    sitename = "Porosity.jl",
+    doctest = true,
+    # format=Documenter.HTML(;
+    #     prettyurls=get(ENV, "CI", "false") == "true",
+    #     canonical="https://ayushinav.github.io/Porosity.jl",
+    #     edit_link="main",
+    #     assets=String[]
+    # ),
+
+    format = DocumenterVitepress.MarkdownVitepress(
+        repo = "https://github.com/ayushinav/Porosity.jl",
     ),
-    pages=pages
+    pages = pages,
 )
 
-deploydocs(; repo="github.com/ayushinav/MT.git", devbranch="main")
+# deploydocs(; repo="github.com/ayushinav/Porosity.git", devbranch="main")

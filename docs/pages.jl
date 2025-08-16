@@ -1,29 +1,20 @@
 pages = [
     "Home" => "index.md",
-    "model" => "model.md",
-    "forward" => "forward.md",
-    "Deterministic Inverse" => "deterministic_inverse.md",
-    "domain transformation" => "domain_transformation.md",
-    "interface guide" => "interface_guide.md",
-    "Probabilistic inverse" => Any[
-        "Interface" => "probabilistic_inverse.md",
-        "MCMC with fixed discretization" => "tutorials/fixed_discretization.md",
-        "MCMC with variable discretization" => "tutorials/variable_discretization.md",
-        "RTO-TKO" => "tutorials/rto.md"
+    "Getting Started" => "tutorials/getting_started.md",
+    "Models" => [
+        "Conductivity models" => "models/conductivity.md",
+        "Elasticity models" => "models/elasticity.md",
+        "Viscosity models" => "models/viscosity.md",
+        "Anelasticity models" => "models/anelasticity.md",
+        "Adding a new method" => "models/new_method.md",
     ],
-    "Visualization" => "visualization.md",
-    "Rock physics" => [
-        "Introduction" => "rp/index.md",
-        "Conductivity models" => "rp/conductivity.md",
-        "Elasticity models" => "rp/elasticity.md",
-        "Viscosity models" => "rp/viscosity.md",
-        "Anelasticity models" => "rp/anelasticity.md",
-        "Mixing phases" => "rp/mixing_phases.md",
-        "Multi rock physics" => "rp/combine_models.md",
-        "Solidus" => "rp/solidus.md",
-        "Tuning rock physics hyperparameters" => "rp/tune_rp.md",
-        "Stochastic inverse" => "rp/stochastic_inverse.md"
+    "Tutorials" => [
+        "Mixing phases" => "tutorials/mixing_phases.md",
+        "Multi rock physics" => "tutorials/combine_models.md",
+        "Tuning rock physics hyperparameters" => "tutorials/tune_rp.md",
+        "Stochastic inverse" => "tutorials/stochastic_inverse.md",
+        "Automatic Differentiation" => "tutorials/ad.md",
     ],
+    "Solidus" => "solidus.md",
     "API" => "api.md",
-    "mtpy tutorial" => "working_with_mtpy.md"
 ]

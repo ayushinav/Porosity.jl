@@ -1,14 +1,14 @@
 ```@autodocs
-Modules = [MT]
+Modules = [Porosity]
 Order = [:function]
 ```
 
 ```@autodocs
-Modules = [MT]
+Modules = [Porosity]
 Order = [:type]
 ```
 
 ```@autodocs
-Modules = [MT]
+Modules = [Porosity]
 Order = [:constant]
 ```
