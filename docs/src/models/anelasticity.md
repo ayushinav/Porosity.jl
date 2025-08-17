@@ -14,7 +14,7 @@ For different temperatures, the distribution with oscillation period looks like 
 
 !!! tip
     
-    The following code is a nice beginner example on [changing `params`](../tutorials/getting_started.md#Changing-initial-parameters) values for rock physics models
+    The following code is a nice beginner example on [changing `params`](../intro/getting_started.md#Changing-initial-parameters) values for rock physics models
 
 ```@raw html
 <details closed><summary>Code for this figure</summary>
@@ -146,7 +146,7 @@ Similar figures for different `params can be obtained (compare with Fig. 1 (c) a
 
 !!! tip
     
-    The following code is a nice example on [changing `params`](../tutorials/getting_started.md#Changing-initial-parameters) values for rock physics models
+    The following code is a nice example on [changing `params`](../intro/getting_started.md#Changing-initial-parameters) values for rock physics models
 
 ```@raw html
 <details closed><summary>Code for this figure</summary>

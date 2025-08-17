@@ -19,7 +19,7 @@ features:
   - icon: 🔢
     title: Modeling
     details: Estimate geophysical observables using rock physics
-    link: tutorials/getting_started
+    link: intro/getting_started
 
   - icon: 📊
     title: Probabilstic inference
@@ -40,48 +40,4 @@ features:
 ```julia
 using Pkg
 Pkg.add("Porosity.jl")
-```
-
-or if you are using REPL-mode : 
-
-```repl
-julia>
-```
-
-Enter the package mode by pressing `]`
-
-```repl
-pkg>
-```
-
-then
-
-```repl
-pkg> add Porosity
-```
-
-
-## Types and subtypes
-
-```mermaid
-graph TD;
-    subgraph L[ ]
-        AbstractCondModel
-        AbstractElasticModel
-        AbstractViscousModel
-        AbstractAnelasticModel
-    end
-
-    AbstractCondModel["AbstractCondModel <br/> (eg., SEO3, Ni2011) "] --> Matrix_conductivity;
-    AbstractCondModel --> Melt_conductivity;
-    Matrix_conductivity -.-> two_phase_model;
-    Melt_conductivity -.-> two_phase_model;
-    two_phase_model --> combine_rp_model;
-    AbstractCondModel --> combine_rp_model;
-    AbstractElasticModel --> combine_rp_model;
-    AbstractViscousModel --> combine_rp_model;
-    AbstractAnelasticModel --> combine_rp_model;
-    combine_rp_model --> tune_rp_model;
-
-    style L fill:#fff,stroke:#fff
 ```

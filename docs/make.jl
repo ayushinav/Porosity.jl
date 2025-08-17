@@ -2,7 +2,7 @@
 # Pkg.activate("docs/.")
 
 using Porosity
-using Documenter, DocumenterVitepress, DocumenterMermaid
+using Documenter, DocumenterVitepress
 
 include("pages.jl")
 DocMeta.setdocmeta!(Porosity, :DocTestSetup, :(using Porosity); recursive = true)

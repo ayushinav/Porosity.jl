@@ -1,6 +1,11 @@
 pages = [
     "Home" => "index.md",
-    "Getting Started" => "tutorials/getting_started.md",
+    "Getting Started" => [
+        "intro/intro_julia.md",
+        "intro/getting_started.md",
+        "intro/intro_figs.md",
+        "intro/structure.md",
+    ],
     "Models" => [
         "Conductivity models" => "models/conductivity.md",
         "Elasticity models" => "models/elasticity.md",
