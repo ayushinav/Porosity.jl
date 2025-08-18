@@ -35,7 +35,7 @@ features:
 
 ## Installation
 
-`Porosity.jl` can be installed in julia as :
+You can install `Porosity.jl` on Julia by running:
 
 ```julia
 using Pkg

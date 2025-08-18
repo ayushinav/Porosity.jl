@@ -194,13 +194,3 @@ nothing # hide
 ```@example sol_plts
 f # hide
 ```
-
-
-```@raw mermaid
-graph TD
-    A[Start] --> B{Is it cool?};
-    B -- Yes --> C[Continue];
-    B -- No --> D[Make it cool];
-    D --> B;
-    C --> E[End];
-```

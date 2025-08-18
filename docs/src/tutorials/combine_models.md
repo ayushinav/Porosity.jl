@@ -6,9 +6,9 @@ using Porosity, CairoMakie
 
 We provide the feature to model multiple rock physics simultaneously. This is useful because often we want to model, say electrical conductivity and p-wave velocity, for the same temperatures, melt fraction, water content and other parameters. This utility showcases itself particularly when we want to perform the stochastic inversion of rock physics properties. For now, lets understand how to get the responses from multi rock physics models.
 
-!!! info
-    
+::: info
     Please note that this bears close resemblance with [Mixing phases](mixing_phases.md) tutorial.
+:::
 
 We first need to define the rock physics we want to model. To model electrical conductivity using `SEO3` and elastic properties using `anharmonic`, we use [`multi_rp_modelType`](@ref)
 
