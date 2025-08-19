@@ -41,3 +41,10 @@ You can install `Porosity.jl` on Julia by running:
 using Pkg
 Pkg.add("Porosity.jl")
 ```
+
+A large part of the package has functionalities borrowed from the [Very Broadband Rheology Calculator (VBRc)](https://github.com/vbr-calc/vbr), coded up in MATLAB.
+
+!!! tip "Very Broadband Rheology Calculator"
+
+    MATLAB framework for calculating material properties from thermodynamic state variables (e.g., temperature, pressure, melt fraction, grain size) using a wide range of experimental scalings.
+

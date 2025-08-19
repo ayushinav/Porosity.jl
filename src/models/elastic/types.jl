@@ -33,14 +33,25 @@ using anharmonic scaling
 
 ## Usage
 
-```julia
-T = collect(1273.0f0:30:1573.0f0)
-P = 2 .+ zero(T)
-ρ = collect(3300.0f0:100.0f0:4300.0f0)
+```jldoctest
+julia> T = collect(1273.0f0:40:1473.0f0);
 
-model = anharmonic(T, P, ρ)
+julia> P = 2 .+ zero(T);
 
-forward(model, [])
+julia> ρ = collect(3300.0f0:200.0f0:4300.0f0);
+
+julia> model = anharmonic(T, P, ρ)
+Model : anharmonic
+Temperature (K) : Float32[1273.0, 1313.0, 1353.0, 1393.0, 1433.0, 1473.0]
+Pressure (GPa) : Float32[2.0, 2.0, 2.0, 2.0, 2.0, 2.0]
+Density (kg/m³) : Float32[3300.0, 3500.0, 3700.0, 3900.0, 4100.0, 4300.0]
+
+julia> forward(model, [])
+Rock physics Response : RockphyElastic
+Elastic shear modulus (Pa) : Float32[7.136702f10, 7.082302f10, 7.027902f10, 6.9735014f10, 6.919102f10, 6.864702f10]
+Elastic bulk modulus (Pa) : Float32[1.1894502f11, 1.18038364f11, 1.1713171f11, 1.1622502f11, 1.1531837f11, 1.1441169f11]
+Elastic P-wave velocity (m/s) : Float32[8054.7563, 7791.3696, 7548.708, 7324.0913, 7115.3057, 6920.496]
+Elastic S-wave velocity (m/s) : Float32[4650.416, 4498.3496, 4358.2485, 4228.5664, 4108.0234, 3995.5503]
 ```
 
 ## References
@@ -83,15 +94,28 @@ on anharmonic scaling
 
 ## Usage
 
-```julia
-T = collect(1273.0f0:30:1573.0f0)
-P = 2 .+ zero(T)
-ρ = collect(3300.0f0:100.0f0:4300.0f0)
-ϕ = collect(1.0f-2:1.0f-3:2.0f-2)
+```jldoctest
+julia> T = collect(1273.0f0:40:1473.0f0);
 
-model = anharmonic_poro(T, P, ρ, ϕ)
+julia> P = 2 .+ zero(T);
 
-forward(model, [])
+julia> ρ = collect(3300.0f0:200.0f0:4300.0f0);
+
+julia> ϕ = collect(1.0f-2:2.0f-3:2.0f-2);
+
+julia> model = anharmonic_poro(T, P, ρ, ϕ)
+Model : anharmonic_poro
+Temperature (K) : Float32[1273.0, 1313.0, 1353.0, 1393.0, 1433.0, 1473.0]
+Pressure (GPa) : Float32[2.0, 2.0, 2.0, 2.0, 2.0, 2.0]
+Density (kg/m³) : Float32[3300.0, 3500.0, 3700.0, 3900.0, 4100.0, 4300.0]
+Porosity : Float32[0.01, 0.012, 0.014, 0.016, 0.018, 0.02]
+
+julia> forward(model, [])
+Rock physics Response : RockphyElastic
+Elastic shear modulus (Pa) : Float32[6.90533f10, 6.8138574f10, 6.723185f10, 6.633203f10, 6.5438487f10, 6.4550883f10]
+Elastic bulk modulus (Pa) : Float32[1.1665774f11, 1.1534928f11, 1.1405562f11, 1.127763f11, 1.11511036f11, 1.102595f11]
+Elastic P-wave velocity (m/s) : Float32[7953.0596, 7675.5776, 7419.807, 7182.9395, 6962.659, 6757.0347]
+Elastic S-wave velocity (m/s) : Float32[4574.4116, 4412.2744, 4262.7188, 4124.1016, 3995.0728, 3874.5107]
 ```
 
 ## References
@@ -130,13 +154,22 @@ Stixrude and Lithgow‐Bertelloni (2005) fit of upper mantle Vs.
 
 ## Usage
 
-```julia
-T = collect(1273.0f0:30:1573.0f0)
-P = 2 .+ zero(T)
+```jldoctest
+julia> T = collect(1273.0f0:40:1473.0f0);
 
-model = SLB2005(T, P)
+julia> P = 2 .+ zero(T);
 
-forward(model, [])
+julia> model = SLB2005(T, P)
+Model : SLB2005
+Temperature (K) : Float32[1273.0, 1313.0, 1353.0, 1393.0, 1433.0, 1473.0]
+Pressure (GPa) : Float32[2.0, 2.0, 2.0, 2.0, 2.0, 2.0]
+
+julia> forward(model, [])
+Rock physics Response : RockphyElastic
+Elastic shear modulus (Pa) : Float32[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Elastic bulk modulus (Pa) : Float32[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Elastic P-wave velocity (m/s) : Float32[0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+Elastic S-wave velocity (m/s) : [4478.205990493298, 4463.085990846157, 4447.965991199017, 4432.845991551876, 4417.725991904736, 4402.605992257595]
 ```
 
 ## References

@@ -1,3 +1,5 @@
+# Porosity.jl : Introduction
+
 ```@setup rp_intro
 using Porosity
 ```

@@ -1,7 +1,7 @@
 """
     two_phase_modelType(m1, m2, mix)
 
-Rock physics model to combine two phases.
+Rock physics model Type to combine two phases.
 
 ## Arguments
 
@@ -11,8 +11,12 @@ Rock physics model to combine two phases.
 
 ## Usage
 
-```julia
+```jldoctest; output = false
 two_phase_modelType(SEO3, Ni2011, HS1962_plus())
+
+# output
+
+two_phase_modelType{SEO3, Ni2011, HS1962_plus}(SEO3, Ni2011, HS1962_plus())
 ```
 """
 mutable struct two_phase_modelType{T1, T2, M}
@@ -35,13 +39,37 @@ Rock physics model to combine two phases, usually constructed through `two_phase
 
 ## Usage
 
-```julia
-m = two_phase_modelType(SEO3, Ni2011, HS1962_plus())
-ps_nt = ps_nt = (;
-    T=[800.0f0, 1000.0f0] .+ 273, P=3.0f0, ρ=3300.0f0, Ch2o_m=1000.0f0, ϕ=0.1f0)
-model = m(ps_nt)
+```jldoctest
+julia> m = two_phase_modelType(SEO3, Ni2011, HS1962_plus());
 
-resp = forward(model)
+julia> T = [900.0f0, 1000.0f0] .+ 273;
+
+julia> P = 3.0f0;
+
+julia> ρ = 3300.0f0;
+
+julia> Ch2o_m = 1000.0f0;
+
+julia> ϕ = 0.1f0;
+
+julia> ps_nt = ps_nt = (; T, P, ρ, Ch2o_m, ϕ);
+
+julia> model = m(ps_nt)
+Two phase composition using HS1962_plus()
+
+*    m₁ (solid phase) : 
+Model : SEO3
+Temperature (K) : Float32[1173.0, 1273.0]
+ϕ : 0.9
+
+*    m₂ (liquid phase) : 
+Model : SEO3
+Temperature (K) : Float32[1173.0, 1273.0]
+ϕ : 0.1
+
+julia> resp = forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : Float32[-5.800449, -4.128538]
 ```
 """
 mutable struct two_phase_model{V, T1, T2, M} <: AbstractRockphyModel
@@ -116,26 +144,27 @@ end
 # multi-phase 
 
 """
-    two_phase_model(ϕ, m1, m2, mix)
+    multi_phase_modelType(m1, m2, m3, m4, m5, m6, m7, m8, mix)
+    multi_phase_modelType(m1, ..., mix)
 
-Rock physics model to combine two phases, usually constructed through `two_phase_modelType`[@ref]
+Rock physics model Type to combine multiple (upto 8) phases.
 
 ## Arguments
 
-  - `ϕ` : Vol. fraction of the **second** phase
-  - `m1` : model corresponding to phase 1
-  - `m2` : model corresponding to phase 2
-  - `mix` : mixing type, available options are `HS_1962_plus()`, `HS1962_minus`, `MAL(m)`
+  - `m1` : model type corresponding to phase 1
+  - `m2` : model type corresponding to phase 2 (optional)
+  - `m3` : model type corresponding to phase 3 (optional)
+  - `m4` : model type corresponding to phase 4 (optional)
+  - `m5` : model type corresponding to phase 5 (optional)
+  - `m6` : model type corresponding to phase 6 (optional)
+  - `m7` : model type corresponding to phase 7 (optional)
+  - `m8` : model type corresponding to phase 8 (optional)
+  - `mix` : mixing type, available options are `HS_plus_multi_phase()`, `HS_minus_multi_phase`, `GAL(m)`
 
 ## Usage
 
 ```julia
-m = two_phase_modelType(SEO3, Ni2011, HS1962_plus())
-ps_nt = ps_nt = (;
-    T=[800.0f0, 1000.0f0] .+ 273, P=3.0f0, ρ=3300.0f0, Ch2o_m=1000.0f0, ϕ=0.1f0)
-model = m(ps_nt)
-
-resp = forward(model)
+multi_phase_modelType(SEO3, Ni2011, Yang2011, HS_plus_multi_phase())
 ```
 """
 mutable struct multi_phase_modelType{T1, T2, T3, T4, T5, T6, T7, T8, M}
@@ -166,26 +195,65 @@ for i in 2:7
 end
 
 """
-    two_phase_model(ϕ, m1, m2, mix)
+    multi_phase_model(m1, m2, m3, m4, m5, m6, m7, m8, mix)
+    multi_phase_model(m1, ..., mix)
 
-Rock physics model to combine two phases, usually constructed through `two_phase_modelType`[@ref]
+Rock physics model Type to combine multiple (upto 8) phases.
 
 ## Arguments
 
-  - `ϕ` : Vol. fraction of the **second** phase
   - `m1` : model corresponding to phase 1
-  - `m2` : model corresponding to phase 2
-  - `mix` : mixing type, available options are `HS_1962_plus()`, `HS1962_minus`, `MAL(m)`
+  - `m2` : model corresponding to phase 2 (optional)
+  - `m3` : model corresponding to phase 3 (optional)
+  - `m4` : model corresponding to phase 4 (optional)
+  - `m5` : model corresponding to phase 5 (optional)
+  - `m6` : model corresponding to phase 6 (optional)
+  - `m7` : model corresponding to phase 7 (optional)
+  - `m8` : model corresponding to phase 8 (optional)
+  - `mix` : mixing type, available options are `HS_plus_multi_phase()`, `HS_minus_multi_phase`, `GAL(m)`
 
 ## Usage
 
-```julia
-m = two_phase_modelType(SEO3, Ni2011, HS1962_plus())
-ps_nt = ps_nt = (;
-    T=[800.0f0, 1000.0f0] .+ 273, P=3.0f0, ρ=3300.0f0, Ch2o_m=1000.0f0, ϕ=0.1f0)
-model = m(ps_nt)
+```jldoctest
+julia> m = multi_phase_modelType(SEO3, Ni2011, Yang2011, HS_plus_multi_phase());
 
-resp = forward(model)
+julia> T = [900.0f0, 1000.0f0] .+ 273;
+
+julia> P = 3.0f0;
+
+julia> ρ = 3300.0f0;
+
+julia> Ch2o_m = 1000.0f0;
+
+julia> Ch2o_cpx = 100.0f0;
+
+julia> ϕ = [0.8f0, 0.1f0];
+
+julia> ps_nt = ps_nt = (; T, P, ρ, Ch2o_m, Ch2o_cpx, ϕ);
+
+julia> model = m(ps_nt)
+multi-phase composition using HS_plus_multi_phase()
+
+*    m₁ : 
+Model : SEO3
+Temperature (K) : Float32[1173.0, 1273.0]
+ϕ : 0.8
+
+*    m₂ : 
+Model : Ni2011
+Temperature (K) : Float32[1173.0, 1273.0]
+Water concentration in melt (ppm) : 1000.0
+ϕ : 0.1
+
+*    m₃ : 
+Model : Yang2011
+Temperature (K) : Float32[1173.0, 1273.0]
+Water concentration in clinopyroxene (ppm) : 100.0
+ϕ : 0.099999964
+
+julia> forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : Float32[-26.768837, -3.9519336]
 ```
 """
 mutable struct multi_phase_model{T, T1, T2, T3, T4, T5, T6, T7, T8, M} <:
