@@ -54,7 +54,7 @@ const nav = [
 // https://vitepress.dev/reference/site-config
 export default withMermaid({
   base: './',// TODO: replace this in makedocs!
-  title: '',
+  title: 'Porosity.jl',
   description: 'Documentation for Porosity.jl',
   lastUpdated: true,
   cleanUrls: true,

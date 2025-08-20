@@ -194,3 +194,48 @@ nothing # hide
 ```@example sol_plts
 f # hide
 ```
+
+## Stable melt fraction
+
+Addition of volatiles lowers the solidus, generating more melt. The partitioning of volatiles into melt would, however, require knowing about the melt fraction beforehand. We, therefore, follow [Blatter, et al., 2022](https://www.nature.com/articles/s41586-022-04483-w) to estimate the amount of thermodynamically stable melt using [`get_melt_fraction`](@ref).
+
+```@raw html
+<details closed><summary>Code for this figure</summary>
+```
+
+```@example sol_plts
+P = 3.0
+T_solidus = solidus_Hirschmann2000((; P)).T_solidus
+T = [1460, 1480, 1500, 1520] .+ 273.0
+
+Ch2o = reshape(collect(0.:10:5000.), 1, :)
+Cco2 = reshape(collect(0.:100:10000.), 1, 1, :)
+
+ps_nt = (; P, T, T_solidus, Ch2o, Cco2)
+ϕ = get_melt_fraction(ps_nt).ϕ;
+size(ϕ)
+
+fig = Figure(size = (800, 900))
+ax1 = Axis(fig[1,1], xlabel = "water conc. (ppm)", ylabel = "CO₂ conc. (ppm)", title = "$(T[1]) K")
+ax2 = Axis(fig[1,2], xlabel = "water conc. (ppm)", ylabel = "CO₂ conc. (ppm)", title = "$(T[2]) K")
+ax3 = Axis(fig[2,1], xlabel = "water conc. (ppm)", ylabel = "CO₂ conc. (ppm)", title = "$(T[3]) K")
+ax4 = Axis(fig[2,2], xlabel = "water conc. (ppm)", ylabel = "CO₂ conc. (ppm)", title = "$(T[4]) K")
+
+crange = extrema(ϕ)
+cmap = :thermal
+heatmap!(ax1, vec(Ch2o), vec(Cco2), ϕ[1,:,:], colorrange = crange, colormap = cmap)
+heatmap!(ax2, vec(Ch2o), vec(Cco2), ϕ[2,:,:], colorrange = crange, colormap = cmap)
+heatmap!(ax3, vec(Ch2o), vec(Cco2), ϕ[3,:,:], colorrange = crange, colormap = cmap)
+h = heatmap!(ax4, vec(Ch2o), vec(Cco2), ϕ[4,:,:], colorrange = crange, colormap = cmap)
+Colorbar(fig[3,:], h, vertical = false, label = "melt fraction")
+Label(fig[0,:], "melt fraction at dry solidus temp :  $(Int(round(T_solidus))) K", fontsize = 20)
+nothing # hide
+```
+
+```@raw html
+</details>
+```
+
+```@example sol_plts
+fig # hide
+```

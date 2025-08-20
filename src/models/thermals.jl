@@ -381,8 +381,6 @@ function get_melt_fraction_core(
         sol = solve(prob_init)
         return sol.u
     end
-
-    # return x3
 end
 
 """
