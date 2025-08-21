@@ -29,7 +29,7 @@ We calculate the melt fraction using [`get_melt_fraction`](@ref), and then using
 
 ```@example tune_rp
 fn_list = [get_melt_fraction]
-m_type = two_phase_modelType(SEO3, Gaillard2008, HS1962_plus())
+m_type = two_phase_modelType(SEO3, Gaillard2008, HS1962_plus)
 m = tune_rp_modelType(fn_list, m_type)
 
 model = m(ps_nt)
@@ -101,7 +101,7 @@ Then we put together the `fn_list`. We first need to calculate the solidus tempe
 
 ```@example tune_rp
 fn_list = [solidus_Hirschmann2000, get_melt_fraction, get_Ch2o_m]
-m_type = two_phase_modelType(Yoshino2009, Ni2011, HS1962_plus())
+m_type = two_phase_modelType(Yoshino2009, Ni2011, HS1962_plus)
 m = tune_rp_modelType(fn_list, m_type)
 
 model = m(ps_nt)
@@ -156,5 +156,3 @@ nothing # hide
 ```@example tune_rp
 f # hide
 ```
-
-The sudden spike we see in the above plot is because of low amount of melt generated which leads to saturation of water in melt, making it very conductive.

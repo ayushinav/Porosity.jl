@@ -133,13 +133,13 @@ Lets combine `SEO3` with `Sifre2014` and also try to infer the porosity.
 
 ```@example rp_si
 # Creating synthetic data
-m = two_phase_modelType(SEO3, Sifre2014, HS1962_plus())
+m = two_phase_modelType(SEO3, Sifre2014, HS1962_plus)
 ps_nt = (; T=[1400.0] .+ 273, Ch2o_m=[100.0], Cco2_m=[100.0], ϕ=[0.1])
 model = m(ps_nt)
 resp = forward(model, [])
 err_resp = RockphyCond(0.01 .* abs.(resp.σ))
 
-m = two_phase_modelDistributionType(SEO3Distribution, Sifre2014Distribution, HS1962_plus())
+m = two_phase_modelDistributionType(SEO3Distribution, Sifre2014Distribution, HS1962_plus)
 ps_nt_dist = (;
     T=MvNormal([1000.0], [400.0;]),
     Ch2o_m=product_distribution([Uniform(50.0, 150.0)]),
@@ -279,7 +279,7 @@ As a last example, lets take the two phases case above and see if we can do a be
 
 ```@example rp_si
 # Synthetic data
-m_mix = two_phase_modelType(SEO3, Sifre2014, HS1962_plus())
+m_mix = two_phase_modelType(SEO3, Sifre2014, HS1962_plus)
 m = multi_rp_modelType(typeof(m_mix), anharmonic, Nothing, Nothing)
 
 ps_nt = (; T=[1200.0] .+ 273, Ch2o_m=[100.0], Cco2_m=[100.0], ϕ=[0.1], P=[3.0], ρ=[3300.0])
@@ -309,7 +309,7 @@ ps_nt_dist = (;
 )
 
 m_mixdist = two_phase_modelDistributionType(
-    SEO3Distribution, Sifre2014Distribution, HS1962_plus())
+    SEO3Distribution, Sifre2014Distribution, HS1962_plus)
 m = multi_rp_modelDistributionType(
     typeof(m_mixdist), anharmonicDistribution, Nothing, Nothing)
 

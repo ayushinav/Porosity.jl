@@ -7,22 +7,22 @@ Rock physics model Type to combine two phases.
 
   - `m1` : model type corresponding to phase 1
   - `m2` : model type corresponding to phase 2
-  - `mix` : mixing type, available options are `HS_1962_plus()`, `HS1962_minus`, `MAL(m)`
+  - `mix` : mixing type, available options are `HS_1962_plus`, `HS1962_minus`, `MAL`
 
 ## Usage
 
 ```jldoctest; output = false
-two_phase_modelType(SEO3, Ni2011, HS1962_plus())
+two_phase_modelType(SEO3, Ni2011, HS1962_plus)
 
 # output
 
-two_phase_modelType{SEO3, Ni2011, HS1962_plus}(SEO3, Ni2011, HS1962_plus())
+two_phase_modelType{SEO3, Ni2011, HS1962_plus}(SEO3, Ni2011, HS1962_plus)
 ```
 """
 mutable struct two_phase_modelType{T1, T2, M}
     m1::Type{T1}
     m2::Type{T2}
-    mix::M
+    mix::Type{M}
 end
 
 """
@@ -40,7 +40,7 @@ Rock physics model to combine two phases, usually constructed through `two_phase
 ## Usage
 
 ```jldoctest
-julia> m = two_phase_modelType(SEO3, Ni2011, HS1962_plus());
+julia> m = two_phase_modelType(SEO3, Ni2011, HS1962_plus);
 
 julia> T = [900.0f0, 1000.0f0] .+ 273;
 
@@ -80,13 +80,13 @@ mutable struct two_phase_model{V, T1, T2, M} <: AbstractRockphyModel
 end
 
 two_phase_modelType(m1) = m1
-two_phase_modelType(m1, m::phase_mixing) = m1
+two_phase_modelType(m1, mix::Type{T}) where {T <: phase_mixing} = m1
 
 function (model::two_phase_modelType)(ps::NamedTuple)
-    mix = model.mix
     ϕ = ps.ϕ
     v1 = from_nt(getproperty(model, :m1), ps)
     v2 = from_nt(getproperty(model, :m2), ps)
+    mix = from_nt(model.mix, ps)
     return two_phase_model(ϕ, v1, v2, mix)
 end
 
@@ -135,7 +135,7 @@ function SubsurfaceCore.from_nt(m::Type{T}, nt::NamedTuple) where {T <: two_phas
     model1 = from_nt(m1, nt)
     model2 = from_nt(m2, nt)
     # @show m.types[3]
-    mix = from_nt(m.types[3], nt)
+    mix = from_nt(m.types[3].parameters[1], nt)
 
     return two_phase_model(ϕ, model1, model2, mix)
 end
@@ -159,12 +159,12 @@ Rock physics model Type to combine multiple (upto 8) phases.
   - `m6` : model type corresponding to phase 6 (optional)
   - `m7` : model type corresponding to phase 7 (optional)
   - `m8` : model type corresponding to phase 8 (optional)
-  - `mix` : mixing type, available options are `HS_plus_multi_phase()`, `HS_minus_multi_phase`, `GAL(m)`
+  - `mix` : mixing type, available options are `HS_plus_multi_phase`, `HS_minus_multi_phase`, `GAL`
 
 ## Usage
 
 ```julia
-multi_phase_modelType(SEO3, Ni2011, Yang2011, HS_plus_multi_phase())
+multi_phase_modelType(SEO3, Ni2011, Yang2011, HS_plus_multi_phase)
 ```
 """
 mutable struct multi_phase_modelType{T1, T2, T3, T4, T5, T6, T7, T8, M}
@@ -176,19 +176,22 @@ mutable struct multi_phase_modelType{T1, T2, T3, T4, T5, T6, T7, T8, M}
     m6::Type{T6}
     m7::Type{T7}
     m8::Type{T8}
-    mix::M
+    mix::Type{M}
 end
 
 multi_phase_modelType(m1) = m1
-multi_phase_modelType(m1, m::phase_mixing) = m1
+multi_phase_modelType(m1, m::Type{phase_mixing}) = m1
 
 for i in 2:7
     args = [Symbol("m$k") for k in 1:i]
-    last_args = :(m::phase_mixing)
-    expr_lhs = Expr(:call, :multi_phase_modelType, args..., last_args)
+    T_ = :T
+    last_args = :(m::Type{$T_})
+    expr_call = Expr(:call, :multi_phase_modelType, args..., last_args)
+    expr_where = :($T_ <: phase_mixing)
+    expr_lhs = Expr(:where, expr_call, expr_where)
 
     args2 = [Nothing for k in (i + 1):8]
-    expr_rhs = Expr(:call, :multi_phase_modelType, args..., args2..., last_args)
+    expr_rhs = Expr(:call, :multi_phase_modelType, args..., args2..., :m)
 
     expr = Expr(:function, expr_lhs, expr_rhs)
     eval(expr)
@@ -215,7 +218,7 @@ Rock physics model Type to combine multiple (upto 8) phases.
 ## Usage
 
 ```jldoctest
-julia> m = multi_phase_modelType(SEO3, Ni2011, Yang2011, HS_plus_multi_phase());
+julia> m = multi_phase_modelType(SEO3, Ni2011, Yang2011, HS_plus_multi_phase);
 
 julia> T = [900.0f0, 1000.0f0] .+ 273;
 
@@ -294,19 +297,18 @@ function rearrange_ϕ(ϕ, model::multi_phase_modelType)
 end
 
 function (model::multi_phase_modelType)(ps::NamedTuple)
-    pnames = propertynames(model)
-    mix = getfield(model, pnames[end])
+    mix = from_nt(model.mix, ps)
 
     ϕ_vec = rearrange_ϕ(ps.ϕ, model)
 
-    v1 = from_nt(getproperty(model, pnames[1]), ps)
-    v2 = from_nt(getproperty(model, pnames[2]), ps)
-    v3 = from_nt(getproperty(model, pnames[3]), ps)
-    v4 = from_nt(getproperty(model, pnames[4]), ps)
-    v5 = from_nt(getproperty(model, pnames[5]), ps)
-    v6 = from_nt(getproperty(model, pnames[6]), ps)
-    v7 = from_nt(getproperty(model, pnames[7]), ps)
-    v8 = from_nt(getproperty(model, pnames[8]), ps)
+    v1 = from_nt(model.m1, ps)
+    v2 = from_nt(model.m2, ps)
+    v3 = from_nt(model.m3, ps)
+    v4 = from_nt(model.m4, ps)
+    v5 = from_nt(model.m5, ps)
+    v6 = from_nt(model.m6, ps)
+    v7 = from_nt(model.m7, ps)
+    v8 = from_nt(model.m8, ps)
     return multi_phase_model(ϕ_vec, v1, v2, v3, v4, v5, v6, v7, v8, mix)
 end
 
@@ -426,7 +428,7 @@ function SubsurfaceCore.from_nt(
     model7 = from_nt(m7, nt)
     model8 = from_nt(m8, nt)
 
-    mix = from_nt(m.types[9], nt)
+    mix = from_nt(m.types[9].parameters[1], nt)
 
     ϕ_vec = rearrange_ϕ(ϕ,
         multi_phase_modelType(

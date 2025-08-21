@@ -8,7 +8,7 @@ Hashim-Strikman upper bound for mixing 2 phases
 ## Usage
 
 ```julia
-m = two_phase_modelType(Yoshino2009, Sifre2014, MAL(0.2))
+m = two_phase_modelType(Yoshino2009, Sifre2014, HS1962_plus())
 ```
 
 Check out the relevant rock physics documentation.
@@ -28,7 +28,7 @@ Hashim-Strikman lower bound for mixing 2 phases
 ## Usage
 
 ```julia
-m = two_phase_modelType(Yoshino2009, Sifre2014, MAL(0.2))
+m = two_phase_modelType(Yoshino2009, Sifre2014, HS1962_minus())
 ```
 
 Check out the relevant rock physics documentation.
@@ -63,18 +63,42 @@ mutable struct MAL{T} <: phase_mixing
     m_MAL::T
 end
 
+"""
+Hashim-Strikman upper bound for multiple phases
+
+## References
+
+    - Berryman, J. G. (1995), Mixture Theories for Rock Properties
+     https://doi.org/10.1029/RF003p0205
+"""
 mutable struct HS_plus_multi_phase <: phase_mixing end
 
+"""
+Hashim-Strikman lower bound for multiple phases
+
+## References
+
+    - Berryman, J. G. (1995), Mixture Theories for Rock Properties
+     https://doi.org/10.1029/RF003p0205
+"""
 mutable struct HS_minus_multi_phase <: phase_mixing end
 
 """
     GAL(m)
 
-Generalized Archie's law
+Generalized Archie's law for multiple phases
+
+## Usage
+
+## References
+
+    - Glover, P.W.J (2010), A generalized Archie’s law for n phases
+    https://doi.org/10.1190/1.3509781
 """
 mutable struct GAL{T} <: phase_mixing
     m_GAL::T
 end
+
 """
     single_phase
 

@@ -96,7 +96,7 @@ Sooner or later, you would want to also mix phases in estimating conductivity. T
 We first need to define the mixing type
 
 ```@example multi_rp
-m_mix = two_phase_modelType(SEO3, Gaillard2008, HS1962_plus())
+m_mix = two_phase_modelType(SEO3, Gaillard2008, HS1962_plus)
 ```
 
 and then construct the multi rock physics type

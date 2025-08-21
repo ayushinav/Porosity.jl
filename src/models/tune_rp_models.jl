@@ -19,7 +19,7 @@ julia> ps_nt = (; T=T, P=P, T_solidus=T_solidus);
 
 julia> fn_list = [get_melt_fraction];
 
-julia> m_type = two_phase_modelType(SEO3, Gaillard2008, HS1962_plus());
+julia> m_type = two_phase_modelType(SEO3, Gaillard2008, HS1962_plus);
 
 julia> m = tune_rp_modelType(fn_list, m_type)
 Tuning rock physics with function list :
