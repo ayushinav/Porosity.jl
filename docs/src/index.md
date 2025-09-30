@@ -6,7 +6,7 @@ layout: home
 hero:
   name: Porosity.jl
   text: Rock physics parameter inference in Julia
-  tagline: Automatic Differentiation enabled probabalistic inference of rock physics
+  tagline: Automatic Differentiation enabled probabilistic inference of rock physics
   image:
     src: logo.png
     alt: Porosity.jl
@@ -23,7 +23,7 @@ features:
 
   - icon: 📊
     title: Probabilstic inference
-    details: Perform probablistic inference of parameters
+    details: Perform probabilistic inference of parameters
     link: /tutorials/stochastic_inverse
 
   - icon: ∂

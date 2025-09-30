@@ -1,6 +1,6 @@
 # Structure
 
-One of the goals of this package is to provide an easy and intiutive way to compute the geophysical observables. In order to that, it is helpful to understand the structure of codes. The following serves as a cheatsheet to understand the structure.
+One of the goals of this package is to provide an easy and intuitive way to compute the geophysical observables. In order to that, it is helpful to understand the structure of codes. The following serves as a cheatsheet to understand the structure.
 
 ## Building blocks
 

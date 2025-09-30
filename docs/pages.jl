@@ -17,7 +17,7 @@ pages = [
         "Mixing phases" => "tutorials/mixing_phases.md",
         "Multi rock physics" => "tutorials/combine_models.md",
         "Tuning rock physics hyperparameters" => "tutorials/tune_rp.md",
-        "Stochastic inverse" => "tutorials/stochastic_inverse.md",
+        "Stochastic inversion" => "tutorials/stochastic_inverse.md",
         "Automatic Differentiation" => "tutorials/ad.md",
     ],
     "Solidus" => "solidus.md",

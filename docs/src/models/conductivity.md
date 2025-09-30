@@ -324,9 +324,6 @@ f # hide
 
 ## Melt
 
-  - [Sifre2014](@ref Sifre2014) : Sifre et al., 2014 : [Electrical conductivity during incipient melting in the oceanic low-velocity zone](https://doi.org/10.1038/nature13245)
-  - [Gaillard2008](@ref Gaillard2008) : Gaillard et al., 2008 : [Carbonatite Melts and Electrical Conductivity in the Asthenosphere](https://www.science.org/doi/10.1126/science.1164446)
-
 ### Ni2011
 
 ```@docs; canonical = false
@@ -478,14 +475,14 @@ The distribution with temperature looks like :
 
 ```@example cond_plts
 f = Figure()
-ax = Axis(f[3:8, 3:8]; yscale=log10,
+ax = Axis(f[1,1]; yscale=log10,
     xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
     yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
     backgroundcolor=(:magenta, 0.05))
 
 xts = inv.([700, 900, 1100, 1300, 1500] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
+ax2 = Axis(f[1,1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
     xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=10, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
@@ -499,6 +496,171 @@ logsig = forward(m, []).σ
 
 lines!(ax, inv.(T) .* 1e4, 10 .^ logsig)
 lines!(ax2, inv.(T) .* 1e4, 10 .^ logsig; alpha=0)
+nothing # hide
+```
+
+```@raw html
+</details>
+```
+
+```@example cond_plts
+f # hide
+```
+
+## Orthopyroxene
+
+### Dai_Karato2009
+
+
+```@docs; canonical = false
+Dai_Karato2009
+```
+
+The distribution with temperature looks like :
+
+```@raw html
+<details closed><summary>Code for this figure</summary>
+```
+
+```@example cond_plts
+
+f = Figure()
+
+ax = Axis(f[1, 1]; yscale=log10,
+    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
+    backgroundcolor=(:magenta, 0.05))
+
+xts = inv.([800, 900, 1000, 1300] .+ 273.0) .* 1e4
+
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
+    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+    xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
+ax2.xticks = xts
+hidespines!(ax2)
+hideydecorations!(ax2)
+linkyaxes!(ax, ax2)
+
+T = (700:1300) .+ 273.0
+Ch2o = [0.0, 100, 200, 2000]'
+m = Dai_Karato2009(T, Ch2o)
+logsig = forward(m, []).σ
+
+for i in eachindex(Ch2o)
+    w = Ch2o[i]
+    lines!(ax, inv.(T) .* 1e4, 10 .^ logsig[:, i]; label="$w")
+    lines!(ax2, inv.(T) .* 1e4, 10 .^ logsig[:, i]; alpha=0)
+end
+f[1, 2] = Legend(f, ax, "water conc. (ppm)")
+
+nothing # hide
+```
+
+```@raw html
+</details>
+```
+
+```@example cond_plts
+f # hide
+```
+
+### Zhang2012
+
+```@docs; canonical = false
+Zhang2012
+```
+
+The distribution with temperature looks like (compare with fig. 6 in Zhang et al., 2012):
+
+```@raw html
+<details closed><summary>Code for this figure</summary>
+```
+
+```@example cond_plts
+f = Figure()
+
+ax = Axis(f[1, 1]; yscale=log10,
+    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
+    backgroundcolor=(:magenta, 0.05))
+
+xts = inv.([800, 1300., 2000.] .+ 273.0) .* 1e4
+
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
+    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+    xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
+ax2.xticks = xts
+hidespines!(ax2)
+hideydecorations!(ax2)
+linkyaxes!(ax, ax2)
+
+T = (700:2600) .+ 273.0
+Ch2o = [0.0, 1, 10, 100, 1000, 10000]'
+m = Zhang2012(T, Ch2o)
+logsig = forward(m, []).σ
+
+for i in eachindex(Ch2o)
+    w = Ch2o[i]
+    lines!(ax, inv.(T) .* 1e4, 10 .^ logsig[:, i]; label="$w")
+    lines!(ax2, inv.(T) .* 1e4, 10 .^ logsig[:, i]; alpha=0)
+end
+
+f[1, 2] = Legend(f, ax, "water conc. (ppm)")
+nothing # hide
+```
+
+```@raw html
+</details>
+```
+
+```@example cond_plts
+f # hide
+```
+
+
+## Clinopyroxene
+
+### Yang2011
+
+```@docs; canonical = false
+Yang2011
+```
+
+The distribution with temperature looks like (compare with fig. 8 in Yang et al., 2011):
+
+```@raw html
+<details closed><summary>Code for this figure</summary>
+```
+
+```@example cond_plts
+f = Figure()
+
+ax = Axis(f[1, 1]; yscale=log10,
+    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
+    backgroundcolor=(:magenta, 0.05))
+
+xts = inv.([400, 500, 800, 1000, 1300] .+ 273.0) .* 1e4
+
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
+    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+    xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
+ax2.xticks = xts
+hidespines!(ax2)
+hideydecorations!(ax2)
+linkyaxes!(ax, ax2)
+
+T = (400:1300) .+ 273.0
+Ch2o = [0.0, 100, 200, 2000]'
+m = Yang2011(T, Ch2o)
+logsig = forward(m, []).σ
+
+for i in eachindex(Ch2o)
+    w = Ch2o[i]
+    lines!(ax, inv.(T) .* 1e4, 10 .^ logsig[:, i]; label="$w")
+    lines!(ax2, inv.(T) .* 1e4, 10 .^ logsig[:, i]; alpha=0)
+end
+f[1, 2] = Legend(f, ax, "water conc. (ppm)")
 nothing # hide
 ```
 

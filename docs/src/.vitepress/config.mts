@@ -3,7 +3,6 @@ import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs'
 import mathjax3 from "markdown-it-mathjax3";
 import footnote from "markdown-it-footnote";
 import path from 'path'
-import { withMermaid } from "vitepress-plugin-mermaid";
 
 function getBaseRepository(base: string): string {
   if (!base || base === '/') return '/';
@@ -35,7 +34,7 @@ const navTemp = {
 { text: 'Mixing phases', link: '/tutorials/mixing_phases' },
 { text: 'Multi rock physics', link: '/tutorials/combine_models' },
 { text: 'Tuning rock physics hyperparameters', link: '/tutorials/tune_rp' },
-{ text: 'Stochastic inverse', link: '/tutorials/stochastic_inverse' },
+{ text: 'Stochastic inversion', link: '/tutorials/stochastic_inverse' },
 { text: 'Automatic Differentiation', link: '/tutorials/ad' }]
  },
 { text: 'Solidus', link: '/solidus' },
@@ -52,8 +51,8 @@ const nav = [
 ]
 
 // https://vitepress.dev/reference/site-config
-export default withMermaid({
-  base: './',// TODO: replace this in makedocs!
+export default defineConfig({
+  base: '/',// TODO: replace this in makedocs!
   title: 'Porosity.jl',
   description: 'Documentation for Porosity.jl',
   lastUpdated: true,
@@ -63,9 +62,7 @@ export default withMermaid({
     
     ['script', {src: `${getBaseRepository(baseTemp.base)}versions.js`}],
     // ['script', {src: '/versions.js'], for custom domains, I guess if deploy_url is available.
-    ['script', {src: `${baseTemp.base}siteinfo.js`}],
-    ['script', { src: 'https://cdn.tailwindcss.com' }]
-    
+    ['script', {src: `${baseTemp.base}siteinfo.js`}]
   ],
   
   vite: {
@@ -132,7 +129,7 @@ export default withMermaid({
 { text: 'Mixing phases', link: '/tutorials/mixing_phases' },
 { text: 'Multi rock physics', link: '/tutorials/combine_models' },
 { text: 'Tuning rock physics hyperparameters', link: '/tutorials/tune_rp' },
-{ text: 'Stochastic inverse', link: '/tutorials/stochastic_inverse' },
+{ text: 'Stochastic inversion', link: '/tutorials/stochastic_inverse' },
 { text: 'Automatic Differentiation', link: '/tutorials/ad' }]
  },
 { text: 'Solidus', link: '/solidus' },

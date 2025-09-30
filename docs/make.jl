@@ -1,6 +1,3 @@
-# using Pkg
-# Pkg.activate("docs/.")
-
 using Porosity
 using Documenter, DocumenterVitepress
 
@@ -13,7 +10,7 @@ makedocs(;
     # repo = "https://github.com/ayushinav/Porosity.jl", #.jl/blob/{commit}{path}#{line}",
     # sitename = "Porosity.jl",
     # doctest = true,
-    # clean = false,
+    clean = true,
     # format=Documenter.HTML(;
     #     prettyurls=get(ENV, "CI", "false") == "true",
     #     canonical="https://ayushinav.github.io/Porosity.jl",
@@ -21,10 +18,12 @@ makedocs(;
     #     assets=String[]
     # ),
 
-
     format = DocumenterVitepress.MarkdownVitepress(
         repo = "https://github.com/ayushinav/Porosity.jl",
-        devurl = "dev", #, md_output_path = ".", #build_vitepress = false
+        devurl = "dev", #, md_output_path = ".", 
+        deploy_url="/"
+        # md_output_path = "docs2"
+        # build_vitepress = false
     ),
     pages = pages,
 )
