@@ -365,7 +365,9 @@ Electrical conductivity model for olivine dependent on temperature and water con
 
 ## References
 
-  - todo
+  - Dai, Lidong and Karato, Shun-ichiro (2009),
+  "Electrical conductivity of orthopyroxene: Implications for the water content of the asthenosphere",
+  Proceedings of the Japan Academy,  Series B, doi:10.2183/pjab.85.466
 
 ## Usage
 
@@ -377,7 +379,7 @@ Water concentration in orthopyroxene (ppm) : 20000.0
 
 julia> log_cond = forward(model, [])
 Rock physics Response : RockphyCond
-log₁₀ conductivity (S/m) : 1.9018362213428317
+log₁₀ conductivity (S/m) : -1.4966847149880984
 ```
 """
 mutable struct Dai_Karato2009{F1, F2} <: AbstractCondModel
@@ -409,7 +411,7 @@ Water concentration in orthopyroxene (ppm) : 20000.0
 
 julia> log_cond = forward(model, [])
 Rock physics Response : RockphyCond
-log₁₀ conductivity (S/m) : 12.152747721019077
+log₁₀ conductivity (S/m) : -0.045414286402875675
 ```
 """
 mutable struct Zhang2012{F1, F2} <: AbstractCondModel
@@ -432,7 +434,9 @@ Electrical conductivity model for olivine dependent on temperature and water con
 
 ## References
 
-  - todo
+  - Yang,  Xiaozhi and Keppler, Hans and McCammon, Catherine and Ni, Huaiwei and Xia, Qunke and Fan, Qicheng (2011),
+  "Effect of water on the electrical conductivity of lower crustal clinopyroxene",
+  Journal of Geophysical Research, doi:https://doi.org/10.1029/2010JB008010
 
 ## Usage
 
@@ -444,7 +448,7 @@ Water concentration in clinopyroxene (ppm) : 20000.0
 
 julia> log_cond = forward(model, [])
 Rock physics Response : RockphyCond
-log₁₀ conductivity (S/m) : 5.529998592434935
+log₁₀ conductivity (S/m) : 1.0103884511392625
 ```
 """
 mutable struct Yang2011{F1, F2} <: AbstractCondModel

@@ -12,7 +12,7 @@ Rock physics model distribution type to combine two phases.
 ## Usage
 
 ```julia
-two_phase_modelType(SEO3Distribution, Ni2011Distribution, HS1962_plus())
+two_phase_modelType(SEO3Distribution, Ni2011Distribution, HS1962_plus)
 ```
 """
 mutable struct two_phase_modelDistributionType{T1, T2, M}
@@ -31,7 +31,7 @@ Rock physics model distribution to combine two phases, usually constructed throu
   - `ϕ` : distribution (or value) of vol. fraction of the **second** phase
   - `m1` : model distribution corresponding to phase 1
   - `m2` : model distribution corresponding to phase 2
-  - `mix` : mixing type, available options are `HS_1962_plus()`, `HS1962_minus`, `MAL(m_MAL)`
+  - `mix` : mixing type, available options are `HS_1962_plus`, `HS1962_minus`, `MAL(m_MAL)`
 
 ## Usage
 
@@ -119,11 +119,14 @@ multi_phase_modelDistributionType(m1, m::phase_mixing) = m1
 
 for i in 2:7
     args = [Symbol("m$k") for k in 1:i]
-    last_args = :(m::phase_mixing)
-    expr_lhs = Expr(:call, :multi_phase_modelDistributionType, args..., last_args)
+    T_ = :T
+    last_args = :(m::Type{$T_})
+    expr_call = Expr(:call, :multi_phase_modelDistributionType, args..., last_args)
+    expr_where = :($T_ <: phase_mixing)
+    expr_lhs = Expr(:where, expr_call, expr_where)
 
     args2 = [Nothing for k in (i + 1):8]
-    expr_rhs = Expr(:call, :multi_phase_modelDistributionType, args..., args2..., last_args)
+    expr_rhs = Expr(:call, :multi_phase_modelDistributionType, args..., args2..., :m)
 
     expr = Expr(:function, expr_lhs, expr_rhs)
     eval(expr)

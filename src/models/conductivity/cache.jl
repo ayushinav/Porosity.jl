@@ -163,7 +163,7 @@ params_Dai_Karato2009 = (
 )
 
 params_Zhang2012 = (
-    S_pol = 3.99f0,
+    S_pol = 10f0 ^ 3.99f0,
     H_pol = 1.88f0,
     S_hyd = 10f0 ^2.58f0,
     H_hyd = 84f-2,

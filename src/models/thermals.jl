@@ -111,7 +111,7 @@ function ΔT_h2o_Katz2003(ps_nt)
 
     Ch2o_m_sat = @. 12 * P^(0.6f0) + P
     # C_w = (Ch2o_m <= Ch2o_m_sat) ? (Ch2o_m) : Ch2o_m # worth investigating
-    Ch2o_m_ = @. Ch2o_m * 1.0f-4
+    Ch2o_m_ = @. ifelse(Ch2o_m * 1.0f-4 < Ch2o_m_sat, Ch2o_m * 1.0f-4, Ch2o_m_sat)
     dT = @. K * (Ch2o_m_)^γ
     T_solidus = @. T_solidus - dT
     return (; T_solidus)
@@ -249,7 +249,7 @@ ps_nt = (; P, T_solidus, Ch2o_m)
 
 # output
 
-(T_solidus = [1673.0, 1672.3546644354983, 1671.7105086752495, 1671.0675288870077, 1670.425721456937, 1669.7850823343872],)
+(T_solidus = [1673.0, 1672.2288240004204, 1671.459057866923, 1670.6906970192301, 1669.9237371410397, 1669.1581736299327],)
 ```
 
 ## References
@@ -262,13 +262,13 @@ function ΔT_h2o_Blatter2022(ps_nt)
     @unpack Ch2o_m, T_solidus = ps_nt
 
     # D = 0.005
-    Ch2o_m_ = @. Ch2o_m * 1.0f-4
+    Ch2o_m_ = @. Ch2o_m * 1.0f-6
 
     M = 59.0f0
     ΔS = 0.4
 
-    X_OH = @. 2M * Ch2o_m_ / 100 / (18.02 + Ch2o_m_ / 100 * (2M - 18.02))
-    T_wet = @. 273 + (T_solidus - 273) * inv(1 - gas_R * 1.0f3 / (M * ΔS) * log(1 - X_OH))
+    X_OH = @. 2M * Ch2o_m_ / (18.02 + Ch2o_m_ * (2M - 18.02))
+    T_wet = @. (T_solidus) * inv(1 - gas_R * 1.0f3 / (M * ΔS) * log(1 - X_OH))
 
     return (; T_solidus=T_wet)
 end
@@ -363,7 +363,7 @@ function f_melt(u, p, H2O_suppress_fn, CO2_suppress_fn)
     T_solidus_new = T_solidus - (2T_solidus - T_new_H2O - T_new_CO2)
     ΔT = T - T_solidus_new
     dTdF = -40 * P + 450
-    return u * dTdF / ΔT - 1
+    return u - ΔT / dTdF
 end
 
 function get_melt_fraction_core(
@@ -419,7 +419,7 @@ get_melt_fraction(ps_nt)
 
 # output
 
-(ϕ = [0.0, 0.05316277745049081, 0.07070084095393975, 0.09191423664676544, 0.11587408103133091],)
+(ϕ = [0.04134572027205016, 0.05481061353958139, 0.07230082742746091, 0.09337629457528136, 0.11716772981090577],)
 ```
 """
 function get_melt_fraction(

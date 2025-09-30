@@ -124,6 +124,11 @@ function SubsurfaceCore.default_params(::Type{two_phase_modelType{
     (; zip([:m1, :m2], [default_params(T1), default_params(T2)])...)
 end
 
+function SubsurfaceCore.default_params(::Type{two_phase_model{
+    V, T1, T2, M}}) where {V, T1, T2, M}
+(; zip([:m1, :m2], [default_params(T1), default_params(T2)])...)
+end
+
 # following is needed for combine_models
 
 # for constructing mdist
@@ -256,7 +261,7 @@ Water concentration in clinopyroxene (ppm) : 100.0
 
 julia> forward(model, [])
 Rock physics Response : RockphyCond
-log₁₀ conductivity (S/m) : Float32[-26.768837, -3.9519336]
+log₁₀ conductivity (S/m) : Float32[-26.768837, -3.9526708]
 ```
 """
 mutable struct multi_phase_model{T, T1, T2, T3, T4, T5, T6, T7, T8, M} <:
@@ -315,7 +320,7 @@ end
 function SubsurfaceCore.forward(
         model::multi_phase_model{V, T1, T2, T3, T4, T5, T6, T7, T8, M},
         p) where {
-        V, M <: multi_phase_mix_types, T1 <: AbstractCondModel, T2, T3, T4, T5, T6, T7, T8}
+        V, M, T1 <: AbstractCondModel, T2, T3, T4, T5, T6, T7, T8}
     σ1 = (isnothing(model.m1)) ? nothing : forward(model.m1, []).σ .|> exp10
     σ2 = (isnothing(model.m2)) ? nothing : forward(model.m2, []).σ .|> exp10
     σ3 = (isnothing(model.m3)) ? nothing : forward(model.m3, []).σ .|> exp10
@@ -326,7 +331,7 @@ function SubsurfaceCore.forward(
     σ8 = (isnothing(model.m8)) ? nothing : forward(model.m8, []).σ .|> exp10
 
     σ_tup_ = (σ1, σ2, σ3, σ4, σ5, σ6, σ7, σ8)
-    σ_tup = filter(f -> isa(f, AbstractArray), σ_tup_) |> Tuple
+    σ_tup = filter(f -> !isnothing(f), σ_tup_) |> Tuple
 
     σ = broadcast_helper_(σ_tup, model.ϕ, model.mix, Val{length(σ_tup)}())
     return RockphyCond(log10.(σ))
@@ -336,7 +341,7 @@ function SubsurfaceCore.forward(
         model::multi_phase_model{V, T1, T2, T3, T4, T5, T6, T7, T8, M},
         p,
         params) where {
-        V, M <: multi_phase_mix_types, T1 <: AbstractCondModel, T2, T3, T4, T5, T6, T7, T8}
+        V, M, T1 <: AbstractCondModel, T2, T3, T4, T5, T6, T7, T8}
     σ1 = (isnothing(model.m1)) ? Nothing : forward(model.m1, params.m1).σ .|> exp10
     σ2 = (isnothing(model.m2)) ? Nothing : forward(model.m2, params.m2).σ .|> exp10
     σ3 = (isnothing(model.m3)) ? Nothing : forward(model.m3, params.m3).σ .|> exp10
@@ -432,8 +437,8 @@ function SubsurfaceCore.from_nt(
 
     ϕ_vec = rearrange_ϕ(ϕ,
         multi_phase_modelType(
-            typeof.([model1, model2, model3, model4, model5, model6, model7, model8])...,
-            mix))
+            m1, m2, m3, m4, m5, m6, m7, m8,
+            m.types[9].parameters[1]))
 
     return multi_phase_model(
         ϕ_vec, model1, model2, model3, model4, model5, model6, model7, model8, mix)
