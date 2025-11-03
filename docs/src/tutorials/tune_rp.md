@@ -5,6 +5,7 @@
 using Porosity, CairoMakie
 ```
 
+## A dependency scenario
 When the temperatures get high enough and near the solidus temperature to start melting, the melt fraction no longer remains an independent variable. Similarly, addition of volatiles implies solidus temperature itself is a function of volatile concentration. This in turn, implies melt fraction is a function of volatile concentration along with the temperature.
 
 Depending on the type of model chosen for estimating solidus temperature, then consequently melt fraction and the partition coefficients as well, the estimates of melt fraction changes and so do these parameters as well. This makes it challenging to model such functions. In order to tune the rock physics parameters where one of the variables are dependent on another, we provide `tune_rp_modelType`
@@ -12,6 +13,8 @@ Depending on the type of model chosen for estimating solidus temperature, then c
 ```@docs; canonical = false
 tune_rp_modelType
 ```
+
+## Example
 
 `tune_rp_model` has a vector/list of functions as the first argument. These function are applied in the order of their positions in the list to the input arguments are made available to the `model`, the second argument of `tune_rp_model`. The variables for input are given through a named tuple.
 
@@ -156,3 +159,7 @@ nothing # hide
 ```@example tune_rp
 f # hide
 ```
+
+## Custom functions
+
+All the functions to be included in the list for `tune_rp_model` take a named tuple as an input and the same as output.
