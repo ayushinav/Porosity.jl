@@ -80,58 +80,58 @@ A large part of the package has functionalities borrowed from the [Very Broadban
 ::: code-group
 
 ``` [Conductivity]
-* Dai_Karato2009
-* Gaillard2008
-* Jones2012
-* Ni2011
-* Poe2010
-* SEO3
-* Sifre2014
-* UHO2014
-* Wang2006
-* Yang2011
-* Yoshino2009
-* Zhang2012
-* const_matrix
+∘ Dai_Karato2009
+∘ Gaillard2008
+∘ Jones2012
+∘ Ni2011
+∘ Poe2010
+∘ SEO3
+∘ Sifre2014
+∘ UHO2014
+∘ Wang2006
+∘ Yang2011
+∘ Yoshino2009
+∘ Zhang2012
+∘ const_matrix
 
 The whole list can be obtained by running `subtypes(AbstractCondModel)`
 ```
 
 ``` [Elastic]
-* SLB2005
-* anharmonic
-* anharmonic_poro
+∘ SLB2005
+∘ anharmonic
+∘ anharmonic_poro
 
 The whole list can be obtained by running `subtypes(AbstractElasticModel)`
 ```
 
 ``` [Viscous]
-* HK2003
-* HZK2011
-* xfit_premelt
+∘ HK2003
+∘ HZK2011
+∘ xfit_premelt
 
 The whole list can be obtained by running `subtypes(AbstractViscousModel)`
 ```
 
 ``` [Anelastic]
-* andrade_analytical
-* andrade_psp
-* eburgers_psp
-* premelt_anelastic
-* xfit_mxw
+∘ andrade_analytical
+∘ andrade_psp
+∘ eburgers_psp
+∘ premelt_anelastic
+∘ xfit_mxw
 
 The whole list can be obtained by running `subtypes(AbstractAnelasticModel)`
 ```
 
 ``` [Phase mixing type]
 Two phase :
-* HS upper bound
-* HS lower bound
-* Modified Archie's law
+∘ HS upper bound
+∘ HS lower bound
+∘ Modified Archie's law
 
 Multiple phase :
-* HS upper bound
-* HS lower bound
-* Generalized Archie's law
+∘ HS upper bound
+∘ HS lower bound
+∘ Generalized Archie's law
 ```
 :::

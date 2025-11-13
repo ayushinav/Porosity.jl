@@ -32,12 +32,12 @@ Two phase composition using HS1962_plus()
 *    m₁ (solid phase) : 
 Model : SEO3
 Temperature (K) : 1073.0:200.0:1473.0
-ϕ : [1.0, 1.0, 0.4594594594593244]
+ϕ : [1.0, 1.0, 0.4594594594594593]
 
 *    m₂ (liquid phase) : 
 Model : SEO3
 Temperature (K) : 1073.0:200.0:1473.0
-ϕ : [0.0, 0.0, 0.5405405405406756]
+ϕ : [0.0, 0.0, 0.5405405405405407]
 ```
 """
 mutable struct tune_rp_modelType{K, M} <: AbstractRockphyModel

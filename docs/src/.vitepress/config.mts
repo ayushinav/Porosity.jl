@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress'
 import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs'
+import { withMermaid } from "vitepress-plugin-mermaid";
 import mathjax3 from "markdown-it-mathjax3";
 import footnote from "markdown-it-footnote";
 import path from 'path'
@@ -51,7 +52,7 @@ const nav = [
 ]
 
 // https://vitepress.dev/reference/site-config
-export default defineConfig({
+export default withMermaid({
   base: '/',// TODO: replace this in makedocs!
   title: 'Porosity.jl',
   description: 'Documentation for Porosity.jl',

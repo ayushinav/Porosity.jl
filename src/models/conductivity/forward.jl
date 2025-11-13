@@ -162,7 +162,7 @@ function SubsurfaceCore.forward(m::Zhang2012, p, params=default_params_Zhang2012
     @unpack S_pol, H_pol, S_hyd, H_hyd, a = params
 
     σ_pol = @. arrh_dry(S_pol, H_pol, boltz_k, m.T)
-    σ_hyd = @. arrh_wet(S_hyd, H_hyd, boltz_k, m.T, m.Ch2o_opx*1f-4, a, 1.0f0)
+    σ_hyd = @. arrh_wet(S_hyd, H_hyd, boltz_k, m.T, m.Ch2o_opx * 1.0f-4, a, 1.0f0)
 
     σ = @. σ_pol + σ_hyd
 
@@ -176,7 +176,7 @@ function SubsurfaceCore.forward(m::Yang2011, p, params=default_params_Yang2011)
     @unpack A, Aw, H, Hw, r = params
 
     σ_dry = @. arrh_dry(A, H, boltz_k, m.T)
-    σ_wet = @. arrh_wet(Aw, Hw, boltz_k, m.T, m.Ch2o_cpx * 1f-4, 0.0f0, r)
+    σ_wet = @. arrh_wet(Aw, Hw, boltz_k, m.T, m.Ch2o_cpx * 1.0f-4, 0.0f0, r)
 
     σ = @. σ_dry + σ_wet
 

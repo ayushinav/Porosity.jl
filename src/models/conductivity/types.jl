@@ -366,8 +366,8 @@ Electrical conductivity model for olivine dependent on temperature and water con
 ## References
 
   - Dai, Lidong and Karato, Shun-ichiro (2009),
-  "Electrical conductivity of orthopyroxene: Implications for the water content of the asthenosphere",
-  Proceedings of the Japan Academy,  Series B, doi:10.2183/pjab.85.466
+    "Electrical conductivity of orthopyroxene: Implications for the water content of the asthenosphere",
+    Proceedings of the Japan Academy,  Series B, doi:10.2183/pjab.85.466
 
 ## Usage
 
@@ -435,8 +435,8 @@ Electrical conductivity model for olivine dependent on temperature and water con
 ## References
 
   - Yang,  Xiaozhi and Keppler, Hans and McCammon, Catherine and Ni, Huaiwei and Xia, Qunke and Fan, Qicheng (2011),
-  "Effect of water on the electrical conductivity of lower crustal clinopyroxene",
-  Journal of Geophysical Research, doi:https://doi.org/10.1029/2010JB008010
+    "Effect of water on the electrical conductivity of lower crustal clinopyroxene",
+    Journal of Geophysical Research, doi:https://doi.org/10.1029/2010JB008010
 
 ## Usage
 

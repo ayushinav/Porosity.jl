@@ -21,7 +21,7 @@ makedocs(;
     format = DocumenterVitepress.MarkdownVitepress(
         repo = "https://github.com/ayushinav/Porosity.jl",
         devurl = "dev", #, md_output_path = ".", 
-        deploy_url="/"
+        deploy_url = "/",
         # md_output_path = "docs2"
         # build_vitepress = false
     ),
