@@ -95,7 +95,7 @@ function SubsurfaceCore.forward(m::eburgers_psp, p, params=default_params_eburge
     @. J1 = Ju * J1
     @. J2 = Ju * J2
 
-    Qinv = J2 .* inv.(J1)
+    Qinv = @. J2 * inv(J1)
     Ma = sqrt.(inv.(J1 .^ 2 + J2 .^ 2))
     Va = sqrt.(Ma ./ m.ρ)
 
@@ -144,7 +144,7 @@ function SubsurfaceCore.forward(
              pifac * A_p * σ_p * erfc(lntauapp / (sqrt(2.0f0) * σ_p)))
     J2 = @. Ju * π / 2.0f0 * (ABppa + A_p * exp(-((lntauapp .^ 2) / (2 * σ_p^2))))
 
-    Qinv = J2 .* inv.(J1)
+    Qinv = @. J2 * inv(J1)
     Ma = sqrt.(inv.(J1 .^ 2 + J2 .^ 2))
     Va = sqrt.(Ma ./ m.ρ)
 
@@ -185,7 +185,7 @@ function SubsurfaceCore.forward(m::xfit_mxw, p, params=default_params_xfit_mxw)
     J1 = @. Ju * (1.0f0 + int1)
     J2 = @. Ju * (π / 2.0f0 * int2 * (τ_norm_f) + τ_norm)
 
-    Qinv = J2 .* inv.(J1)
+    Qinv = @. J2 * inv(J1)
     Ma = sqrt.(inv.(J1 .^ 2 + J2 .^ 2))
     Va = sqrt.(Ma ./ m.ρ)
 

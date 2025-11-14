@@ -25,10 +25,14 @@ Electrical conductivity model for olivine dependent on temperature.
 
 ## Usage
 
-```julia
-model = SEO3(1000 + 273.0)
+```jldoctest
+julia> model = SEO3(1000 + 273.0)
+Model : SEO3
+Temperature (K) : 1273.0
 
-log_cond = forward(model, [])
+julia> forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : -4.0571856119909375
 ```
 
 ## References
@@ -57,10 +61,15 @@ Electrical conductivity model for olivine dependent on temperature and water con
 
 ## Usage
 
-```julia
-model = UHO2014(1000 + 273.0, 2e4)
+```jldoctest
+julia> model = UHO2014(1000 + 273.0, 2e4)
+Model : UHO2014
+Temperature (K) : 1273.0
+Water concentration in olivine (ppm) : 20000.0
 
-log_cond = forward(model, [])
+julia> log_cond = forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : 1.2727662435353444
 ```
 """
 mutable struct UHO2014{F1, F2} <: AbstractCondModel
@@ -80,10 +89,15 @@ Electrical conductivity model for olivine dependent on temperature and water con
 
 ## Usage
 
-```julia
-model = Jones2012(1000 + 273.0, 2e4)
+```jldoctest
+julia> model = Jones2012(1000 + 273.0, 2e4)
+Model : Jones2012
+Temperature (K) : 1273.0
+Water concentration in olivine (ppm) : 20000.0
 
-log_cond = forward(model, [])
+julia> log_cond = forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : 0.15504093485137044
 ```
 
 ## References
@@ -109,10 +123,15 @@ Electrical conductivity model for olivine dependent on temperature and water con
 
 ## Usage
 
-```julia
-model = Poe2010(1000 + 273.0, 2e4)
+```jldoctest
+julia> model = Poe2010(1000 + 273.0, 2e4)
+Model : Poe2010
+Temperature (K) : 1273.0
+Water concentration in olivine (ppm) : 20000.0
 
-log_cond = forward(model, [])
+julia> log_cond = forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : 3.4473300721921056
 ```
 
 ## References
@@ -139,9 +158,16 @@ Electrical conductivity model for olivine dependent on temperature and water con
 
 ## Usage
 
-model = Wang2006(1000 + 273., 2e4)
+```jldoctest
+julia> model = Wang2006(1000 + 273.0, 2e4)
+Model : Wang2006
+Temperature (K) : 1273.0
+Water concentration in olivine (ppm) : 20000.0
 
-log_cond = forward(model, [])
+julia> log_cond = forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : -0.383209519477097
+```
 
 ## References
 
@@ -166,10 +192,15 @@ Electrical conductivity model for olivine dependent on temperature and water con
 
 ## Usage
 
-```julia
-model = Yoshino2009(1000 + 273.0, 2e4)
+```jldoctest
+julia> model = Yoshino2009(1000 + 273.0, 2e4)
+Model : Yoshino2009
+Temperature (K) : 1273.0
+Water concentration in olivine (ppm) : 20000.0
 
-log_cond = forward(model, [])
+julia> log_cond = forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : -0.6428765173222217
 ```
 
 ## References
@@ -196,14 +227,18 @@ Fixed electrical conductivity model for the phase.
 
 ## Usage
 
-```julia
-model = const_matrix(1000.0)
+```jldoctest
+julia> model = const_matrix(1000.0)
+Model : const_matrix
+Conductivity (S/m) : 1000.0
 
-log_cond = forward(model, [])
+julia> log_cond = forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : 3.0
 ```
 """
 mutable struct const_matrix{F} <: AbstractCondModel
-    σ::F
+    cond::F
 end
 
 # ========================================================================================================== 
@@ -220,10 +255,15 @@ Electrical conductivity model for basaltic melt dependent on Temperature and wat
 
 ## Usage
 
-```julia
-model = Ni2011(1000 + 273.0, 2e4)
+```jldoctest
+julia> model = Ni2011(1000 + 273.0, 2e4)
+Model : Ni2011
+Temperature (K) : 1273.0
+Water concentration in melt (ppm) : 20000.0
 
-log_cond = forward(model, [])
+julia> log_cond = forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : -2.3578741895190163
 ```
 
 ## References
@@ -256,10 +296,16 @@ Electrical conductivity model for melt dependent on Temperature, water content a
 
 ## Usage
 
-```julia
-model = Sifre2014(1000 + 273.0, 2e4, 2e4)
+```jldoctest
+julia> model = Sifre2014(1000 + 273.0, 2e4, 2e4)
+Model : Sifre2014
+Temperature (K) : 1273.0
+Water concentration in melt (ppm) : 20000.0
+CO₂ concentration in melt (ppm) : 20000.0
 
-log_cond = forward(model, [])
+julia> log_cond = forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : -0.012765453025208906
 ```
 
 ## References
@@ -280,10 +326,14 @@ Electrical conductivity model for melt dependent on Temperature.
 
 ## Usage
 
-```julia
-model = Gaillard2008(1000 + 273.0)
+```jldoctest
+julia> model = Gaillard2008(1000 + 273.0)
+Model : Gaillard2008
+Temperature (K) : 1273.0
 
-log_cond = forward(model, [])
+julia> log_cond = forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : 2.2275677836002115
 ```
 
 ## Arguments
@@ -315,14 +365,21 @@ Electrical conductivity model for olivine dependent on temperature and water con
 
 ## References
 
-  - todo
+  - Dai, Lidong and Karato, Shun-ichiro (2009),
+    "Electrical conductivity of orthopyroxene: Implications for the water content of the asthenosphere",
+    Proceedings of the Japan Academy,  Series B, doi:10.2183/pjab.85.466
 
 ## Usage
 
-```julia
-model = Dai_Karato2009(1000 + 273.0, 2e4)
+```jldoctest
+julia> model = Dai_Karato2009(1000 + 273.0, 2e4)
+Model : Dai_Karato2009
+Temperature (K) : 1273.0
+Water concentration in orthopyroxene (ppm) : 20000.0
 
-log_cond = forward(model, [])
+julia> log_cond = forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : -1.4966847149880984
 ```
 """
 mutable struct Dai_Karato2009{F1, F2} <: AbstractCondModel
@@ -346,10 +403,15 @@ Electrical conductivity model for olivine dependent on temperature and water con
 
 ## Usage
 
-```julia
-model = Zhang2012(1000 + 273.0, 2e4)
+```jldoctest
+julia> model = Zhang2012(1000 + 273.0, 2e4)
+Model : Zhang2012
+Temperature (K) : 1273.0
+Water concentration in orthopyroxene (ppm) : 20000.0
 
-log_cond = forward(model, [])
+julia> log_cond = forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : -0.045414286402875675
 ```
 """
 mutable struct Zhang2012{F1, F2} <: AbstractCondModel
@@ -372,14 +434,21 @@ Electrical conductivity model for olivine dependent on temperature and water con
 
 ## References
 
-  - todo
+  - Yang,  Xiaozhi and Keppler, Hans and McCammon, Catherine and Ni, Huaiwei and Xia, Qunke and Fan, Qicheng (2011),
+    "Effect of water on the electrical conductivity of lower crustal clinopyroxene",
+    Journal of Geophysical Research, doi:https://doi.org/10.1029/2010JB008010
 
 ## Usage
 
-```julia
-model = Yang2011(1000 + 273.0, 2e4)
+```jldoctest
+julia> model = Yang2011(1000 + 273.0, 2e4)
+Model : Yang2011
+Temperature (K) : 1273.0
+Water concentration in clinopyroxene (ppm) : 20000.0
 
-log_cond = forward(model, [])
+julia> log_cond = forward(model, [])
+Rock physics Response : RockphyCond
+log₁₀ conductivity (S/m) : 1.0103884511392625
 ```
 """
 mutable struct Yang2011{F1, F2} <: AbstractCondModel

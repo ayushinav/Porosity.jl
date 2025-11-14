@@ -42,19 +42,39 @@ Andrade model with pseudo-scaling per Jackson and Faul (2010)
 **Make sure that the dimension of vector `f` is one more than the other parameters.
 Check relevant tutorials. Note the transpose on `f` when making the model in the following eg.**
 
-```julia
-T = collect(1073.0f0:30:1373.0f0)
-P = 2 .+ zero(T)
-dg = collect(3.0f0:4.0f-1:7.0f0)
-σ = collect(7.5f0:0.5f0:12.5f0) .* 1.0f-3
-ϕ = collect(1.0f-2:1.0f-3:2.0f-2)
-ρ = collect(3300.0f0:100.0f0:4300.0f0)
+```jldoctest
+julia> T = [800, 1000] .+ 273.0f0;
 
-f = [1.0f0] #10f0 .^ collect(-10:1:0)
+julia> P = 2 .+ zero(T);
 
-model = andrade_psp(T, P, dg, σ, ϕ, ρ, Ch2o_ol, f')
+julia> dg = 4.0f0;
 
-forward(model, [])
+julia> σ = 10.0f-3;
+
+julia> ϕ = 1.0f-2;
+
+julia> ρ = 3300.0f0;
+
+julia> f = [1.0f0, 1.0f1];
+
+julia> model = andrade_psp(T, P, dg, σ, ϕ, ρ, f')
+Model : andrade_psp
+Temperature (K) : Float32[1073.0, 1273.0]
+Pressure (GPa) : Float32[2.0, 2.0]
+grain size(μm) : 4.0
+Shear stress (GPa) : 0.01
+Porosity : 0.01
+Density (kg/m³) : 3300.0
+Frequency (Hz) : Float32[1.0 10.0]
+
+julia> forward(model, [])
+Rock physics Response : RockphyAnelastic
+Real part of dynamic compliance (Pa⁻¹) : Float32[1.35194625f-11 1.35077696f-11; 1.4162938f-11 1.4082101f-11]
+Imaginary part of dynamic compliance (Pa⁻¹) : Float32[1.259776f-14 5.8473344f-15; 8.712478f-14 4.0431112f-14]
+Attenuation : Float32[0.00093182403 0.00043288674; 0.006151603 0.0028710994]
+Modulus (Pa) : Float32[7.39674f10 7.403146f10; 7.060549f10 7.1011836f10]
+Anelastic S-wave velocity : (m/s) : Float32[4734.381 4736.4307; 4625.538 4638.8296]
+Frequency averaged S-wave velocity (m/s) : Float32[4735.406, 4632.1836]
 ```
 
 ## References
@@ -88,7 +108,7 @@ Extended Burgers model with pseudo-scaling per Jackson and Faul (2010)
     - `ϕ` : Porosity
     - `ρ` : Density (kg/m³)
     - `Ch2o_ol` : water concentration in olivine (in ppm)
-    - `T_solidus` : Solidus temperature (K), only used when using `xfit_premelt` for viscosity calculations
+    - `T_solidus` : Solidus temperature (K), only used when using `xfit_premelt` for viscosity calculations, when scaling from Jackson and Faul (2010) for maxwell time calculations is not used
     - `f` : frequency
 
 ## Keyword Arguments
@@ -126,21 +146,45 @@ Extended Burgers model with pseudo-scaling per Jackson and Faul (2010)
 **Make sure that the dimension of vector `f` is one more than the other parameters.
 Check relevant tutorials. Note the transpose on `f` when making the model in the following eg.**
 
-```julia
-T = collect(1073.0f0:30:1373.0f0)
-P = 2 .+ zero(T)
-dg = collect(3.0f0:4.0f-1:7.0f0)
-σ = collect(7.5f0:0.5f0:12.5f0) .* 1.0f-3
-ϕ = collect(1.0f-2:1.0f-3:2.0f-2)
-T_solidus = 1473 .+ zero(T)
-ρ = collect(3300.0f0:100.0f0:4300.0f0)
-Ch2o_ol = zero(T)
+```jldoctest
+julia> T = [800, 1000] .+ 273.0f0;
 
-f = [1.0f0] #10f0 .^ collect(-10:1:0)
+julia> P = 2 .+ zero(T);
 
-model = eburgers_psp(T, P, dg, σ, ϕ, ρ, Ch2o_ol, T_solidus, f')
+julia> dg = 4.0f0;
 
-forward(model, [])
+julia> σ = 10.0f-3;
+
+julia> ϕ = 1.0f-2;
+
+julia> ρ = 3300.0f0;
+
+julia> Ch2o_ol = 0.0f0;
+
+julia> T_solidus = 900 + 273.0f0;
+
+julia> f = [1.0f0, 1.0f1];
+
+julia> model = eburgers_psp(T, P, dg, σ, ϕ, ρ, Ch2o_ol, T_solidus, f')
+Model : eburgers_psp
+Temperature (K) : Float32[1073.0, 1273.0]
+Pressure (GPa) : Float32[2.0, 2.0]
+grain size(μm) : 4.0
+Shear stress (GPa) : 0.01
+Porosity : 0.01
+Density (kg/m³) : 3300.0
+Water concentration in olivine (ppm) : 0.0
+Solidus Temperature (K) : 1173.0
+Frequency (Hz) : Float32[1.0 10.0]
+
+julia> forward(model, [])
+Rock physics Response : RockphyAnelastic
+Real part of dynamic compliance (Pa⁻¹) : Float32[1.3524236f-11 1.3499646f-11; 1.42722735f-11 1.413697f-11]
+Imaginary part of dynamic compliance (Pa⁻¹) : Float32[2.754988f-14 8.080778f-15; 1.29419f-13 7.1557296f-14]
+Attenuation : Float32[0.0020370746 0.00059859187; 0.009067862 0.0050617135]
+Modulus (Pa) : Float32[7.394117f10 7.4076004f10; 7.006304f10 7.073561f10]
+Anelastic S-wave velocity : (m/s) : Float32[4733.5415 4737.8555; 4607.7354 4629.7983]
+Frequency averaged S-wave velocity (m/s) : Float32[4735.698, 4618.7666]
 ```
 
 ## References
@@ -206,21 +250,45 @@ with optional extension to include direct melt effects of Yamauchi and Takei (20
 **Make sure that the dimension of vector `f` is one more than the other parameters.
 Check relevant tutorials. Note the transpose on `f` when making the model in the following eg.**
 
-```julia
-T = collect(1073.0f0:30:1373.0f0)
-P = 2 .+ zero(T)
-dg = collect(3.0f0:4.0f-1:7.0f0)
-σ = collect(7.5f0:0.5f0:12.5f0) .* 1.0f-3
-ϕ = collect(1.0f-2:1.0f-3:2.0f-2)
-T_solidus = 1473 .+ zero(T)
-ρ = collect(3300.0f0:100.0f0:4300.0f0)
-Ch2o_ol = zero(T)
+```jldoctest
+julia> T = [800, 1000] .+ 273.0f0;
 
-f = [1.0f0] #10f0 .^ collect(-10:1:0)
+julia> P = 2 .+ zero(T);
 
-model = premelt_anelastic(T, P, dg, σ, ϕ, ρ, Ch2o_ol, T_solidus, f')
+julia> dg = 4.0f0;
 
-forward(model, [])
+julia> σ = 10.0f-3;
+
+julia> ϕ = 1.0f-2;
+
+julia> ρ = 3300.0f0;
+
+julia> Ch2o_ol = 0.0f0;
+
+julia> T_solidus = 900 + 273.0f0;
+
+julia> f = [1.0f0, 1.0f1];
+
+julia> model = premelt_anelastic(T, P, dg, σ, ϕ, ρ, Ch2o_ol, T_solidus, f')
+Model : premelt_anelastic
+Temperature (K) : Float32[1073.0, 1273.0]
+Pressure (GPa) : Float32[2.0, 2.0]
+grain size(μm) : 4.0
+Shear stress (GPa) : 0.01
+Porosity : 0.01
+Density (kg/m³) : 3300.0
+Water concentration in olivine (ppm) : 0.0
+Solidus Temperature (K) : 1173.0
+Frequency (Hz) : Float32[1.0 10.0]
+
+julia> forward(model, [])
+Rock physics Response : RockphyAnelastic
+Real part of dynamic compliance (Pa⁻¹) : Float32[1.3508699f-11 1.3501298f-11; 1.7620908f-11 1.6476176f-11]
+Imaginary part of dynamic compliance (Pa⁻¹) : Float32[8.801486f-15 2.5916762f-15; 8.878848f-13 6.8378257f-13]
+Attenuation : Float32[0.0006515421 0.00019195756; 0.050388142 0.041501287]
+Modulus (Pa) : Float32[7.402635f10 7.406695f10; 5.6678855f10 6.0641493f10]
+Anelastic S-wave velocity : (m/s) : Float32[4736.267 4737.566; 4144.3228 4286.748]
+Frequency averaged S-wave velocity (m/s) : Float32[4736.9165, 4215.535]
 ```
 
 ## References
@@ -287,21 +355,45 @@ Master curve maxwell scaling per McCarthy, Takei and Hiraga (2011)
 **Make sure that the dimension of vector `f` is one more than the other parameters.
 Check relevant tutorials. Note the transpose on `f` when making the model in the following eg.**
 
-```julia
-T = collect(1073.0f0:30:1373.0f0)
-P = 2 .+ zero(T)
-dg = collect(3.0f0:4.0f-1:7.0f0)
-σ = collect(7.5f0:0.5f0:12.5f0) .* 1.0f-3
-ϕ = collect(1.0f-2:1.0f-3:2.0f-2)
-T_solidus = 1473 .+ zero(T)
-ρ = collect(3300.0f0:100.0f0:4300.0f0)
-Ch2o_ol = zero(T)
+```jldoctest
+julia> T = [800, 1000] .+ 273.0f0;
 
-f = [1.0f0] #10f0 .^ collect(-10:1:0)
+julia> P = 2 .+ zero(T);
 
-model = xfit_mxw(T, P, dg, σ, ϕ, ρ, Ch2o_ol, T_solidus, f')
+julia> dg = 4.0f0;
 
-forward(model, [])
+julia> σ = 10.0f-3;
+
+julia> ϕ = 1.0f-2;
+
+julia> ρ = 3300.0f0;
+
+julia> Ch2o_ol = 0.0f0;
+
+julia> T_solidus = 900 + 273.0f0;
+
+julia> f = [1.0f0, 1.0f1];
+
+julia> model = xfit_mxw(T, P, dg, σ, ϕ, ρ, Ch2o_ol, T_solidus, f')
+Model : xfit_mxw
+Temperature (K) : Float32[1073.0, 1273.0]
+Pressure (GPa) : Float32[2.0, 2.0]
+grain size(μm) : 4.0
+Shear stress (GPa) : 0.01
+Porosity : 0.01
+Density (kg/m³) : 3300.0
+Water concentration in olivine (ppm) : 0.0
+Solidus Temperature (K) : 1173.0
+Frequency (Hz) : Float32[1.0 10.0]
+
+julia> forward(model, [])
+Rock physics Response : RockphyAnelastic
+Real part of dynamic compliance (Pa⁻¹) : Float32[1.4031399f-11 1.3812445f-11; 1.6433199f-11 1.57985f-11]
+Imaginary part of dynamic compliance (Pa⁻¹) : Float32[1.6107535f-13 1.3877004f-13; 5.1549807f-13 3.6455504f-13]
+Attenuation : Float32[0.011479636 0.01004674; 0.031369306 0.023075296]
+Modulus (Pa) : Float32[7.1264035f10 7.2394826f10; 6.0822508f10 6.3280304f10]
+Anelastic S-wave velocity : (m/s) : Float32[4647.0596 4683.783; 4293.141 4379.024]
+Frequency averaged S-wave velocity (m/s) : Float32[4665.4214, 4336.0825]
 ```
 
 ## References
@@ -359,19 +451,45 @@ Master curve maxwell scaling per McCarthy, Takei and Hiraga (2011)
 **Make sure that the dimension of vector `f` is one more than the other parameters.
 Check relevant tutorials. Note the transpose on `f` when making the model in the following eg.**
 
-```julia
-T = collect(1073.0f0:30:1373.0f0)
-P = 2 .+ zero(T)
-dg = collect(3.0f0:4.0f-1:7.0f0)
-σ = collect(7.5f0:0.5f0:12.5f0) .* 1.0f-3
-ϕ = collect(1.0f-2:1.0f-3:2.0f-2)
-ρ = collect(3300.0f0:100.0f0:4300.0f0)
+```jldoctest
+julia> T = [800, 1000] .+ 273.0f0;
 
-f = [1.0f0] #10f0 .^ collect(-10:1:0)
+julia> P = 2 .+ zero(T);
 
-model = andrade_analytical(T, P, dg, σ, ϕ, ρ, f')
+julia> dg = 4.0f0;
 
-forward(model, [])
+julia> σ = 10.0f-3;
+
+julia> ϕ = 1.0f-2;
+
+julia> ρ = 3300.0f0;
+
+julia> Ch2o_ol = 0.0f0;
+
+julia> T_solidus = 900 + 273.0f0;
+
+julia> f = [1.0f0, 1.0f1];
+
+julia> model = andrade_analytical(T, P, dg, σ, ϕ, ρ, Ch2o_ol, T_solidus, f')
+Model : andrade_analytical
+Temperature (K) : Float32[1073.0, 1273.0]
+Pressure (GPa) : Float32[2.0, 2.0]
+grain size(μm) : 4.0
+Shear stress (GPa) : 0.01
+Porosity : 0.01
+Density (kg/m³) : 3300.0
+Water concentration in olivine (ppm) : 0.0
+Solidus Temperature (K) : 1173.0
+Frequency (Hz) : Float32[1.0 10.0]
+
+julia> forward(model, [])
+Rock physics Response : RockphyAnelastic
+Real part of dynamic compliance (Pa⁻¹) : Float32[1.3498141f-11 1.34976925f-11; 1.4012593f-11 1.4012127f-11]
+Imaginary part of dynamic compliance (Pa⁻¹) : Float32[3.2687721f-16 1.5162017f-16; 6.353883f-16 1.8700414f-16]
+Attenuation : Float32[2.4216462f-5 1.1233044f-5; 4.534409f-5 1.3345877f-5]
+Modulus (Pa) : Float32[7.408428f10 7.4086736f10; 7.136438f10 7.1366754f10]
+Anelastic S-wave velocity : (m/s) : Float32[4738.12 4738.1987; 4650.33 4650.4077]
+Frequency averaged S-wave velocity (m/s) : Float32[4738.159, 4650.369]
 ```
 
 ## References

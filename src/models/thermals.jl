@@ -13,15 +13,22 @@ returns pressure-dependent dry solidus (in K)
 
 ## Usage
 
-The inputs should be in the form of a `NamedTuple`
+The inputs should be in the form of a `NamedTuple`, and the output will be a `NamedTuple` as well with `T_solidus` as the only field
 
-```julia
+```jldoctest; output = false
 P = [3.0, 4.0, 5.0]
 ps_nt = (; P)
 solidus_Hirschmann2000(ps_nt)
+
+# output
+
+(T_solidus = [1746.2639651298523, 1844.3759689331055, 1930.6799731254578],)
 ```
 
 ## References
+
+Marc M. Hirschmann (2000) : Mantle solidus: Experimental constraints and the effects of peridotite composition
+https://doi.org/10.1029/2000GC000070
 """
 function solidus_Hirschmann2000(ps_nt)
     @unpack P = ps_nt
@@ -40,12 +47,16 @@ returns pressure-dependent dry solidus (in K)
 
 ## Usage
 
-The inputs should be in the form of a `NamedTuple`
+The inputs should be in the form of a `NamedTuple`, and the output will be a `NamedTuple` as well with `T_solidus` as the only field
 
-```julia
+```jldoctest; output = false
 P = [3.0, 4.0, 5.0]
 ps_nt = (; P)
 solidus_Katz2003(ps_nt)
+
+# output
+
+(T_solidus = [1711.499933719635, 1808.6999282836914, 1895.6999230384827],)
 ```
 
 ## References
@@ -71,16 +82,20 @@ updates solidus with the depressed one because of water in melt
   - `T_solidus` : solidus temperature (K)
   - `Ch2o_m` : melt fraction
 
-# Usage
+## Usage
 
-The inputs should be in the form of a `NamedTuple`
+The inputs should be in the form of a `NamedTuple`, and the output will be a `NamedTuple` as well with `T_solidus` as the only field
 
-```julia
+```jldoctest; output = false
 P = [3.0]
 T_solidus = [1400.0] .+ 273
-Ch2o_m = 0:100:10000
+Ch2o_m = 0:200:1000
 ps_nt = (; P, T_solidus, Ch2o_m)
 ΔT_h2o_Katz2003(ps_nt)
+
+# output
+
+(T_solidus = [1673.0, 1670.7131328582764, 1669.1539633274078, 1667.7870697975159, 1666.531762599945, 1665.3533987998962],)
 ```
 
 ## References
@@ -96,7 +111,7 @@ function ΔT_h2o_Katz2003(ps_nt)
 
     Ch2o_m_sat = @. 12 * P^(0.6f0) + P
     # C_w = (Ch2o_m <= Ch2o_m_sat) ? (Ch2o_m) : Ch2o_m # worth investigating
-    Ch2o_m_ = @. Ch2o_m * 1.0f-4
+    Ch2o_m_ = @. ifelse(Ch2o_m * 1.0f-4 < Ch2o_m_sat, Ch2o_m * 1.0f-4, Ch2o_m_sat)
     dT = @. K * (Ch2o_m_)^γ
     T_solidus = @. T_solidus - dT
     return (; T_solidus)
@@ -130,15 +145,23 @@ updates solidus with the depressed one because of CO₂ in melt
 
 The inputs should be in the form of a `NamedTuple`
 
-```julia
+```jldoctest; output = false
 P = [3.0]
-T = [1400.0] .+ 273
-Cco2_m = 0:100:10000
-ps_nt = (; P, T, Cco2_m)
+T_solidus = [1400.0] .+ 273
+Cco2_m = 0:200:1000
+ps_nt = (; P, T_solidus, Cco2_m)
 ΔT_co2_Dasgupta2007(ps_nt)
+
+# output
+
+(T_solidus = [1673.0, 1672.81102091074, 1672.6222137212753, 1672.4334008693695, 1672.2446709871292, 1672.0560241937637],)
 ```
 
 ## References
+
+Rajdeep Dasgupta; Marc M. Hirschmann; Neil D. Smith (2007) :
+Water follows carbon: CO 2 incites deep silicate melting and dehydration beneath mid-ocean ridges, Geology, 2007
+https://doi.org/10.1130/G22856A.1
 """
 function ΔT_co2_Dasgupta2007(ps_nt)
     @unpack Cco2_m, T_solidus = ps_nt
@@ -164,12 +187,16 @@ updates solidus with the depressed one because of CO₂ in melt
 
 The inputs should be in the form of a `NamedTuple`
 
-```julia
+```jldoctest; output = false
 P = [3.0]
-T = [1400.0] .+ 273
-Cco2_m = 0:100:10000
-ps_nt = (; P, T, Cco2_m)
-ΔT_co2_Blatter2022(ps_nt)
+T_solidus = [1400.0] .+ 273
+Cco2_m = 0:200:1000
+ps_nt = (; P, T_solidus, Cco2_m)
+ΔT_co2_Dasgupta2013(ps_nt)
+
+# output
+
+(T_solidus = [1673.0, 1672.8723660707474, 1672.7446873784065, 1672.6171417236328, 1672.4896402359009, 1672.3620940446854],)
 ```
 
 ## References
@@ -213,12 +240,16 @@ updates solidus with the depressed one because of water in melt
 
 The inputs should be in the form of a `NamedTuple`
 
-```julia
+```jldoctest; output = false
 P = [3.0]
-T = [1400.0] .+ 273
-Ch2o_m = 0:100:10000
-ps_nt = (; P, T, Ch2o_m)
+T_solidus = [1400.0] .+ 273
+Ch2o_m = 0:200:1000
+ps_nt = (; P, T_solidus, Ch2o_m)
 ΔT_h2o_Blatter2022(ps_nt)
+
+# output
+
+(T_solidus = [1673.0, 1672.2288240004204, 1671.459057866923, 1670.6906970192301, 1669.9237371410397, 1669.1581736299327],)
 ```
 
 ## References
@@ -231,13 +262,13 @@ function ΔT_h2o_Blatter2022(ps_nt)
     @unpack Ch2o_m, T_solidus = ps_nt
 
     # D = 0.005
-    Ch2o_m_ = @. Ch2o_m * 1.0f-4
+    Ch2o_m_ = @. Ch2o_m * 1.0f-6
 
     M = 59.0f0
     ΔS = 0.4
 
-    X_OH = @. 2M * Ch2o_m_ / 100 / (18.02 + Ch2o_m_ / 100 * (2M - 18.02))
-    T_wet = @. 273 + (T_solidus - 273) * inv(1 - gas_R * 1.0f3 / (M * ΔS) * log(1 - X_OH))
+    X_OH = @. 2M * Ch2o_m_ / (18.02 + Ch2o_m_ * (2M - 18.02))
+    T_wet = @. (T_solidus) * inv(1 - gas_R * 1.0f3 / (M * ΔS) * log(1 - X_OH))
 
     return (; T_solidus=T_wet)
 end
@@ -268,11 +299,16 @@ returns the amount of CO₂ in melt
 
 The inputs should be in the form of a `NamedTuple`
 
-```julia
+```jldoctest
 ϕ = 0.05
 Cco2 = 1000
-ps_nt = (; ϕ, Cco2)
+Cco2_sat = 38e4
+ps_nt = (; ϕ, Cco2, Cco2_sat)
 get_Cco2_m(ps_nt)
+
+# output
+
+(Cco2_m = 20000.0,)
 ```
 """
 function get_Cco2_m(ps_nt)
@@ -290,16 +326,22 @@ returns the amount of CO₂ in melt and water in the form of `NamedTuple`
 
   - `ϕ` : melt fraction
   - `Cco2` : bulk water conc.
+  - `D` : partition coefficient
 
 ## Usage
 
 The inputs should be in the form of a `NamedTuple`
 
-```julia
+```jldoctest
 ϕ = 0.05
 Ch2o = 1000
-ps_nt = (; ϕ, Ch2o)
-get_Cco2_m(ps_nt)
+D = 0.005
+ps_nt = (; ϕ, Ch2o, D)
+get_Ch2o_m(ps_nt)
+
+# output
+
+(Ch2o_m = 18264.840182648404, Ch2o_ol = 91.32420091324202)
 ```
 """
 function get_Ch2o_m(ps_nt)
@@ -311,50 +353,85 @@ end
 
 function f_melt(u, p, H2O_suppress_fn, CO2_suppress_fn)
     T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D = p
-    ps = (; T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D)
+    # ps = (; T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D)
 
     Ch2o_m = Ch2o * inv(D + u * (1 - D))
     Cco2_m = get_Cco2_m((; ϕ=u, Cco2, Cco2_sat)).Cco2_m
 
-    T_new_H2O = H2O_suppress_fn((; ps..., Ch2o_m)).T_solidus
-    T_new_CO2 = CO2_suppress_fn((; ps..., Cco2_m)).T_solidus
-    T_solidus_new = 3T_solidus - T_new_H2O - T_new_CO2
-    ΔT = T - T_solidus_new
+    T_new_H2O = H2O_suppress_fn((;
+        T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D, Ch2o_m)).T_solidus
+    T_new_CO2 = CO2_suppress_fn((;
+        T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D, Cco2_m)).T_solidus
+    T_solidus_new = T_solidus - (2T_solidus - T_new_H2O - T_new_CO2)
+    ΔT = max(zero(T - T_solidus_new), T - T_solidus_new)
     dTdF = -40 * P + 450
-    return u * dTdF / ΔT - 1
+    return u - ΔT / dTdF
 end
 
 function get_melt_fraction_core(
         T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D, H2O_suppress_fn, CO2_suppress_fn)
     f(u, p) = f_melt(u, p, H2O_suppress_fn, CO2_suppress_fn)
 
-    f1 = f(1.0f-15, (; T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D))
-    f2 = f(1.0f0, (; T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D))
     p = [T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D]
 
+    f1 = f(1.0f-15, p)
+    f2 = f(1.0f0, p)
+    etype_ = eltype(p)
+
     if f1 * f2 > 0
-        return 0.0f0
+        return zero(etype_)
     else
-        prob_init = IntervalNonlinearProblem(f, (1.0f-15, 1.0f0), p)
+        prob_init = IntervalNonlinearProblem(f, (exp10(-15 * one(etype_)), one(etype_)), p)
         sol = solve(prob_init)
         return sol.u
     end
+    # x1 = exp10(-12+zero(etype_))
+    # x_new = exp10(-12+zero(etype_))
+    # x2 = one(etype_)
 
-    # return x3
+    # f1 = f(x1, p)
+    # f2 = f(x2, p)
+    # count = 0;
+
+    # while f1*f2<0
+    #     x_new = (x1+x2)/2
+    #     f_new = f(x_new, p)
+
+    #     if log10(abs(f_new)) <= -9 #exp10(-12*one(etype_))
+    #         # return x_new
+    #         break;
+    #     elseif f1 * f_new < 0
+    #         x2 = x_new;
+    #         f2 = f_new;
+    #     else
+    #         x1 = x_new;
+    #         f1 = f_new;
+    #     end
+    #     count+=1
+    #     if count > 40 # 
+    #         # @show x_new
+    #         # return x_new
+    #         break;
+    #     end
+    # end
+    # # @show x_new, count
+    # return x_new
 end
 
 """
     get_melt_fraction(ps_nt; H2O_suppress_fn = ΔT_h2o_Blatter2022, CO2_suppress_fn= ΔT_co2_Blatter2022)
 
-returns the melt fraction that is thermodynamically stable at given water conc. and CO₂ conc. for a given solidus temperature and pressure
+returns the melt fraction that is thermodynamically stable at given water conc. and CO₂ conc. for a given dry solidus temperature and pressure
 
 ## Arguments
 
-  - `Cco2` : bulk CO₂ conc. (ppm)
-  - `Ch2o` : bulk water conc. (ppm)
+  - `Cco2` : bulk CO₂ conc. (ppm), defaults to 0 ppm
+  - `Cco2_sat` : saturation limit of melt CO₂ conc. (ppm), defaults to 38 wt %
+  - `Ch2o` : bulk water conc. (ppm), defaults to 0 ppm
+  - `T` : temperature (K)
   - `T_solidus` : solidus temperature (K)
   - `P` : Pressure (GPa)
-  - `D` : water partition coefficient
+  - `D` : water partition coefficient between water and olivine, defaults to 0.005
 
 ## Keyword Arguments
 
@@ -365,36 +442,25 @@ returns the melt fraction that is thermodynamically stable at given water conc. 
 
 The inputs should be in the form of a `NamedTuple`
 
-```julia
+```jldoctest
 P = [3.0]
-T_solidus = [1400.0] .+ 273
-Ch2o = 0:100:10000
-Cco2 = 1000
-ps_nt = (; P, T_solidus, Ch2o_m, Cco2_m)
+T = (1440:10:1480) .+ 273.0
+T_solidus = [1450.0] .+ 273
+Ch2o = 100.0
+Cco2 = 1000.0
+
+ps_nt = (; P, T, T_solidus, Ch2o, Cco2)
 get_melt_fraction(ps_nt)
+
+# output
+
+(ϕ = [0.041345720244193085, 0.05481061353960702, 0.072300827427471, 0.09337629457529527, 0.1171677298066955],)
 ```
 """
 function get_melt_fraction(
         ps_nt; H2O_suppress_fn=ΔT_h2o_Blatter2022, CO2_suppress_fn=ΔT_co2_Dasgupta2013)
-    @unpack Cco2, Ch2o, T, T_solidus, P, D = ps_nt
-
-    if :Ch2o ∈ keys(ps_nt)
-        Ch2o = ps_nt.Ch2o
-    else
-        Ch2o = 0.0f0
-    end
-
-    if :Cco2 ∈ keys(ps_nt)
-        Cco2 = ps_nt.Cco2
-    else
-        Cco2 = 0.0f0
-    end
-
-    if :Cco2_sat ∈ keys(ps_nt)
-        Cco2_sat = ps_nt.Cco2_sat
-    else
-        Cco2_sat = 38.0f4
-    end
+    ps_nt = (; Ch2o=0.0f0, Cco2=0.0f0, Cco2_sat=38.0f4, D=0.005, ps_nt...)
+    @unpack Cco2, Cco2_sat, Ch2o, T, T_solidus, P, D = ps_nt
 
     ϕ = broadcast(get_melt_fraction_core, T, T_solidus, Ch2o, Cco2,
         Cco2_sat, P, D, H2O_suppress_fn, CO2_suppress_fn)

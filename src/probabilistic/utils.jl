@@ -78,8 +78,8 @@ function SubsurfaceCore.sample_type(::multi_rp_modelDistribution{
 end
 
 function SubsurfaceCore.sample_type(d::tune_rp_modelDistribution{K, M}) where {K, M}
-    @show d.model
-    @show M
+    # @show d.model
+    # @show M
     m_ = sample_type2(M)
     # @show m_
     tune_rp_modelType{Vector{Function}, m_}
@@ -89,6 +89,30 @@ sample_type2(x) = sample_type(x)
 
 function sample_type2(::Type{two_phase_modelDistributionType{T1, T2, M}}) where {T1, T2, M}
     return two_phase_modelType{sample_type(T1), sample_type(T2), M}
+end
+
+# function sample_type2(::Type{multi_phase_modelDistributionType{T1, T2, M}}) where {T1, T2, M}
+#     return two_phase_modelType{sample_type(T1), sample_type(T2), M}
+# end
+
+function sample_type2(::Type{multi_rp_modelDistributionType{
+        M1, M2, M3, M4}}) where {M1, M2, M3, M4}
+    return multi_rp_modelType{
+        sample_type2(M1), sample_type2(M2), sample_type2(M3), sample_type2(M4)}
+end
+
+function sample_type2(::Type{multi_phase_modelDistributionType{
+        T1, T2, T3, T4, T5, T6, T7, T8, M}}) where {T1, T2, T3, T4, T5, T6, T7, T8, M}
+    t1 = sample_type(T1)
+    t2 = sample_type(T2)
+    t3 = sample_type(T3)
+    t4 = sample_type(T4)
+    t5 = sample_type(T5)
+    t6 = sample_type(T6)
+    t7 = sample_type(T7)
+    t8 = sample_type(T8)
+    m = sample_type(M)
+    multi_phase_modelType{t1, t2, t3, t4, t5, t6, t7, t8, m}
 end
 
 # NamedTuple manipulation

@@ -30,10 +30,6 @@ function SubsurfaceCore.forward(m::UHO2014, p, params=default_params_UHO2014)
     return RockphyCond(log10.(σ))
 end
 
-function SubsurfaceCore.forward(m::const_matrix, p, params=default_params_const_matrix)
-    RockphyCond(log10.(m.σ))
-end
-
 function SubsurfaceCore.forward(m::Jones2012, p, params=default_params_Jones2012)
     @unpack S, r, H, a, params_SEO3 = params
 
@@ -106,6 +102,10 @@ function SubsurfaceCore.forward(m::Wang2006, p, params=default_params_Wang2006)
     return RockphyCond(log10.(σ))
 end
 
+function SubsurfaceCore.forward(m::const_matrix, p, params=default_params_const_matrix)
+    RockphyCond(log10.(m.cond))
+end
+
 # ========================================================================================================== 
 # melt
 
@@ -147,11 +147,11 @@ end
 # ========================================================================================================== 
 # orthopyroxene
 
-function SubsurfaceCore.forward(m::Dai_Karato2009, p, params=default_params_Zhang2012)
+function SubsurfaceCore.forward(m::Dai_Karato2009, p, params=default_params_Dai_Karato2009)
     @unpack A, Aw, H, Hw, r = params
 
-    σ_dry = @. arrh_dry(A, H, gas_R, m.T)
-    σ_wet = @. arrh_wet(Aw, Hw, gas_R_k, m.T, m.Ch2o_opx, 0.0f0, r)
+    σ_dry = @. arrh_dry(A, H, gas_R, (m.T - 273))
+    σ_wet = @. arrh_wet(Aw, Hw, gas_R, (m.T - 273), m.Ch2o_opx * 1.0f-4, 0.0f0, r)
 
     σ = @. σ_dry + σ_wet
 
@@ -162,7 +162,7 @@ function SubsurfaceCore.forward(m::Zhang2012, p, params=default_params_Zhang2012
     @unpack S_pol, H_pol, S_hyd, H_hyd, a = params
 
     σ_pol = @. arrh_dry(S_pol, H_pol, boltz_k, m.T)
-    σ_hyd = @. arrh_wet(S_hyd, H_hyd, boltz_k, m.T, m.Ch2o_opx, a, 1.0f0)
+    σ_hyd = @. arrh_wet(S_hyd, H_hyd, boltz_k, m.T, m.Ch2o_opx * 1.0f-4, a, 1.0f0)
 
     σ = @. σ_pol + σ_hyd
 
@@ -176,7 +176,7 @@ function SubsurfaceCore.forward(m::Yang2011, p, params=default_params_Yang2011)
     @unpack A, Aw, H, Hw, r = params
 
     σ_dry = @. arrh_dry(A, H, boltz_k, m.T)
-    σ_wet = @. arrh_wet(Aw, Hw, boltz_k, m.T, m.Ch2o_opx, 0.0f0, r)
+    σ_wet = @. arrh_wet(Aw, Hw, boltz_k, m.T, m.Ch2o_cpx * 1.0f-4, 0.0f0, r)
 
     σ = @. σ_dry + σ_wet
 

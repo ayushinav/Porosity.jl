@@ -1,0 +1,9 @@
+[deps]
+CairoMakie = "13f3f980-e62b-5c42-98c6-ff1f3baf88f0"
+DifferentiationInterface = "a0c0ee7d-e4b9-4e03-894e-1c5f64a51d63"
+Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+DocumenterVitepress = "4710194d-e776-4893-9690-8d956a29c365"
+Enzyme = "7da242da-08ed-463a-9acd-ee780be4f1d9"
+Porosity = "35db7a65-4993-4cb4-8bbd-c48e232b3666"
+Turing = "fce5fe82-541a-59a6-adf8-730c64b5f9a0"
