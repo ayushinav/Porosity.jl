@@ -22,7 +22,7 @@ and then calling `forward` on it
 forward(model_SEO3, [])
 ```
 
-The `[]` argument is needed to make the interface consistent. It is not used anywhere and you can pass any value to it.
+The `[]` argument is needed to make the interface consistent. It is not used anywhere, and you can pass any value to it.
 
 You can pass a whole vector for temperature and get the result :
 
@@ -34,7 +34,7 @@ forward(model_SEO3, [])
 
 ## Dimensions
 
-Dimensions for all the rock physics types follow the broadcasting rule, that is, if there are two parameters, one with shape `(11,1)` and other with `(1, 4)` then the output/s will be of `(11, 4)`. This is useful when you want to get the output for multiple values. You can obviously iterate but broadcasting would be usually faster, eg. :
+Dimensions for all the rock physics types follow the broadcasting rule, that is, if there are two parameters, one with shape `(11,1)` and other with `(1, 4)` then the output/s will be of `(11, 4)`. This is useful when you want to get the output for multiple values. You can obviously iterate, but broadcasting would be usually faster, e.g.:
 
 ```@example rp_intro
 T = (600:100:1600) .+ 273.0
@@ -51,9 +51,9 @@ println("size of ϵ_rate : ", size(resp.ϵ_rate))
 println("size of η : ", size(resp.η))
 ```
 
-Notice that the dimensions of `T` and `dg` were `(11,1)` and `(1, 4)`  respectively and the output shapes are `(11, 4)`.
+Notice that the dimensions of `T` and `dg` were `(11,1)` and `(1, 4)` respectively and the output shapes are `(11, 4)`.
 
-Ofcourse, simple broadcasting rules dictate that if `T` were of `(11,1)` (or `(11,)`) and so were `dg`, then the output would be `(11, 1)` (or `(11,)`), eg.:
+Of course, simple broadcasting rules dictate that if `T` were of `(11,1)` (or `(11,)`) and so were `dg`, then the output would be `(11, 1)` (or `(11,)`), e.g.:
 
 ```@example rp_intro
 T = (600:100:1600) .+ 273.0
@@ -74,7 +74,7 @@ println("size of η : ", size(resp.η))
 
 ### Anelastic case
 
-For anelastic types, one of the input arguments is frequency `f`. Make sure the  `f` is of the size one more than the dimensions of other values. eg. :
+For anelastic types, one of the input arguments is frequency `f`. Make sure the `f` is of the size one more than the dimensions of other values. e.g.:
 
 ```@example rp_intro
 T = (600:100:1400) .+ 273.0
@@ -123,7 +123,7 @@ println("size of Vave (one of the outputs, averaged over frequency) : ", size(re
 
 ## Changing initial parameters
 
-A lot of rock physics models have empirical constants on defined physical laws from lab experiments. The `forward` function has a keyword argument `params` which has default value for these constants. These default parameters can be observed by `default_params` function dispatched on the rock physics type, eg:
+A lot of rock physics models have empirical constants on defined physical laws from lab experiments. The `forward` function has a keyword argument `params` which has default value for these constants. These default parameters can be observed by `default_params` function dispatched on the rock physics type, e.g.:
 
 ```@example rp_intro
 default_ps_SEO3 = default_params(SEO3)

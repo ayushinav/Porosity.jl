@@ -346,7 +346,8 @@ xfit_premelt
 ```
 
 !!!note
-Note that `xfit_premelt` populates the return value of strain rate with zeros. We, therefore, do not plot the same here.
+
+    Note that `xfit_premelt` populates the return value of strain rate with zeros. We, therefore, do not plot the same here.
 
 ### Varying grain size
 

@@ -142,7 +142,7 @@ fig # hide
     
     Use of `peak` coefficients is highly discouraged because these involve integrals that can be unstable in their limits. Note that the figures are skewed and the weird behaviour increases at lower temperatures.
 
-Similar figures for different `params can be obtained (compare with Fig. 1 (c) and (d) of [Jackson and Faul, 2010](https://doi.org/10.1016/j.pepi.2010.09.005)):
+Similar figures for different `params` can be obtained (compare with Fig. 1 (c) and (d) of [Jackson and Faul, 2010](https://doi.org/10.1016/j.pepi.2010.09.005)):
 
 !!! tip
     

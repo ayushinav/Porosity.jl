@@ -80,7 +80,7 @@ The above might seem complicated at the first sight but bears a very close analo
 
   - We had `forward(model, [])` similar to any other rock physics type, the last step to get the responses is to call the `forward` function.
   - Before that, we had `m(ps_nt)` where `ps_nt` had the parameters. This looks very much like `SEO3(1000. + 273)` or `anharmonic(T, P, ρ)`. Instead of passing the parameters as such, we now have to pass them through the `NamedTuple` called `ps_nt` because now, we do not know beforehand what parameters the mixed model will depend on. Had we used `SEO3` with `Gaillard2008`, we would have only needed temperature (and obviously melt fraction).
-  - Before that, in the very first step, we had `two_phase_modelType(Yoshino2009, Sifre2014, HS1962_plus())`. Now, we do not have a comparison step here but we do know that the output from this `m` is used in the similar fashion as `SEO3`, `Yoshino2009` or `Sifre2014`. The `two_phase_modelType` function allows us to create one of these "types". For two phase mixing, we require the two phases along with the mixing law. Once we know them, we can completely define the physics at play, similar to how `SEO3` or `Yoshino2009` defines it in their way.
+  - Before that, in the very first step, we had `two_phase_modelType(Yoshino2009, Sifre2014, HS1962_plus())`. Now, we do not have a comparison step here, but we do know that the output from this `m` is used in the similar fashion as `SEO3`, `Yoshino2009` or `Sifre2014`. The `two_phase_modelType` function allows us to create one of these "types". For two phase mixing, we require the two phases along with the mixing law. Once we know them, we can completely define the physics at play, similar to how `SEO3` or `Yoshino2009` defines it in their way.
 
 For different models, we have the distribution with melt fraction as (also a nice example of broadcasting) :
 
@@ -158,7 +158,7 @@ fig # hide
 
 ## Multiple phase models
 
-Multiple phases (upto 8) can  be mixed using the Hashin-Shtrikman bounds for n-phases, [`HS_plus_multi_phase`](@ref) and[`HS_minus_multi_phase`](@ref), and generalized Archie's law [`GAL`](@ref).
+Multiple phases (upto 8) can be mixed using the Hashin-Shtrikman bounds for n-phases, [`HS_plus_multi_phase`](@ref) and[`HS_minus_multi_phase`](@ref), and generalized Archie's law [`GAL`](@ref).
 
 For an example, let's define the parameters first :
 ```@example mix_phases
@@ -267,6 +267,7 @@ fig # hide
 ### GAL
 
 !!! info
+    
         Note that for [`GAL`](@ref), we need to provide cementation exponent, passed in through `ps_nt`
 
 ```@raw html

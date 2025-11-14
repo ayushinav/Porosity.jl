@@ -19,7 +19,7 @@ resp = forward(m, [])
 err_resp = RockphyCond(0.01 .* abs.(resp.σ))
 ```
 
-Then create an *apriori* using corresponding distribution, here `Poe2010Distribution`. In the above, we want to infer only for temperature and water content in olivine, so we'll define the distribution as such.
+Then create an *a priori* using corresponding distribution, here `Poe2010Distribution`. In the above, we want to infer only for temperature and water content in olivine, so we'll define the distribution as such.
 
 !!! note
     
@@ -35,7 +35,7 @@ Then defining the likelihood
 rdist = RockphyCondDistribution(Porosity.normal_dist)
 ```
 
-and putting everything together to perform the inference ssing `stochastic inverse`[@ref]
+and putting everything together to perform the inference using `stochastic inverse`[@ref]
 
 ```@example rp_si
 m_cache = mcmc_cache(mdist, rdist, 1000, Prior());
@@ -192,7 +192,7 @@ f # hide
 
 ## Multi rock physics inference
 
-Things work similarly here but we provide an example for convenience:
+Things work similarly here, but we provide an example for convenience:
 
 ```@example rp_si
 m = multi_rp_modelType(SEO3, anharmonic_poro, Nothing, Nothing)

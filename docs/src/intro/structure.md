@@ -126,7 +126,7 @@ graph TD;
 ```
 
 ## Mixing phases
-More often than not, we want to compute the bulk conductivity in the presence of fluids. This can be accompolished with [`two_phase_modelType`](@ref).
+More often than not, we want to compute the bulk conductivity in the presence of fluids. This can be accomplished with [`two_phase_modelType`](@ref).
 [Relevant tutorial](../tutorials/mixing_phases.md)
 
 ## Multi-rock physics
@@ -134,5 +134,5 @@ A further goal of the package is to encourage joint stochastic inference of more
 [Relevant tutorial](../tutorials/combine_models.md)
 
 ## Tuning rock physics
-It happens in a lot of cases that one of the inputs to a rock physics model is dependent on the other, eg. melt fraction depends on temperature of the rock and its solidus temperature. In those cases where we want to tune one of the models with respect to others, [`tune_rp_modelType`](@ref) will come handy.
+It happens in a lot of cases that one of the inputs to a rock physics model is dependent on the other, e.g. melt fraction depends on temperature of the rock and its solidus temperature. In those cases where we want to tune one of the models with respect to others, [`tune_rp_modelType`](@ref) will come handy.
 [Relevant tutorial](../tutorials/tune_rp.md)

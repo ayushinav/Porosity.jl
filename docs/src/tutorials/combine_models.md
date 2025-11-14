@@ -16,7 +16,7 @@ We first need to define the rock physics we want to model. To model electrical c
 m = multi_rp_modelType(SEO3, anharmonic, Nothing, Nothing)
 ```
 
-The `multi_rp_modelType` function requires exactly 4 parameters, first of which defines the conductivity model, followed by elastic, viscous and anelastic models in that order. To exclude the physics of any kind, pass `Nothing` in its place, eg., in the above example, we have `SEO3` for conductivity and `anharmonic` for elastic. Since we did not want to model viscous and anelastic responses, we passed `Nothing` in their places.
+The `multi_rp_modelType` function requires exactly 4 parameters, first of which defines the conductivity model, followed by elastic, viscous and anelastic models in that order. To exclude the physics of any kind, pass `Nothing` in its place, e.g., in the above example, we have `SEO3` for conductivity and `anharmonic` for elastic. Since we did not want to model viscous and anelastic responses, we passed `Nothing` in their places.
 
 Now, we define the parameters required to define the model.
 

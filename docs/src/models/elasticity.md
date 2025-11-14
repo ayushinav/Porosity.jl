@@ -129,7 +129,7 @@ nothing # hide
 f # hide
 ```
 
-The distribution with temperature at constant porosity (0.1) (assuming increase in density is not related to pressure (2 GPa) ) :
+The distribution with temperature at constant porosity (0.1) (assuming increase in density is not related to pressure (2 GPa)) :
 
 ```@raw html
 <details closed><summary>Code for this figure</summary>

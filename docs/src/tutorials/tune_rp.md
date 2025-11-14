@@ -16,9 +16,9 @@ tune_rp_modelType
 
 ## Example
 
-`tune_rp_model` has a vector/list of functions as the first argument. These function are applied in the order of their positions in the list to the input arguments are made available to the `model`, the second argument of `tune_rp_model`. The variables for input are given through a named tuple.
+`tune_rp_model` has a vector/list of functions as the first argument. These functions are applied in the order of their positions in the list to the input arguments are made available to the `model`, the second argument of `tune_rp_model`. The variables for input are given through a named tuple.
 
-The following example demonstrate the utility. Let's first define the parameters : 
+The following example demonstrates the utility. Let's first define the parameters : 
 
 ```@example tune_rp
 T = (800:1200) .+ 273.0
@@ -28,7 +28,7 @@ T_solidus = 1000. + 273
 ps_nt = (; T = T, P = P, T_solidus = T_solidus)
 ```
 
-We calculate the melt fraction using [`get_melt_fraction`](@ref), and then using the estimated melt fraction, calculate the bulk conductivity using Hashin-Strikman upper bound.
+We calculate the melt fraction using [`get_melt_fraction`](@ref), and then using the estimated melt fraction, calculate the bulk conductivity using Hashin-Shtrikman upper bound.
 
 ```@example tune_rp
 fn_list = [get_melt_fraction]
@@ -87,7 +87,7 @@ nothing # hide
 f # hide
 ```
 
-Please note that this is just one of the functions to calculate melt fractions and you can define your own function and plug it in the `fn_list` defined above. In fact, `fn_list` can include multiple functions to better suit the needs, just keep in mind that these functions execute in the order they are placed in the list.
+Please note that this is just one of the functions to calculate melt fractions, and you can define your own function and plug it in the `fn_list` defined above. In fact, `fn_list` can include multiple functions to better suit the needs, just keep in mind that these functions execute in the order they are placed in the list.
 
 Let's take another example, this time around we use [`solidus_Hirschmann2000`](@ref) to estimate solidus temperature. We also take into account the presence of volatiles and use [`get_Ch2o_m`](@ref) to partition the melt. This requires we also need a partition coefficient along with bulk water conc. Putting everything together, we have : 
 

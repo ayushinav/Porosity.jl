@@ -62,9 +62,9 @@ If you need derivatives explicitly, it is recommended to check out `Differentiat
 :::
 
 ## A bit of caution
-Please note that you would not need to compute the derivatives in most cases. If you are using a neural nretwork you can just plug the forward model in front of the network to train it. This page is to show the compatibility of the code for automatic differentiation.
+Please note that you would not need to compute the derivatives in most cases. If you are using a neural network you can just plug the forward model in front of the network to train it. This page is to show the compatibility of the code for automatic differentiation.
 
-An MWE for such a model would be :
+An MWE (minimal working example) for such a model would be :
 
 ```julia
 using Porosity, Lux

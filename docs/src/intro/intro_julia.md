@@ -54,7 +54,7 @@ y = @. exp(sin(x/10))
 
 ## Functions
 
-Usage of function is similar to MATLAB .In the above example, we already call functions. Julia also has a bunch of mutating functions. The name of such functions mostly end with a `!` and mutate the value stored in (usually) the first variables
+Usage of function is similar to MATLAB. In the above example, we already call functions. Julia also has a bunch of mutating functions. The name of such functions mostly end with a `!` and mutate the value stored in (usually) the first variables
 ```@repl
 x = [30, 40, 10, 50, 20]
 sort!(x)
@@ -118,7 +118,7 @@ A different value for `a` can be passed without referring to it explicitly:
 ```@example fn_demo
 f(2., 3., 1.)
 ```
-`operation_type` is a *keyword* argument. In the above case, it also assumed a value but this is not necessary. If you want to pass a value to it, you have to explicitly refer to it in the function call:
+`operation_type` is a *keyword* argument. In the above case, it also assumed a value, but this is not necessary. If you want to pass a value to it, you have to explicitly refer to it in the function call:
 ```@example fn_demo
 f(2., 3., operation_type = 2)
 ```
