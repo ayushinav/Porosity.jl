@@ -11,7 +11,6 @@ makedocs(;
     sitename = "Porosity.jl",
     doctest = true,
     clean = true,
-
     format = DocumenterVitepress.MarkdownVitepress(
         repo = "https://github.com/ayushinav/Porosity.jl",
         devurl = "dev",
@@ -21,4 +20,8 @@ makedocs(;
     pages = pages,
 )
 
-DocumenterVite/press.deploydocs(; repo="github.com/ayushinav/Porosity.git", devbranch="main", push_preview = true)
+DocumenterVite / press.deploydocs(;
+    repo = "github.com/ayushinav/Porosity.git",
+    devbranch = "main",
+    push_preview = true,
+)

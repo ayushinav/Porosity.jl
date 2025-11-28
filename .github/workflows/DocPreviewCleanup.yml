@@ -21,7 +21,7 @@ jobs:
           version: '1'
       - name: "load SubsurfaceCore.jl"
         run: |
-          julia --project=@. -e '
+          julia -e '
             using Pkg;
             Pkg.develop(url="https://github.com/ayushinav/SubsurfaceCore.jl.git");
             Pkg.instantiate();
