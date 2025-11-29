@@ -11,6 +11,9 @@
     model = m1(ps_nt)
     @inferred m1(ps_nt)
     @inferred forward(model, [])
+
+    resp = forward(model, [])
+    @test :σ ∈ propertynames(resp)
 end
 
 @testitem "multi_phase" tags = [:phase_mixing] begin
@@ -27,4 +30,7 @@ end
     model = m1(ps_nt)
     @inferred m1(ps_nt)
     @inferred forward(model, [])
+
+    resp = forward(model, [])
+    @test :σ ∈ propertynames(resp)
 end

@@ -23,6 +23,7 @@ jobs:
         run: |
           julia -e '
             using Pkg;
+            Pkg.activate("docs")
             Pkg.develop(url="https://github.com/ayushinav/SubsurfaceCore.jl.git");
             Pkg.instantiate();
           's

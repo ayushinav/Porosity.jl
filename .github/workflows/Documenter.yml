@@ -3,13 +3,12 @@
 name: Documenter
 
 on:
-  # Runs on pushes targeting the `master` branch. Change this to `main` if you're
+  # Change this to `main` if you're
   # using the `main` branch as the default branch.
   push:
     branches:
-      - master
+      - main
     tags: ['*']
-  pull_request:
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -43,6 +42,7 @@ jobs:
         run: |
           julia -e '
             using Pkg;
+            Pkg.activate("docs")
             Pkg.develop(url="https://github.com/ayushinav/SubsurfaceCore.jl.git");
             Pkg.instantiate();
           '        
