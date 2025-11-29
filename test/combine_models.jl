@@ -15,7 +15,7 @@
     resp_SEO3 = forward(model.cond, [])
     resp_anharmonic = forward(model.elastic, [])
 
-    resp_check = merge(to_nt.([resp_SEO3, resp_anharmonic])...)
-
-    @test resp == resp_check
+    @test resp.cond.σ == resp_SEO3.σ
+    @test resp.elastic.Vp == resp_anharmonic.Vp
+    @test resp.elastic.Vs == resp_anharmonic.Vs
 end
