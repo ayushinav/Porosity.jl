@@ -9,7 +9,7 @@
         ϕ = 0.1f0,
     )
     model = m(ps_nt)
-    resp = to_resp_nt(forward(model, []))
+    resp = forward(model, [])
     @inferred forward(model, [])
 
     resp_SEO3 = forward(model.cond, [])
