@@ -38,12 +38,13 @@ jobs:
       - name: Load Julia packages from cache
         id: julia-cache
         uses: julia-actions/cache@v2
-      - name: "load SubsurfaceCore.jl"
+      - name: "load SubsurfaceCore.jl and Porosity.jl"
         run: |
           julia -e '
             using Pkg;
             Pkg.activate("docs")
             Pkg.develop(url="https://github.com/ayushinav/SubsurfaceCore.jl.git");
+            Pkg.develop(PackageSpec(path=pwd()))
             Pkg.instantiate();
           '        
       - name: Build and deploy docs

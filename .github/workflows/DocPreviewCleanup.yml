@@ -19,12 +19,13 @@ jobs:
       - uses: julia-actions/setup-julia@v2
         with:
           version: '1'
-      - name: "load SubsurfaceCore.jl"
+      - name: "load SubsurfaceCore.jl and Porosity.jl"
         run: |
           julia -e '
             using Pkg;
             Pkg.activate("docs")
             Pkg.develop(url="https://github.com/ayushinav/SubsurfaceCore.jl.git");
+            Pkg.develop(PackageSpec(path=pwd()))
             Pkg.instantiate();
           's
       - name: Check for stale PR previews
