@@ -32,15 +32,6 @@ jobs:
         with:
           version: "${{ matrix.version }}"
 
-      - name: "load SubsurfaceCore.jl"
-        run: |
-          julia -e '
-            using Pkg;
-            Pkg.activate(".")
-            Pkg.develop(url="https://github.com/ayushinav/SubsurfaceCore.jl.git")
-            Pkg.instantiate()
-          '
-
       - name: "Run tests with Julia v${{ matrix.version }}"
         uses: julia-actions/julia-runtest@v1
         env:
