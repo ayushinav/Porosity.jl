@@ -20,7 +20,7 @@ makedocs(;
     pages = pages,
 )
 
-DocumenterVite / press.deploydocs(;
+DocumenterVitepress.deploydocs(;
     repo = "github.com/ayushinav/Porosity.git",
     devbranch = "main",
     push_preview = true,
