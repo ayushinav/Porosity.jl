@@ -13,7 +13,6 @@ makedocs(;
         repo = "github.com/ayushinav/Porosity.jl",
         devurl = "dev",
         devbranch = "main",
-        deploy_url = "https://ayushinav.github.io/Porosity.jl",
     ),
     pages = pages,
 )
