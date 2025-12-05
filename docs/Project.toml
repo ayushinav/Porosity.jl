@@ -8,3 +8,6 @@ Enzyme = "7da242da-08ed-463a-9acd-ee780be4f1d9"
 Porosity = "35db7a65-4993-4cb4-8bbd-c48e232b3666"
 Turing = "fce5fe82-541a-59a6-adf8-730c64b5f9a0"
 UnPack = "3a884ed6-31ef-47d7-9d2a-63182c4928ed"
+
+[compat]
+DifferentiationInterface = "0.7"
