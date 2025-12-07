@@ -26,7 +26,12 @@ jobs:
       matrix:
         version: ["1.11"]
         group:
-          - "none"
+          - "cond"
+          - "elastic"
+          - "visc"
+          - "anelastic"
+          - "phase_mixing"
+          - "combine_models"
     steps:
       - uses: actions/checkout@v4
 
