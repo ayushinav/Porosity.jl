@@ -24,7 +24,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: ["1.10.9"]
+        version: ["1.11"]
         group:
           - "cond"
           - "elastic"

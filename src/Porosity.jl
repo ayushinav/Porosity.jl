@@ -7,8 +7,6 @@ using Distributions
 using Statistics
 using SpecialFunctions
 using QuadGK
-using Enzyme
-using DifferentiationInterface
 using UnPack
 using NonlinearSolve
 import Base: show
