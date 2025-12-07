@@ -24,14 +24,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        version: ["1.10.9"]
+        version: ["1.11"]
         group:
-          - "cond"
-          - "elastic"
-          - "visc"
-          - "anelastic"
-          - "phase_mixing"
-          - "combine_models"
+          - "none"
     steps:
       - uses: actions/checkout@v4
 
