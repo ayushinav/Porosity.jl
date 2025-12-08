@@ -15,9 +15,9 @@ makedocs(;
         devbranch = "main",
     ),
     pages = pages,
-    draft=false,
-    source="src", 
-    build="build",
+    draft = false,
+    source = "src",
+    build = "build",
 )
 
 DocumenterVitepress.deploydocs(;
