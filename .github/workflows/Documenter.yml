@@ -5,8 +5,11 @@ on:
     branches:
       - main
     tags: ['*']
-  workflow_dispatch:
+  pull_request:
 
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+    
 permissions:
   contents: write
   pages: write
@@ -25,7 +28,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Setup Julia
-        uses: julia-actions/setup-julia@v1
+        uses: julia-actions/setup-julia@v2
       - name: Load Julia packages from cache
         id: julia-cache
         uses: julia-actions/cache@v2

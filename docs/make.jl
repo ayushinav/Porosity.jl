@@ -15,10 +15,14 @@ makedocs(;
         devbranch = "main",
     ),
     pages = pages,
+    draft = false,
+    source = "src",
+    build = "build",
 )
 
 DocumenterVitepress.deploydocs(;
     repo = "github.com/ayushinav/Porosity.jl",
+    target = joinpath(@__DIR__, "build"),
     devbranch = "main",
     push_preview = true,
 )

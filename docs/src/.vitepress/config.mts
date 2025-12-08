@@ -12,68 +12,45 @@ function getBaseRepository(base: string): string {
 }
 
 const baseTemp = {
-  base: '/',// TODO: replace this in makedocs!
+  base: 'REPLACE_ME_DOCUMENTER_VITEPRESS',// TODO: replace this in makedocs!
 }
 
 const navTemp = {
-  nav: [
-{ text: 'Home', link: '/index' },
-{ text: 'Getting Started', collapsed: false, items: [
-{ text: 'Julia 101', link: '/intro/intro_julia' },
-{ text: 'Porosity.jl : Introduction', link: '/intro/getting_started' },
-{ text: 'Visualization', link: '/intro/intro_figs' },
-{ text: 'Structure', link: '/intro/structure' }]
- },
-{ text: 'Models', collapsed: false, items: [
-{ text: 'Conductivity models', link: '/models/conductivity' },
-{ text: 'Elasticity models', link: '/models/elasticity' },
-{ text: 'Viscosity models', link: '/models/viscosity' },
-{ text: 'Anelasticity models', link: '/models/anelasticity' },
-{ text: 'Adding a new method', link: '/models/new_method' }]
- },
-{ text: 'Tutorials', collapsed: false, items: [
-{ text: 'Mixing phases', link: '/tutorials/mixing_phases' },
-{ text: 'Multi rock physics', link: '/tutorials/combine_models' },
-{ text: 'Tuning rock physics hyperparameters', link: '/tutorials/tune_rp' },
-{ text: 'Stochastic inversion', link: '/tutorials/stochastic_inverse' },
-{ text: 'Automatic Differentiation', link: '/tutorials/ad' }]
- },
-{ text: 'Solidus', link: '/solidus' },
-{ text: 'API', link: '/api' }
-]
-,
+  nav: 'REPLACE_ME_DOCUMENTER_VITEPRESS',
 }
 
 const nav = [
   ...navTemp.nav,
   {
-    component: 'VersionPicker'
+    component: 'VersionPicker',
   }
 ]
-
 // https://vitepress.dev/reference/site-config
 export default withMermaid({
-  base: '/',// TODO: replace this in makedocs!
-  title: 'Porosity.jl',
-  description: 'Documentation for Porosity.jl',
+  base: 'REPLACE_ME_DOCUMENTER_VITEPRESS', // TODO: replace this in makedocs!
+  title: 'REPLACE_ME_DOCUMENTER_VITEPRESS',
+  description: 'REPLACE_ME_DOCUMENTER_VITEPRESS',
   lastUpdated: true,
   cleanUrls: true,
-  outDir: '../1', // This is required for MarkdownVitepress to work correctly...
+  outDir: 'REPLACE_ME_DOCUMENTER_VITEPRESS', // This is required for MarkdownVitepress to work correctly...
+  
   head: [
-    
+    ['link', { rel: 'icon', href: 'REPLACE_ME_DOCUMENTER_VITEPRESS_FAVICON' }],
     ['script', {src: `${getBaseRepository(baseTemp.base)}versions.js`}],
     // ['script', {src: '/versions.js'], for custom domains, I guess if deploy_url is available.
     ['script', {src: `${baseTemp.base}siteinfo.js`}]
   ],
-  
   vite: {
     define: {
-      __DEPLOY_ABSPATH__: JSON.stringify('/'),
+      __DEPLOY_ABSPATH__: JSON.stringify('REPLACE_ME_DOCUMENTER_VITEPRESS_DEPLOY_ABSPATH'),
     },
     resolve: {
       alias: {
         '@': path.resolve(__dirname, '../components')
       }
+    },
+    build: {
+      assetsInlineLimit: 0, // so we can tell whether we have created inlined images or not, we don't let vite inline them
     },
     optimizeDeps: {
       exclude: [ 
@@ -90,6 +67,7 @@ export default withMermaid({
       ], 
     },
   },
+
   markdown: {
     math: true,
     config(md) {
@@ -99,11 +77,13 @@ export default withMermaid({
     },
     theme: {
       light: "github-light",
-      dark: "github-dark"}
+      dark: "github-dark"
+    },
   },
   themeConfig: {
     outline: 'deep',
-    logo: { src: '/logo.png', width: 24, height: 24},
+    // https://vitepress.dev/reference/default-theme-config
+    logo: 'REPLACE_ME_DOCUMENTER_VITEPRESS',
     search: {
       provider: 'local',
       options: {
@@ -111,39 +91,14 @@ export default withMermaid({
       }
     },
     nav,
-    sidebar: [
-{ text: 'Home', link: '/index' },
-{ text: 'Getting Started', collapsed: false, items: [
-{ text: 'Julia 101', link: '/intro/intro_julia' },
-{ text: 'Porosity.jl : Introduction', link: '/intro/getting_started' },
-{ text: 'Visualization', link: '/intro/intro_figs' },
-{ text: 'Structure', link: '/intro/structure' }]
- },
-{ text: 'Models', collapsed: false, items: [
-{ text: 'Conductivity models', link: '/models/conductivity' },
-{ text: 'Elasticity models', link: '/models/elasticity' },
-{ text: 'Viscosity models', link: '/models/viscosity' },
-{ text: 'Anelasticity models', link: '/models/anelasticity' },
-{ text: 'Adding a new method', link: '/models/new_method' }]
- },
-{ text: 'Tutorials', collapsed: false, items: [
-{ text: 'Mixing phases', link: '/tutorials/mixing_phases' },
-{ text: 'Multi rock physics', link: '/tutorials/combine_models' },
-{ text: 'Tuning rock physics hyperparameters', link: '/tutorials/tune_rp' },
-{ text: 'Stochastic inversion', link: '/tutorials/stochastic_inverse' },
-{ text: 'Automatic Differentiation', link: '/tutorials/ad' }]
- },
-{ text: 'Solidus', link: '/solidus' },
-{ text: 'API', link: '/api' }
-]
-,
-    editLink: { pattern: "https://https://github.com/ayushinav/Porosity.jl/edit/main/docs/src/:path" },
+    sidebar: 'REPLACE_ME_DOCUMENTER_VITEPRESS',
+    editLink: 'REPLACE_ME_DOCUMENTER_VITEPRESS',
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/ayushinav/Porosity.jl' }
+      { icon: 'slack', link: 'https://julialang.org/slack/' }
     ],
     footer: {
-      message: 'Made with <a href="https://luxdl.github.io/DocumenterVitepress.jl/dev/" target="_blank"><strong>DocumenterVitepress.jl</strong></a><br>',
+      message: 'Made with <a href="https://documenter.juliadocs.org/stable/" target="_blank"><strong>Documenter.jl</strong></a>, <a href="https://vitepress.dev" target="_blank"><strong>VitePress</strong></a> and <a href="https://luxdl.github.io/DocumenterVitepress.jl/stable/" target="_blank"><strong>DocumenterVitepress.jl</strong></a> <br>',
       copyright: `© Copyright ${new Date().getUTCFullYear()}.`
-    }
+    },
   }
 })
