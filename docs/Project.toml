@@ -15,6 +15,7 @@ path = ".."
 [compat]
 Documenter = "1"
 DocumenterVitepress = "0.2"
+Enzyme = "0.13"
 CairoMakie = "0.15"
 DocumenterVitepress = "0.2"
 DifferentiationInterface = "0.7"
