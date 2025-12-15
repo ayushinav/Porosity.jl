@@ -207,11 +207,11 @@ Addition of volatiles lowers the solidus, generating more melt. The partitioning
 P = 3.0
 T_solidus = solidus_Hirschmann2000((; P)).T_solidus
 T = [1460, 1480, 1500, 1520] .+ 273.0
-
+D = 0.0093
 Ch2o = reshape(collect(0.0:10:5000.0), 1, :)
 Cco2 = reshape(collect(0.0:100:10000.0), 1, 1, :)
 
-ps_nt = (; P, T, T_solidus, Ch2o, Cco2)
+ps_nt = (; P, T, T_solidus, Ch2o, Cco2, D)
 ϕ = get_melt_fraction(ps_nt).ϕ;
 size(ϕ)
 

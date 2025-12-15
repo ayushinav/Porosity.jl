@@ -50,5 +50,6 @@
 
     ps_nt = (; P, T, T_solidus, Ch2o, Cco2)
     get_melt_fraction(ps_nt)
+    @inferred get_melt_fraction(ps_nt)
     @test_call get_melt_fraction(ps_nt)
 end

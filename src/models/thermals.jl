@@ -380,10 +380,10 @@ function get_melt_fraction_core(
     if f1 * f2 > 0
         return zero(etype_)
     else
-        prob_init = IntervalNonlinearProblem{false}(f, (exp10(-15 * one(etype_)), one(etype_)), p)
+        prob_init = IntervalNonlinearProblem{false}(f, (
+            exp10(-15 * one(etype_)), one(etype_)), p)
         sol = solve(prob_init)
         return etype_(sol.u)
-        return 1 + zero(etype_)
     end
 end
 
