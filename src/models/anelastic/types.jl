@@ -519,6 +519,7 @@ mutable struct andrade_analytical{T1, T2, T3, T4, T5, T6, T7, T8, T9} <:
     f::T9
 end
 
+# COV_EXCL_START
 default_params(::Type{T}) where {T <: andrade_psp} = default_params_andrade_psp
 default_params(::Type{T}) where {T <: eburgers_psp} = default_params_eburgers_psp
 default_params(::Type{T}) where {T <: premelt_anelastic} = default_params_premelt_anelastic
@@ -526,3 +527,4 @@ default_params(::Type{T}) where {T <: xfit_mxw} = default_params_xfit_mxw
 function default_params(::Type{T}) where {T <: andrade_analytical}
     default_params_andrade_analytical
 end
+# COV_EXCL_STOP

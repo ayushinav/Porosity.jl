@@ -64,5 +64,14 @@
         @inferred forward(model, [], params_)
         @test_opt forward(model, [], params_)
         @test_call forward(model, [], params_)
+
+        @inferred forward_helper(
+            sample_type(modelD), to_nt(model), [], (; σ=no_tf), params_)
+        if !(methods_list[i] <: Ni2011) # because of if-else criterion
+            @test_opt forward_helper(
+                sample_type(modelD), to_nt(model), [], (; σ=no_tf), params_)
+        end
+        @test_call forward_helper(
+            sample_type(modelD), to_nt(model), [], (; σ=no_tf), params_)
     end
 end

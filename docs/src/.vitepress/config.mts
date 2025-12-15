@@ -94,7 +94,10 @@ export default withMermaid({
     sidebar: 'REPLACE_ME_DOCUMENTER_VITEPRESS',
     editLink: 'REPLACE_ME_DOCUMENTER_VITEPRESS',
     socialLinks: [
-      { icon: 'slack', link: 'https://julialang.org/slack/' }
+      // { icon: 'slack', link: 'https://julialang.org/slack/' }
+      { icon: "github", link: "https://github.com/ayushinav/Porosity.jl" },
+      { icon: 'linkedin', link: 'https://www.linkedin.com/in/abhinav-pratap-singh/' },
+      { icon: 'gmail', link: 'mailto:abhinavps0905@gmail.com' },
     ],
     footer: {
       message: 'Made with <a href="https://documenter.juliadocs.org/stable/" target="_blank"><strong>Documenter.jl</strong></a>, <a href="https://vitepress.dev" target="_blank"><strong>VitePress</strong></a> and <a href="https://luxdl.github.io/DocumenterVitepress.jl/stable/" target="_blank"><strong>DocumenterVitepress.jl</strong></a> <br>',

@@ -1,3 +1,4 @@
+# COV_EXCL_START
 const model_names_definition = (
     T="Temperature (K)", ρ="Density (kg/m³)", P="Pressure (GPa)",
     cond="Conductivity (S/m)", ϕ="Porosity", dg="grain size(μm)", σ="Shear stress (GPa)",
@@ -92,3 +93,4 @@ function Base.show(io::IO, ::MIME"text/plain", m::model) where {model <: multi_r
         end
     end
 end
+# COV_EXCL_STOP

@@ -1,3 +1,4 @@
+# COV_EXCL_START
 mutable struct PseudoGeophysicalModel{
     T1 <: AbstractArray{<:Any}, T2 <: AbstractArray{<:Any}} <: AbstractGeophyModel{T1, T2}
     m::T1
@@ -12,3 +13,4 @@ mutable struct PseudoGeophysicalModelDistribution{
 end
 
 SubsurfaceCore.sample_type(d::PseudoGeophysicalModelDistribution) = PseudoGeophysicalModel
+# COV_EXCL_STOP

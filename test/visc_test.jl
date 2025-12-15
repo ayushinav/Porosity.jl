@@ -42,5 +42,12 @@
         @inferred forward(model, [], params_)
         @test_opt forward(model, [], params_)
         @test_call forward(model, [], params_)
+
+        @inferred forward_helper(
+            sample_type(modelD), to_nt(model), [], (; ϵ_rate=no_tf, η=no_tf), params_)
+        @test_opt forward_helper(
+            sample_type(modelD), to_nt(model), [], (; ϵ_rate=no_tf, η=no_tf), params_)
+        @test_call forward_helper(
+            sample_type(modelD), to_nt(model), [], (; ϵ_rate=no_tf, η=no_tf), params_)
     end
 end

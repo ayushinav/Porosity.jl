@@ -456,6 +456,7 @@ mutable struct Yang2011{F1, F2} <: AbstractCondModel
     Ch2o_cpx::F2
 end
 
+# COV_EXCL_START
 default_params(::Type{T}) where {T <: SEO3} = default_params_SEO3
 default_params(::Type{T}) where {T <: UHO2014} = default_params_UHO2014
 default_params(::Type{T}) where {T <: Jones2012} = default_params_Jones2012
@@ -469,3 +470,4 @@ default_params(::Type{T}) where {T <: Dai_Karato2009} = default_params_Dai_Karat
 default_params(::Type{T}) where {T <: Zhang2012} = default_params_Zhang2012
 default_params(::Type{T}) where {T <: Yang2011} = default_params_Yang2011
 default_params(::Type{T}) where {T <: const_matrix} = default_params_const_matrix
+# COV_EXCL_STOP
