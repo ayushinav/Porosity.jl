@@ -1,7 +1,7 @@
 name = "Porosity"
 uuid = "35db7a65-4993-4cb4-8bbd-c48e232b3666"
 authors = ["Abhinav Pratap Singh <abhinavps0905@gmail.com>"]
-version = "0.1.5"
+version = "0.1.6"
 
 [deps]
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
@@ -22,7 +22,7 @@ QuadGK = "2.11.2"
 Reexport = "1.2.2"
 SpecialFunctions = "2.5.1"
 Statistics = "1.11.1"
-SubsurfaceCore = "0.7"
+SubsurfaceCore = "0.8.1"
 UnPack = "1.0.2"
 julia = "1.11"
 

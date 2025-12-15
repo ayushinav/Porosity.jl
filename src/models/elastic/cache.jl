@@ -2,8 +2,9 @@
 const melt_settings_true = (diff=5.0f0, disl=1.0f0, gbs=2.5f0)
 const melt_settings_false = (diff=1.0f0, disl=1.0f0, gbs=1.0f0)
 
-get_melt_settings_for_x_ϕ_c(::Val{true}) = melt_settings_true
-get_melt_settings_for_x_ϕ_c(::Val{false}) = melt_settings_false
+# get_melt_settings_for_x_ϕ_c(::Val{true}) = melt_settings_true
+# get_melt_settings_for_x_ϕ_c(::Val{false}) = melt_settings_false
+get_melt_settings_for_x_ϕ_c(x::Bool) = x ? melt_settings_true : melt_settings_false
 
 params_anharmonic = (
     Isaak1992=(T_K_ref=300, P_Pa_ref=1.0f5, Gu_0_ol=81, dG_dT=-13.6f6, dG_dP=1.8f0,

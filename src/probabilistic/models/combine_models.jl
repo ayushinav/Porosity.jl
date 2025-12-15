@@ -24,8 +24,7 @@ Similar to `multi_rp_modelDistributionType` but instead accepts `Distribution`
 or `Nothing`
 
 ```julia
-multi_rp_modelDistributionType()(
-    SEO3Distribution, anharmonicDistribution, HK2003Distribution, Nothing)
+multi_rp_modelDistributionType()(SEO3Distribution, anharmonicDistribution, HK2003Distribution, Nothing)
 ```
 
 Pass `Nothing` for the types you do not want responses of, eg. above
@@ -61,8 +60,7 @@ Rock physics model to capture multiple rock physics model, susually constructed 
 ## Usage
 
 ```julia
-m = multi_rp_modelDistributionType()(
-    SEO3Distribution, anharmonicDistribution, Nothing, Nothing)
+m = multi_rp_modelDistributionType()(SEO3Distribution, anharmonicDistribution, Nothing, Nothing)
 ps_nt_dist = (; T=product_distribution(Uniform(1200.0f0, 1400.0f0)), P=[3.0f0],
     ρ=product_distribution(Uniform(80.0f0, 120.0f0)), ϕ=[0.1f0])
 model = m(ps_nt_dist)

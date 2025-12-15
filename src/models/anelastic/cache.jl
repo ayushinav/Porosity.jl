@@ -13,7 +13,7 @@ params_andrade_psp = (
     melt_alpha = 25,
     ϕ_c = 1f-5,
     # x_ϕ_c = 5,
-    elastic_type = anharmonic,
+    elastic_type = Val(anharmonic),
     params_elastic = params_anharmonic.Isaak1992,
     melt_enhancement = false
 )
@@ -109,14 +109,14 @@ params_JF10 = (
 params_eburgers_psp = (
     integration_params = (
         nτ = 3000,
-        integration_method = :quadgk,
+        integration_method = Val(:quadgk),
         τ_integration_points = 5000
     ),
 
     params_btype = params_JF10.bg_only,
-    elastic_type = anharmonic,
+    elastic_type = Val(anharmonic),
     params_elastic = params_anharmonic.Isaak1992,
-    viscous_type = xfit_premelt,
+    viscous_type = Val(xfit_premelt),
     params_viscous = params_xfit_premelt,
     melt_enhancement = false,
     JF10_visc = true
@@ -146,10 +146,9 @@ params_premelt_anelastic = (
         poro_Λ = 4.0f0, # Table 6 YT2024
     ),
 
-    elastic_type = anharmonic,
-    elastic_params = params_anharmonic.Isaak1992,
+    elastic_type = Val(anharmonic),
+    params_elastic = params_anharmonic.Isaak1992,
 
-    viscous_type = xfit_premelt,
     viscous_params = params_xfit_premelt
 )
 
@@ -166,10 +165,10 @@ params_xfit_mxw = (
         melt_alpha = 25f0,
         ϕ_c = 1f-5,
 
-        elastic_type = anharmonic,
-        elastic_params = params_anharmonic.Isaak1992,
+        elastic_type = Val(anharmonic),
+        params_elastic = params_anharmonic.Isaak1992,
 
-        viscous_type = xfit_premelt,
+        viscous_type = Val(xfit_premelt),
         viscous_params = params_xfit_premelt
     ),
 
@@ -185,10 +184,10 @@ params_xfit_mxw = (
         melt_alpha = 25f0,
         ϕ_c = 1f-5,
 
-        elastic_type = anharmonic,
-        elastic_params = params_anharmonic.Isaak1992,
+        elastic_type = Val(anharmonic),
+        params_elastic = params_anharmonic.Isaak1992,
 
-        viscous_type = xfit_premelt,
+        viscous_type = Val(xfit_premelt),
         viscous_params = params_xfit_premelt
     ),
 )
@@ -200,10 +199,10 @@ params_andrade_analytical = (
     viscosity_method = true,
     viscosity_mech = :diff,
 
-    elastic_type = anharmonic,
-    elastic_params = params_anharmonic.Isaak1992,
+    elastic_type = Val(anharmonic),
+    params_elastic = params_anharmonic.Isaak1992,
 
-    viscous_type = HK2003,
+    viscous_type = Val(HK2003),
     viscous_params = params_HK2003
 )
 

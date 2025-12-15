@@ -3,7 +3,7 @@ function SubsurfaceCore.forward(m::HZK2011, p, params=default_params_HZK2011)
 
     P = @. p_dep_calc * m.P
     ϵ_rate = zero(m.T .+ m.P .+ m.dg .+ m.σ .+ m.ϕ) ## TODO
-    x_ϕ_c_vec = get_melt_settings_for_x_ϕ_c(Val{melt_enhancement}())
+    x_ϕ_c_vec = get_melt_settings_for_x_ϕ_c(melt_enhancement)
 
     for mech in keys(mechs)
         sr = sr_flow_law_calculation(
@@ -25,11 +25,16 @@ function SubsurfaceCore.forward(m::HK2003, p, params=default_params_HK2003)
 
     ϵ_rate = zero(m.T .+ m.P .+ m.dg .+ m.σ .+ m.ϕ .+ m.Ch2o_ol)
 
-    x_ϕ_c_vec = get_melt_settings_for_x_ϕ_c(Val{melt_enhancement}())
+    x_ϕ_c_vec = get_melt_settings_for_x_ϕ_c(melt_enhancement)
 
     for mech in keys(mechs)
         sr = broadcast(
-            (T, P, σ, d, ϕ, fH2O) -> sr_flow_law_calculation_HK2003(
+            (T,
+                P,
+                σ,
+                d,
+                ϕ,
+                fH2O) -> sr_flow_law_calculation_HK2003(
                 T, P * 1.0f9, σ, d, ϕ, fH2O, getfield(x_ϕ_c_vec, mech), mechs, mech),
             m.T,
             P,

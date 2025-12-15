@@ -358,10 +358,8 @@ function f_melt(u, p, H2O_suppress_fn, CO2_suppress_fn)
     Ch2o_m = Ch2o * inv(D + u * (1 - D))
     Cco2_m = get_Cco2_m((; ϕ=u, Cco2, Cco2_sat)).Cco2_m
 
-    T_new_H2O = H2O_suppress_fn((;
-        T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D, Ch2o_m)).T_solidus
-    T_new_CO2 = CO2_suppress_fn((;
-        T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D, Cco2_m)).T_solidus
+    T_new_H2O = H2O_suppress_fn((; T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D, Ch2o_m)).T_solidus
+    T_new_CO2 = CO2_suppress_fn((; T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D, Cco2_m)).T_solidus
     T_solidus_new = T_solidus - (2T_solidus - T_new_H2O - T_new_CO2)
     ΔT = max(zero(T - T_solidus_new), T - T_solidus_new)
     dTdF = -40 * P + 450
@@ -385,37 +383,6 @@ function get_melt_fraction_core(
         sol = solve(prob_init)
         return sol.u
     end
-    # x1 = exp10(-12+zero(etype_))
-    # x_new = exp10(-12+zero(etype_))
-    # x2 = one(etype_)
-
-    # f1 = f(x1, p)
-    # f2 = f(x2, p)
-    # count = 0;
-
-    # while f1*f2<0
-    #     x_new = (x1+x2)/2
-    #     f_new = f(x_new, p)
-
-    #     if log10(abs(f_new)) <= -9 #exp10(-12*one(etype_))
-    #         # return x_new
-    #         break;
-    #     elseif f1 * f_new < 0
-    #         x2 = x_new;
-    #         f2 = f_new;
-    #     else
-    #         x1 = x_new;
-    #         f1 = f_new;
-    #     end
-    #     count+=1
-    #     if count > 40 # 
-    #         # @show x_new
-    #         # return x_new
-    #         break;
-    #     end
-    # end
-    # # @show x_new, count
-    # return x_new
 end
 
 """
@@ -457,8 +424,7 @@ get_melt_fraction(ps_nt)
 (ϕ = [0.041345720244193085, 0.05481061353960702, 0.072300827427471, 0.09337629457529527, 0.1171677298066955],)
 ```
 """
-function get_melt_fraction(
-        ps_nt; H2O_suppress_fn=ΔT_h2o_Blatter2022, CO2_suppress_fn=ΔT_co2_Dasgupta2013)
+function get_melt_fraction(ps_nt; H2O_suppress_fn=ΔT_h2o_Blatter2022, CO2_suppress_fn=ΔT_co2_Dasgupta2013)
     ps_nt = (; Ch2o=0.0f0, Cco2=0.0f0, Cco2_sat=38.0f4, D=0.005, ps_nt...)
     @unpack Cco2, Cco2_sat, Ch2o, T, T_solidus, P, D = ps_nt
 

@@ -98,8 +98,7 @@ end
 function default_params(::Type{multi_rp_modelType{T1, T2, T3, T4}}) where {T1, T2, T3, T4}
     (;
         zip([:cond, :elastic, :visc, :anelastic],
-            [default_params(T1), default_params(T2),
-                default_params(T3), default_params(T4)])...)
+        [default_params(T1), default_params(T2), default_params(T3), default_params(T4)])...)
 end
 
 function SubsurfaceCore.from_nt(m::Type{T}, nt::NamedTuple) where {T <: multi_rp_modelType}
