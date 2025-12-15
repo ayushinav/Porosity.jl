@@ -106,8 +106,8 @@ y2 = @. cos(x)
 f = Figure(; size=(200, 200)) # creating empty figure
 ax = Axis(f[1, 1])
 
-lines!(ax, x, y1, label = "sin(x)")
-lines!(ax, x, y2, label = "cos(x)")
+lines!(ax, x, y1; label="sin(x)")
+lines!(ax, x, y2; label="cos(x)")
 
 Legend(f[1, 2], ax)
 f

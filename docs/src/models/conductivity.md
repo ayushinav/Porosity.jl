@@ -20,15 +20,13 @@ The distribution with temperature looks like (compare with fig. 1B of [Constable
 
 ```@example cond_plts
 f = Figure()
-ax = Axis(f[1, 1]; yscale=log10,
-    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
-    yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-    backgroundcolor=(:magenta, 0.05))
+ax = Axis(f[1, 1]; yscale=log10, xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.05))
 
 xts = inv.([700, 900, 1100, 1300, 1500] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
-    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+    xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=10, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
 hidespines!(ax2)
@@ -66,15 +64,13 @@ The distribution with temperature looks like (compare with fig. 2a of [Wang et a
 
 ```@example cond_plts
 f = Figure()
-ax = Axis(f[1, 1]; yscale=log10,
-    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
-    yticks=LogTicks(WilkinsonTicks(9; k_min=8)),
-    backgroundcolor=(:magenta, 0.05))
+ax = Axis(f[1, 1]; yscale=log10, xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(9; k_min=8)), backgroundcolor=(:magenta, 0.05))
 
 xts = inv.([300, 600, 900, 1200, 1500] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
-    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+    xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=10, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
 hidespines!(ax2)
@@ -120,15 +116,13 @@ The distribution with temperature looks like (compare with fig. 6 of [Yoshino et
 
 ```@example cond_plts
 f = Figure()
-ax = Axis(f[1, 1]; yscale=log10,
-    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
-    yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-    backgroundcolor=(:magenta, 0.05))
+ax = Axis(f[1, 1]; yscale=log10, xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.05))
 
 xts = inv.([600, 800, 1000, 1200, 1400, 1600] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
-    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+    xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
 hidespines!(ax2)
@@ -174,15 +168,13 @@ The distribution with temperature looks like (compare with fig. 3 of [Poe et al.
 
 ```@example cond_plts
 f = Figure()
-ax = Axis(f[1, 1]; yscale=log10,
-    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
-    yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-    backgroundcolor=(:magenta, 0.05))
+ax = Axis(f[1, 1]; yscale=log10, xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.05))
 
 xts = inv.([300, 600, 900, 1200, 1500] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
-    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+    xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
 hidespines!(ax2)
@@ -228,15 +220,13 @@ The distribution with temperature looks like:
 
 ```@example cond_plts
 f = Figure()
-ax = Axis(f[1, 1]; yscale=log10,
-    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
-    yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-    backgroundcolor=(:magenta, 0.05))
+ax = Axis(f[1, 1]; yscale=log10, xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.05))
 
 xts = inv.([300, 600, 900, 1200, 1500] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
-    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+    xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
 hidespines!(ax2)
@@ -282,15 +272,13 @@ The distribution with temperature looks like (compare with fig. 4 of [Gardés et
 
 ```@example cond_plts
 f = Figure()
-ax = Axis(f[1, 1]; yscale=log10,
-    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
-    yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-    backgroundcolor=(:magenta, 0.05))
+ax = Axis(f[1, 1]; yscale=log10, xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.05))
 
 xts = inv.([600, 800, 1000, 1200, 1400, 1600] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
-    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+    xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
 hidespines!(ax2)
@@ -338,15 +326,13 @@ The distribution with temperature looks like :
 
 ```@example cond_plts
 f = Figure()
-ax = Axis(f[1, 1]; yscale=log10,
-    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
-    yticks=LogTicks(WilkinsonTicks(9; k_min=8)),
-    backgroundcolor=(:magenta, 0.05))
+ax = Axis(f[1, 1]; yscale=log10, xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(9; k_min=8)), backgroundcolor=(:magenta, 0.05))
 
 xts = inv.([1000, 1100, 1200, 1300, 1400] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
-    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+    xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=10, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
 hidespines!(ax2)
@@ -392,15 +378,13 @@ The distribution with temperature looks like :
 
 ```@example cond_plts
 f = Figure()
-ax = Axis(f[1, 1]; yscale=log10,
-    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
-    yticks=LogTicks(WilkinsonTicks(9; k_min=8)),
-    backgroundcolor=(:magenta, 0.05))
+ax = Axis(f[1, 1]; yscale=log10, xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(9; k_min=8)), backgroundcolor=(:magenta, 0.05))
 
 xts = inv.([800, 1000, 1100, 1200, 1300, 1400] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
-    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+    xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=10, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
 hidespines!(ax2)
@@ -421,15 +405,13 @@ end
 
 f[1, 2] = Legend(f, ax, "water conc. (ppm)")
 
-ax = Axis(f[2, 1]; yscale=log10,
-    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
-    yticks=LogTicks(WilkinsonTicks(9; k_min=8)),
-    backgroundcolor=(:magenta, 0.05))
+ax = Axis(f[2, 1]; yscale=log10, xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(9; k_min=8)), backgroundcolor=(:magenta, 0.05))
 
 xts = inv.([800, 1000, 1100, 1200, 1300, 1400] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[2, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
-    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+ax2 = Axis(f[2, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+    xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=10, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
 hidespines!(ax2)
@@ -475,15 +457,13 @@ The distribution with temperature looks like :
 
 ```@example cond_plts
 f = Figure()
-ax = Axis(f[1,1]; yscale=log10,
-    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
-    yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-    backgroundcolor=(:magenta, 0.05))
+ax = Axis(f[1, 1]; yscale=log10, xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.05))
 
 xts = inv.([700, 900, 1100, 1300, 1500] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[1,1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
-    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+    xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=10, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
 hidespines!(ax2)
@@ -511,7 +491,6 @@ f # hide
 
 ### Dai_Karato2009
 
-
 ```@docs; canonical = false
 Dai_Karato2009
 ```
@@ -526,15 +505,13 @@ The distribution with temperature looks like :
 
 f = Figure()
 
-ax = Axis(f[1, 1]; yscale=log10,
-    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
-    yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-    backgroundcolor=(:magenta, 0.05))
+ax = Axis(f[1, 1]; yscale=log10, xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.05))
 
 xts = inv.([800, 900, 1000, 1300] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
-    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+    xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
 hidespines!(ax2)
@@ -579,15 +556,13 @@ The distribution with temperature looks like (compare with fig. 6 in Zhang et al
 ```@example cond_plts
 f = Figure()
 
-ax = Axis(f[1, 1]; yscale=log10,
-    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
-    yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-    backgroundcolor=(:magenta, 0.05))
+ax = Axis(f[1, 1]; yscale=log10, xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.05))
 
-xts = inv.([800, 1300., 2000.] .+ 273.0) .* 1e4
+xts = inv.([800, 1300.0, 2000.0] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
-    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+    xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
 hidespines!(ax2)
@@ -634,15 +609,13 @@ The distribution with temperature looks like (compare with fig. 8 in Yang et al.
 ```@example cond_plts
 f = Figure()
 
-ax = Axis(f[1, 1]; yscale=log10,
-    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
-    yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-    backgroundcolor=(:magenta, 0.05))
+ax = Axis(f[1, 1]; yscale=log10, xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.05))
 
 xts = inv.([400, 500, 800, 1000, 1300] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
-    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+    xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
 hidespines!(ax2)

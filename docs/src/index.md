@@ -79,7 +79,7 @@ A large part of the package has functionalities borrowed from the [Very Broadban
 
 ::: code-group
 
-``` [Conductivity]
+```[Conductivity]
 ∘ Dai_Karato2009
 ∘ Gaillard2008
 ∘ Jones2012
@@ -97,7 +97,7 @@ A large part of the package has functionalities borrowed from the [Very Broadban
 The whole list can be obtained by running `subtypes(AbstractCondModel)`
 ```
 
-``` [Elastic]
+```[Elastic]
 ∘ SLB2005
 ∘ anharmonic
 ∘ anharmonic_poro
@@ -105,7 +105,7 @@ The whole list can be obtained by running `subtypes(AbstractCondModel)`
 The whole list can be obtained by running `subtypes(AbstractElasticModel)`
 ```
 
-``` [Viscous]
+```[Viscous]
 ∘ HK2003
 ∘ HZK2011
 ∘ xfit_premelt
@@ -113,7 +113,7 @@ The whole list can be obtained by running `subtypes(AbstractElasticModel)`
 The whole list can be obtained by running `subtypes(AbstractViscousModel)`
 ```
 
-``` [Anelastic]
+```[Anelastic]
 ∘ andrade_analytical
 ∘ andrade_psp
 ∘ eburgers_psp
@@ -123,7 +123,7 @@ The whole list can be obtained by running `subtypes(AbstractViscousModel)`
 The whole list can be obtained by running `subtypes(AbstractAnelasticModel)`
 ```
 
-``` [Phase mixing type]
+```[Phase mixing type]
 Two phase :
 ∘ HS upper bound
 ∘ HS lower bound
@@ -134,4 +134,5 @@ Multiple phase :
 ∘ HS lower bound
 ∘ Generalized Archie's law
 ```
+
 :::

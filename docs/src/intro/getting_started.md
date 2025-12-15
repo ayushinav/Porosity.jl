@@ -3,6 +3,7 @@
 ```@setup rp_intro
 using Porosity
 ```
+
 ## Modeling
 
 Modeling for all the functions can be done by calling the `forward` function on the rock physics models.
@@ -92,8 +93,8 @@ resp = forward(m, [])
 
 println("size of T : ", size(T))
 println("size of P : ", size(P))
-println(
-    "size of broadcasted array without f: ", size(T .+ P .+ dg .+ σ .+ ϕ .+ ρ .+ T_solidus))
+println("size of broadcasted array without f: ", size(T .+ P .+ dg .+ σ .+ ϕ .+ ρ .+
+                                                      T_solidus))
 println("size of f : ", size(f))
 println("size of Qinv (one of the outputs, averaged over frequency) : ", size(resp.Qinv))
 ```

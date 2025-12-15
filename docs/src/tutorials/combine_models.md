@@ -7,7 +7,7 @@ using Porosity, CairoMakie
 We provide the feature to model multiple rock physics simultaneously. This is useful because often we want to model, say electrical conductivity and p-wave velocity, for the same temperatures, melt fraction, water content and other parameters. This utility showcases itself particularly when we want to perform the stochastic inversion of rock physics properties. For now, lets understand how to get the responses from multi rock physics models.
 
 ::: info
-    Please note that this bears close resemblance with [Mixing phases](mixing_phases.md) tutorial.
+Please note that this bears close resemblance with [Mixing phases](mixing_phases.md) tutorial.
 :::
 
 We first need to define the rock physics we want to model. To model electrical conductivity using `SEO3` and elastic properties using `anharmonic`, we use [`multi_rp_modelType`](@ref)
@@ -52,17 +52,16 @@ units = ["S/m", "GPa", "GPa", "km/s", "km/s"]
 
 ax_coords = [(1, 1), (2, 1), (3, 1), (4, 1), (5, 1)]
 for i in eachindex(resp_fields)
-    ax = Axis(f[ax_coords[i]...];
-        xlabel="10⁴/T (K⁻¹)", ylabel=string(resp_fields[i]) * " ($(units[i]))",
-        yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-        backgroundcolor=(:magenta, 0.052))
+    ax = Axis(f[ax_coords[i]...]; xlabel="10⁴/T (K⁻¹)",
+        ylabel=string(resp_fields[i]) * " ($(units[i]))",
+        yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.052))
 
     xts = inv.([600, 800, 1000, 1200, 1600] .+ 273.0) .* 1e4
 
-    ax2 = Axis(f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right,
-        xlabel="T (ᴼC)", xgridvisible=false,
-        xtickformat=x -> string.(round.((1e4 ./ x) .- 273)), xticklabelsize=8,
-        backgroundcolor=(:magenta, 0.05))
+    ax2 = Axis(
+        f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+        xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+        xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
     ax2.xticks = xts
     hidespines!(ax2)
     hideydecorations!(ax2)
@@ -139,17 +138,16 @@ units = ["S/m", "GPa", "GPa", "km/s", "km/s"]
 
 ax_coords = [(1, 1), (2, 1), (3, 1), (4, 1), (5, 1)]
 for i in eachindex(resp_fields)
-    ax = Axis(f[ax_coords[i]...];
-        xlabel="10⁴/T (K⁻¹)", ylabel=string(resp_fields[i]) * " ($(units[i]))",
-        yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-        backgroundcolor=(:magenta, 0.052))
+    ax = Axis(f[ax_coords[i]...]; xlabel="10⁴/T (K⁻¹)",
+        ylabel=string(resp_fields[i]) * " ($(units[i]))",
+        yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.052))
 
     xts = inv.([600, 800, 1000, 1200, 1600] .+ 273.0) .* 1e4
 
-    ax2 = Axis(f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right,
-        xlabel="T (ᴼC)", xgridvisible=false,
-        xtickformat=x -> string.(round.((1e4 ./ x) .- 273)), xticklabelsize=8,
-        backgroundcolor=(:magenta, 0.05))
+    ax2 = Axis(
+        f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+        xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+        xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
     ax2.xticks = xts
     hidespines!(ax2)
     hideydecorations!(ax2)

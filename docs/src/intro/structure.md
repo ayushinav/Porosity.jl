@@ -3,9 +3,10 @@
 One of the goals of this package is to provide an easy and intuitive way to compute the geophysical observables. In order to that, it is helpful to understand the structure of codes. The following serves as a cheatsheet to understand the structure.
 
 The interface throughout the package proceeds in three steps:
-1. Define the physics of the system
-2. Define the rock physics model by providing the rock physics parameters
-3. Call `forward`
+
+ 1. Define the physics of the system
+ 2. Define the rock physics model by providing the rock physics parameters
+ 3. Call `forward`
 
 ::: code-group
 
@@ -90,6 +91,7 @@ m = model_type(ps_nt)
 # forward
 resp = forward(m, [])
 ```
+
 :::
 
 ## Building blocks
@@ -126,13 +128,16 @@ graph TD;
 ```
 
 ## Mixing phases
+
 More often than not, we want to compute the bulk conductivity in the presence of fluids. This can be accomplished with [`two_phase_modelType`](@ref).
 [Relevant tutorial](../tutorials/mixing_phases.md)
 
 ## Multi-rock physics
+
 A further goal of the package is to encourage joint stochastic inference of more than one data types. For that purpose, we provide [`multi_rp_modelType`](@ref).
 [Relevant tutorial](../tutorials/combine_models.md)
 
 ## Tuning rock physics
+
 It happens in a lot of cases that one of the inputs to a rock physics model is dependent on the other, e.g. melt fraction depends on temperature of the rock and its solidus temperature. In those cases where we want to tune one of the models with respect to others, [`tune_rp_modelType`](@ref) will come handy.
 [Relevant tutorial](../tutorials/tune_rp.md)

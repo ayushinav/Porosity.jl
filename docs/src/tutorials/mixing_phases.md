@@ -12,7 +12,6 @@ Hashin-Shtrikman bounds, provided through [`HS1962_plus`](@ref) and [`HS1962_min
 
 To get things started, we first need to define the phases we need to mix the models and the mixing law. This is conveniently done using [`two_phase_modelType`](@ref)
 
-
 ```@example mix_phases
 m = two_phase_modelType(Yoshino2009, Sifre2014, HS1962_plus)
 ```
@@ -46,15 +45,13 @@ and then plot :
 
 ```@example mix_phases
 f = Figure()
-ax = Axis(f[1, 1]; yscale=log10,
-    xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
-    yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-    backgroundcolor=(:magenta, 0.05))
+ax = Axis(f[1, 1]; yscale=log10, xlabel="10⁴/T (K⁻¹)", ylabel="σ (S/m)",
+    yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.05))
 
 xts = inv.([700, 900, 1100, 1300, 1500] .+ 273.0) .* 1e4
 
-ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right,
-    xlabel="T (ᴼC)", xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+ax2 = Axis(f[1, 1]; yscale=log10, xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+    xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
     xticklabelsize=10, backgroundcolor=(:magenta, 0.05))
 ax2.xticks = xts
 hidespines!(ax2)
@@ -108,7 +105,7 @@ model = m(ps_nt)
 sig2 = 10.0f0 .^ forward(model, []).σ
 
 m = two_phase_modelType(Yoshino2009, Sifre2014, MAL)
-ps_nt = (; ϕ=ϕ, T=T, Ch2o_ol=Ch2o_ol, Ch2o_m=Ch2o_m, Cco2_m=Cco2_m, m_MAL = 1.2f0)
+ps_nt = (; ϕ=ϕ, T=T, Ch2o_ol=Ch2o_ol, Ch2o_m=Ch2o_m, Cco2_m=Cco2_m, m_MAL=1.2f0)
 model = m(ps_nt)
 
 sig3 = 10.0f0 .^ forward(model, []).σ
@@ -140,8 +137,7 @@ for i in eachindex(T)
     lines!(ax3, ϕ[:], sig3[i, :]; color=color_, label="$(T[i] - 273)")
 end
 
-fig[2, 1:3] = Legend(
-    fig, ax3, "Temperature (ᴼC)"; orientation=:horizontal, labelsize=12)
+fig[2, 1:3] = Legend(fig, ax3, "Temperature (ᴼC)"; orientation=:horizontal, labelsize=12)
 nothing # hide
 ```
 
@@ -154,6 +150,7 @@ fig # hide
 ```
 
 !!! info
+    
         Note that for [`MAL`](@ref), we need to provide cementation exponent, passed in through `ps_nt`
 
 ## Multiple phase models
@@ -161,6 +158,7 @@ fig # hide
 Multiple phases (upto 8) can be mixed using the Hashin-Shtrikman bounds for n-phases, [`HS_plus_multi_phase`](@ref) and[`HS_minus_multi_phase`](@ref), and generalized Archie's law [`GAL`](@ref).
 
 For an example, let's define the parameters first :
+
 ```@example mix_phases
 T = [1200, 1300, 1400, 1500] .+ 273.0f0
 Ch2o_ol = 5.0f0
@@ -184,29 +182,30 @@ m = multi_phase_modelType(UHO2014, Dai_Karato2009, Sifre2014, HS_plus_multi_phas
 logsig_mat = zeros(length(T), length(ϕ1), length(ϕ2))
 
 for i in eachindex(ϕ1), j in eachindex(ϕ2)
+
     ϕ = [ϕ1[i], ϕ2[j]]
     ps_nt = (; ps_nt_..., ϕ)
-    model = m(ps_nt) 
-    logsig_mat[:,i,j] .= forward(model, []).σ
+    model = m(ps_nt)
+    logsig_mat[:, i, j] .= forward(model, []).σ
 end
 
-fig = Figure(size = (800, 900))
+fig = Figure(; size=(800, 900))
 crange = extrema(logsig_mat)
 cmap = :thermal
-ax1 = Axis(fig[1,1], xlabel = "ol. vol. fraction", ylabel = "opx. vol. fraction", title = "Temp : $(T[1]) K")
-ax2 = Axis(fig[1,2], xlabel = "ol. vol. fraction", ylabel = "opx. vol. fraction", title = "Temp : $(T[2]) K")
-ax3 = Axis(fig[2,1], xlabel = "ol. vol. fraction", ylabel = "opx. vol. fraction", title = "Temp : $(T[3]) K")
-ax4 = Axis(fig[2,2], xlabel = "ol. vol. fraction", ylabel = "opx. vol. fraction", title = "Temp : $(T[4]) K")
+ax1 = Axis(fig[1, 1]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[1]) K")
+ax2 = Axis(fig[1, 2]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[2]) K")
+ax3 = Axis(fig[2, 1]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[3]) K")
+ax4 = Axis(fig[2, 2]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[4]) K")
 
-heatmap!(ax1, ϕ1, ϕ2, logsig_mat[1,:,:], colorrange = crange, colormap = cmap)
-contour!(ax1, ϕ1, ϕ2, logsig_mat[1,:,:], color = :black)
-heatmap!(ax2, ϕ1, ϕ2, logsig_mat[2,:,:], colorrange = crange, colormap = cmap)
-contour!(ax2, ϕ1, ϕ2, logsig_mat[2,:,:], color = :black)
-heatmap!(ax3, ϕ1, ϕ2, logsig_mat[3,:,:], colorrange = crange, colormap = cmap)
-contour!(ax3, ϕ1, ϕ2, logsig_mat[3,:,:], color = :black)
-h = heatmap!(ax4, ϕ1, ϕ2, logsig_mat[4,:,:], colorrange = crange, colormap = cmap)
-contour!(ax4, ϕ1, ϕ2, logsig_mat[4,:,:], color = :black)
-Colorbar(fig[3,:], h, vertical = false, label = "log cond. (S/ m)")
+heatmap!(ax1, ϕ1, ϕ2, logsig_mat[1, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax1, ϕ1, ϕ2, logsig_mat[1, :, :]; color=:black)
+heatmap!(ax2, ϕ1, ϕ2, logsig_mat[2, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax2, ϕ1, ϕ2, logsig_mat[2, :, :]; color=:black)
+heatmap!(ax3, ϕ1, ϕ2, logsig_mat[3, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax3, ϕ1, ϕ2, logsig_mat[3, :, :]; color=:black)
+h = heatmap!(ax4, ϕ1, ϕ2, logsig_mat[4, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax4, ϕ1, ϕ2, logsig_mat[4, :, :]; color=:black)
+Colorbar(fig[3, :], h; vertical=false, label="log cond. (S/ m)")
 nothing # hide
 ```
 
@@ -230,29 +229,30 @@ m = multi_phase_modelType(UHO2014, Dai_Karato2009, Sifre2014, HS_minus_multi_pha
 logsig_mat = zeros(length(T), length(ϕ1), length(ϕ2))
 
 for i in eachindex(ϕ1), j in eachindex(ϕ2)
+
     ϕ = [ϕ1[i], ϕ2[j]]
     ps_nt = (; ps_nt_..., ϕ)
-    model = m(ps_nt) 
-    logsig_mat[:,i,j] .= forward(model, []).σ
+    model = m(ps_nt)
+    logsig_mat[:, i, j] .= forward(model, []).σ
 end
 
-fig = Figure(size = (800, 900))
+fig = Figure(; size=(800, 900))
 crange = extrema(logsig_mat)
 cmap = :thermal
-ax1 = Axis(fig[1,1], xlabel = "ol. vol. fraction", ylabel = "opx. vol. fraction", title = "Temp : $(T[1]) K")
-ax2 = Axis(fig[1,2], xlabel = "ol. vol. fraction", ylabel = "opx. vol. fraction", title = "Temp : $(T[2]) K")
-ax3 = Axis(fig[2,1], xlabel = "ol. vol. fraction", ylabel = "opx. vol. fraction", title = "Temp : $(T[3]) K")
-ax4 = Axis(fig[2,2], xlabel = "ol. vol. fraction", ylabel = "opx. vol. fraction", title = "Temp : $(T[4]) K")
+ax1 = Axis(fig[1, 1]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[1]) K")
+ax2 = Axis(fig[1, 2]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[2]) K")
+ax3 = Axis(fig[2, 1]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[3]) K")
+ax4 = Axis(fig[2, 2]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[4]) K")
 
-heatmap!(ax1, ϕ1, ϕ2, logsig_mat[1,:,:], colorrange = crange, colormap = cmap)
-contour!(ax1, ϕ1, ϕ2, logsig_mat[1,:,:], color = :black)
-heatmap!(ax2, ϕ1, ϕ2, logsig_mat[2,:,:], colorrange = crange, colormap = cmap)
-contour!(ax2, ϕ1, ϕ2, logsig_mat[2,:,:], color = :black)
-heatmap!(ax3, ϕ1, ϕ2, logsig_mat[3,:,:], colorrange = crange, colormap = cmap)
-contour!(ax3, ϕ1, ϕ2, logsig_mat[3,:,:], color = :black)
-h = heatmap!(ax4, ϕ1, ϕ2, logsig_mat[4,:,:], colorrange = crange, colormap = cmap)
-contour!(ax4, ϕ1, ϕ2, logsig_mat[4,:,:], color = :black)
-Colorbar(fig[3,:], h, vertical = false, label = "log cond. (S/ m)")
+heatmap!(ax1, ϕ1, ϕ2, logsig_mat[1, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax1, ϕ1, ϕ2, logsig_mat[1, :, :]; color=:black)
+heatmap!(ax2, ϕ1, ϕ2, logsig_mat[2, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax2, ϕ1, ϕ2, logsig_mat[2, :, :]; color=:black)
+heatmap!(ax3, ϕ1, ϕ2, logsig_mat[3, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax3, ϕ1, ϕ2, logsig_mat[3, :, :]; color=:black)
+h = heatmap!(ax4, ϕ1, ϕ2, logsig_mat[4, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax4, ϕ1, ϕ2, logsig_mat[4, :, :]; color=:black)
+Colorbar(fig[3, :], h; vertical=false, label="log cond. (S/ m)")
 nothing # hide
 ```
 
@@ -280,29 +280,30 @@ m = multi_phase_modelType(UHO2014, Dai_Karato2009, Sifre2014, GAL)
 logsig_mat = zeros(length(T), length(ϕ1), length(ϕ2))
 
 for i in eachindex(ϕ1), j in eachindex(ϕ2)
+
     ϕ = [ϕ1[i], ϕ2[j]]
-    ps_nt = (; ps_nt_..., ϕ, m_GAL = [5., 4., 1.2])
-    model = m(ps_nt) 
-    logsig_mat[:,i,j] .= forward(model, []).σ
+    ps_nt = (; ps_nt_..., ϕ, m_GAL=[5.0, 4.0, 1.2])
+    model = m(ps_nt)
+    logsig_mat[:, i, j] .= forward(model, []).σ
 end
 
-fig = Figure(size = (800, 900))
+fig = Figure(; size=(800, 900))
 crange = extrema(logsig_mat)
 cmap = :thermal
-ax1 = Axis(fig[1,1], xlabel = "ol. vol. fraction", ylabel = "opx. vol. fraction", title = "Temp : $(T[1]) K")
-ax2 = Axis(fig[1,2], xlabel = "ol. vol. fraction", ylabel = "opx. vol. fraction", title = "Temp : $(T[2]) K")
-ax3 = Axis(fig[2,1], xlabel = "ol. vol. fraction", ylabel = "opx. vol. fraction", title = "Temp : $(T[3]) K")
-ax4 = Axis(fig[2,2], xlabel = "ol. vol. fraction", ylabel = "opx. vol. fraction", title = "Temp : $(T[4]) K")
+ax1 = Axis(fig[1, 1]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[1]) K")
+ax2 = Axis(fig[1, 2]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[2]) K")
+ax3 = Axis(fig[2, 1]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[3]) K")
+ax4 = Axis(fig[2, 2]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[4]) K")
 
-heatmap!(ax1, ϕ1, ϕ2, logsig_mat[1,:,:], colorrange = crange, colormap = cmap)
-contour!(ax1, ϕ1, ϕ2, logsig_mat[1,:,:], color = :black)
-heatmap!(ax2, ϕ1, ϕ2, logsig_mat[2,:,:], colorrange = crange, colormap = cmap)
-contour!(ax2, ϕ1, ϕ2, logsig_mat[2,:,:], color = :black)
-heatmap!(ax3, ϕ1, ϕ2, logsig_mat[3,:,:], colorrange = crange, colormap = cmap)
-contour!(ax3, ϕ1, ϕ2, logsig_mat[3,:,:], color = :black)
-h = heatmap!(ax4, ϕ1, ϕ2, logsig_mat[4,:,:], colorrange = crange, colormap = cmap)
-contour!(ax4, ϕ1, ϕ2, logsig_mat[4,:,:], color = :black)
-Colorbar(fig[3,:], h, vertical = false, label = "log cond. (S/ m)")
+heatmap!(ax1, ϕ1, ϕ2, logsig_mat[1, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax1, ϕ1, ϕ2, logsig_mat[1, :, :]; color=:black)
+heatmap!(ax2, ϕ1, ϕ2, logsig_mat[2, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax2, ϕ1, ϕ2, logsig_mat[2, :, :]; color=:black)
+heatmap!(ax3, ϕ1, ϕ2, logsig_mat[3, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax3, ϕ1, ϕ2, logsig_mat[3, :, :]; color=:black)
+h = heatmap!(ax4, ϕ1, ϕ2, logsig_mat[4, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax4, ϕ1, ϕ2, logsig_mat[4, :, :]; color=:black)
+Colorbar(fig[3, :], h; vertical=false, label="log cond. (S/ m)")
 nothing # hide
 ```
 

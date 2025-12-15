@@ -7,7 +7,7 @@ If this is the first time you've come across [Julia](https://julialang.org/), th
 
 ## Basics
 
-The basics of operation are very similar. 
+The basics of operation are very similar.
 
 ```@repl
 x = 10
@@ -28,7 +28,7 @@ end
 Like MATLAB, array indices start with 1
 
 ```@repl
-x = [10,20,30,40,50]
+x = [10, 20, 30, 40, 50]
 
 a = x[1]
 b = x[2]
@@ -37,24 +37,25 @@ b = x[2]
 Like MATLAB, to perform element-wise operations on arrays, use dot in front of the operator. This performs broadcasting and will be useful for arrays of different sizes
 
 ```@repl
-x = [10,20,30,40,50]
+x = [10, 20, 30, 40, 50]
 
 y = x .+ 5
-y = x./10
+y = x ./ 10
 y = x .+ x'
 ```
 
 When functions and complex expressions are needed to be performed, `@.` can be used to get a cleaner code.
 
 ```@repl
-x = [10,20,30,40,50]
-y = exp.(sin.(x./10))
+x = [10, 20, 30, 40, 50]
+y = exp.(sin.(x ./ 10))
 y = @. exp(sin(x/10))
 ```
 
 ## Functions
 
 Usage of function is similar to MATLAB. In the above example, we already call functions. Julia also has a bunch of mutating functions. The name of such functions mostly end with a `!` and mutate the value stored in (usually) the first variables
+
 ```@repl
 x = [30, 40, 10, 50, 20]
 sort!(x)
@@ -64,29 +65,34 @@ x
 Such functions are helpful when you want to reduce allocations to speed up the code.
 
 ### Creating new functions
+
 Creating new functions is also similar to MATLAB, and is done via the following syntax :
+
 ```@repl
-function f(x,y)
+function f(x, y)
     a = x/(1 + x^2)
     b = y/(1 + y^2)
     z = a + b
     return z
 end
 
-f(2., 3.)
+f(2.0, 3.0)
 ```
 
-You can also do a single line definition : 
-```@repl
-f(x,y) = 2x + y
+You can also do a single line definition :
 
-f(2., 3.)
+```@repl
+f(x, y) = 2x + y
+
+f(2.0, 3.0)
 ```
 
 ### Optional and keyword arguments
-A lot of times, we want default arguments or named arguments. Consider the following function definition: 
+
+A lot of times, we want default arguments or named arguments. Consider the following function definition:
+
 ```@example fn_demo
-function f(x,y,a=2; operation_type = 2)
+function f(x, y, a=2; operation_type=2)
     if operation_type == 1
         return x+y/a
     elseif operation_type == 2
@@ -102,29 +108,37 @@ end
 In the above definition, `a` is called an *optional* argument. It assumes a value if it is not explicitly passed
 
 !!! note
-
-    Note that optional arguments are positional. If a function is defined as 
+    
+    Note that optional arguments are positional. If a function is defined as
+    
     ```julia
-    function fn(x,y,a=1.,b=2.,c=3.)
+    function fn(x, y, a=1.0, b=2.0, c=3.0)
         # some operation
     end
     ```
+    
     Then the function call `fn(2., 3., 2., 4., 5.)` assumes `a = 2.`, `b = 4.` and `c = 5.`. Similarly, a function call `fn(2., 3., 4.)` assumes `a = 4.` and default values for `b` and `c`.
 
 ```@example fn_demo
-f(2., 3.)
+f(2.0, 3.0)
 ```
+
 A different value for `a` can be passed without referring to it explicitly:
+
 ```@example fn_demo
-f(2., 3., 1.)
+f(2.0, 3.0, 1.0)
 ```
+
 `operation_type` is a *keyword* argument. In the above case, it also assumed a value, but this is not necessary. If you want to pass a value to it, you have to explicitly refer to it in the function call:
+
 ```@example fn_demo
-f(2., 3., operation_type = 2)
+f(2.0, 3.0; operation_type=2)
 ```
+
 and with a different optional argument as :
+
 ```@example fn_demo
-f(2., 3., 1., operation_type = 2)
+f(2.0, 3.0, 1.0; operation_type=2)
 ```
 
 ## Named Tuple
@@ -132,19 +146,20 @@ f(2., 3., 1., operation_type = 2)
 Named Tuples are data structures that hold values assigned to them by a name. These are the most important data structures in the context of the package and are used a lot.
 
 ```@repl
-x = (; a = 30, b = 2., c= "Hello")
+x = (; a=30, b=2.0, c="Hello")
 
 x.a
 x.b
 x.c
 ```
+
 Named-tuples are immutable, that is, once created, their values do not change. However, we can create another named-tuple of the same name that can feel like mutating.
 
 ```@repl
 
-x = (; a = 30, b = 2., c= "Hello")
+x = (; a=30, b=2.0, c="Hello")
 x.a
-x = (; x..., a = 50)
+x = (; x..., a=50)
 x.a
 ```
 

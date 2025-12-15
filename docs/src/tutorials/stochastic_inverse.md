@@ -78,8 +78,7 @@ f # hide
 Lets try to also infer the water content along with the temperature. Everything remains the same, except that now, in `ps_nt`, the vector corresponding to water content `Ch2o_ol` will be replaced by a corresponding distribution.
 
 ```@example rp_si
-mdist = Poe2010Distribution(
-    MvNormal([1200.0], [400.0;]), product_distribution([Uniform(50.0, 150.0)]))
+mdist = Poe2010Distribution(MvNormal([1200.0], [400.0;]), product_distribution([Uniform(50.0, 150.0)]))
 rdist = RockphyCondDistribution(Porosity.normal_dist)
 
 m_cache = mcmc_cache(mdist, rdist, 1000, Prior());
@@ -141,10 +140,8 @@ err_resp = RockphyCond(0.01 .* abs.(resp.σ))
 
 m = two_phase_modelDistributionType(SEO3Distribution, Sifre2014Distribution, HS1962_plus)
 ps_nt_dist = (;
-    T=MvNormal([1000.0], [400.0;]),
-    Ch2o_m=product_distribution([Uniform(50.0, 150.0)]),
-    Cco2_m=[100.0], ϕ=product_distribution([Uniform(0.01, 0.2)])
-)
+    T=MvNormal([1000.0], [400.0;]), Ch2o_m=product_distribution([Uniform(50.0, 150.0)]),
+    Cco2_m=[100.0], ϕ=product_distribution([Uniform(0.01, 0.2)]))
 mdist = m(ps_nt_dist)
 rdist = RockphyCondDistribution(Porosity.normal_dist)
 ```
@@ -199,34 +196,21 @@ m = multi_rp_modelType(SEO3, anharmonic_poro, Nothing, Nothing)
 ps_nt = (; T=[1000.0] .+ 273, P=3.0, ρ=3300.0, Ch2o_m=1000.0, ϕ=0.1)
 model = m(ps_nt)
 resp = forward(model, [])
-err_resp = multi_rp_response(
-    RockphyCond(0.01 .* abs.(resp.cond.σ)),
-    RockphyElastic(
-        0.01 .* resp.elastic.K,
-        0.01 .* resp.elastic.G,
-        0.01 .* resp.elastic.Vp,
-        0.01 .* resp.elastic.Vs
-    ),
-    Nothing, Nothing
-)
+err_resp = multi_rp_response(RockphyCond(0.01 .* abs.(resp.cond.σ)),
+    RockphyElastic(0.01 .* resp.elastic.K, 0.01 .* resp.elastic.G,
+        0.01 .* resp.elastic.Vp, 0.01 .* resp.elastic.Vs),
+    Nothing,
+    Nothing)
 
-ps_nt_dist = (;
-    T=product_distribution([Uniform(1200.0, 1400.0)]),
-    P=[3.0],
-    ρ=[3300.0],
-    Ch2o_m=MvNormal([100.0], [20.0;]),
-    ϕ=product_distribution([Uniform(0.01, 0.2)])
-)
+ps_nt_dist = (; T=product_distribution([Uniform(1200.0, 1400.0)]), P=[3.0], ρ=[3300.0],
+    Ch2o_m=MvNormal([100.0], [20.0;]), ϕ=product_distribution([Uniform(0.01, 0.2)]))
 
-m1 = multi_rp_modelDistributionType(
-    SEO3Distribution, anharmonic_poroDistribution, Nothing, Nothing)
+m1 = multi_rp_modelDistributionType(SEO3Distribution, anharmonic_poroDistribution, Nothing, Nothing)
 mdist = m1(ps_nt_dist)
 # rdist = RockphyCondDistribution(Porosity.normal_dist)
-rdist = Porosity.multi_rp_responseDistribution(
-    RockphyCondDistribution(normal_dist),
+rdist = Porosity.multi_rp_responseDistribution(RockphyCondDistribution(normal_dist),
     RockphyElasticDistribution(normal_dist, normal_dist, normal_dist, normal_dist),
-    Nothing, Nothing
-)
+    Nothing, Nothing)
 nothing # hide
 ```
 
@@ -287,38 +271,25 @@ ps_nt = (; T=[1200.0] .+ 273, Ch2o_m=[100.0], Cco2_m=[100.0], ϕ=[0.1], P=[3.0],
 model = m(ps_nt)
 resp = forward(model, [])
 
-err_resp = multi_rp_response(
-    RockphyCond(0.01 .* abs.(resp.cond.σ)),
-    RockphyElastic(
-        0.01 .* resp.elastic.K,
-        0.01 .* resp.elastic.G,
-        0.01 .* resp.elastic.Vp,
-        0.01 .* resp.elastic.Vs
-    ),
-    Nothing, Nothing
-)
+err_resp = multi_rp_response(RockphyCond(0.01 .* abs.(resp.cond.σ)),
+    RockphyElastic(0.01 .* resp.elastic.K, 0.01 .* resp.elastic.G,
+        0.01 .* resp.elastic.Vp, 0.01 .* resp.elastic.Vs),
+    Nothing,
+    Nothing)
 
 # Defining apriori
 
-ps_nt_dist = (;
-    T=product_distribution([Uniform(1270.0, 1670.0)]),
-    Ch2o_m=product_distribution([Uniform(50.0, 150.0)]),
-    Cco2_m=[100.0], ϕ=product_distribution([Uniform(0.01, 0.2)]),
-    P=[3.0],
-    ρ=[3300.0]
-)
+ps_nt_dist = (; T=product_distribution([Uniform(1270.0, 1670.0)]),
+    Ch2o_m=product_distribution([Uniform(50.0, 150.0)]), Cco2_m=[100.0],
+    ϕ=product_distribution([Uniform(0.01, 0.2)]), P=[3.0], ρ=[3300.0])
 
-m_mixdist = two_phase_modelDistributionType(
-    SEO3Distribution, Sifre2014Distribution, HS1962_plus)
-m = multi_rp_modelDistributionType(
-    typeof(m_mixdist), anharmonicDistribution, Nothing, Nothing)
+m_mixdist = two_phase_modelDistributionType(SEO3Distribution, Sifre2014Distribution, HS1962_plus)
+m = multi_rp_modelDistributionType(typeof(m_mixdist), anharmonicDistribution, Nothing, Nothing)
 
 mdist = m(ps_nt_dist);
-rdist = Porosity.multi_rp_responseDistribution(
-    RockphyCondDistribution(normal_dist),
+rdist = Porosity.multi_rp_responseDistribution(RockphyCondDistribution(normal_dist),
     RockphyElasticDistribution(normal_dist, normal_dist, normal_dist, normal_dist),
-    Nothing, Nothing
-)
+    Nothing, Nothing)
 
 m_cache = mcmc_cache(mdist, rdist, 1000, Prior());
 mcmc_chain_prior = stochastic_inverse(

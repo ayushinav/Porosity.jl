@@ -35,17 +35,16 @@ units = ["", "(Pa s)"]
 
 ax_coords = [(1, 1), (1, 2)]
 for i in eachindex(resp_fields)
-    ax = Axis(f[ax_coords[i]...];
-        xlabel="10⁴/T (K⁻¹)", ylabel=string(resp_fields[i]) * " $(units[i])",
-        yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-        backgroundcolor=(:magenta, 0.052))
+    ax = Axis(f[ax_coords[i]...]; xlabel="10⁴/T (K⁻¹)",
+        ylabel=string(resp_fields[i]) * " $(units[i])",
+        yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.052))
 
     xts = inv.([600, 800, 1000, 1200, 1600] .+ 273.0) .* 1e4
 
-    ax2 = Axis(f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right,
-        xlabel="T (ᴼC)", xgridvisible=false,
-        xtickformat=x -> string.(round.((1e4 ./ x) .- 273)), xticklabelsize=8,
-        backgroundcolor=(:magenta, 0.05))
+    ax2 = Axis(
+        f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+        xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+        xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
     ax2.xticks = xts
     hidespines!(ax2)
     hideydecorations!(ax2)
@@ -100,17 +99,16 @@ units = ["", "(Pa⋅s)"]
 
 ax_coords = [(1, 1), (1, 2)]
 for i in eachindex(resp_fields)
-    ax = Axis(f[ax_coords[i]...];
-        xlabel="10⁴/T (K⁻¹)", ylabel=string(resp_fields[i]) * " $(units[i])",
-        yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-        backgroundcolor=(:magenta, 0.052))
+    ax = Axis(f[ax_coords[i]...]; xlabel="10⁴/T (K⁻¹)",
+        ylabel=string(resp_fields[i]) * " $(units[i])",
+        yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.052))
 
     xts = inv.([600, 800, 1000, 1200, 1600] .+ 273.0) .* 1e4
 
-    ax2 = Axis(f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right,
-        xlabel="T (ᴼC)", xgridvisible=false,
-        xtickformat=x -> string.(round.((1e4 ./ x) .- 273)), xticklabelsize=8,
-        backgroundcolor=(:magenta, 0.05))
+    ax2 = Axis(
+        f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+        xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+        xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
     ax2.xticks = xts
     hidespines!(ax2)
     hideydecorations!(ax2)
@@ -165,17 +163,16 @@ units = ["", "(Pa⋅s)"]
 
 ax_coords = [(1, 1), (1, 2)]
 for i in eachindex(resp_fields)
-    ax = Axis(f[ax_coords[i]...];
-        xlabel="10⁴/T (K⁻¹)", ylabel=string(resp_fields[i]) * " $(units[i])",
-        yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-        backgroundcolor=(:magenta, 0.052))
+    ax = Axis(f[ax_coords[i]...]; xlabel="10⁴/T (K⁻¹)",
+        ylabel=string(resp_fields[i]) * " $(units[i])",
+        yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.052))
 
     xts = inv.([600, 800, 1000, 1200, 1600] .+ 273.0) .* 1e4
 
-    ax2 = Axis(f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right,
-        xlabel="T (ᴼC)", xgridvisible=false,
-        xtickformat=x -> string.(round.((1e4 ./ x) .- 273)), xticklabelsize=8,
-        backgroundcolor=(:magenta, 0.05))
+    ax2 = Axis(
+        f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+        xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+        xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
     ax2.xticks = xts
     hidespines!(ax2)
     hideydecorations!(ax2)
@@ -235,17 +232,16 @@ units = ["", "(Pa s)"]
 
 ax_coords = [(1, 1), (1, 2)]
 for i in eachindex(resp_fields)
-    ax = Axis(f[ax_coords[i]...];
-        xlabel="10⁴/T (K⁻¹)", ylabel=string(resp_fields[i]) * " $(units[i])",
-        yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-        backgroundcolor=(:magenta, 0.052))
+    ax = Axis(f[ax_coords[i]...]; xlabel="10⁴/T (K⁻¹)",
+        ylabel=string(resp_fields[i]) * " $(units[i])",
+        yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.052))
 
     xts = inv.([600, 800, 1000, 1200, 1600] .+ 273.0) .* 1e4
 
-    ax2 = Axis(f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right,
-        xlabel="T (ᴼC)", xgridvisible=false,
-        xtickformat=x -> string.(round.((1e4 ./ x) .- 273)), xticklabelsize=8,
-        backgroundcolor=(:magenta, 0.05))
+    ax2 = Axis(
+        f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+        xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+        xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
     ax2.xticks = xts
     hidespines!(ax2)
     hideydecorations!(ax2)
@@ -300,17 +296,16 @@ units = ["", "(Pa⋅s)"]
 
 ax_coords = [(1, 1), (1, 2)]
 for i in eachindex(resp_fields)
-    ax = Axis(f[ax_coords[i]...];
-        xlabel="10⁴/T (K⁻¹)", ylabel=string(resp_fields[i]) * " $(units[i])",
-        yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-        backgroundcolor=(:magenta, 0.052))
+    ax = Axis(f[ax_coords[i]...]; xlabel="10⁴/T (K⁻¹)",
+        ylabel=string(resp_fields[i]) * " $(units[i])",
+        yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.052))
 
     xts = inv.([600, 800, 1000, 1200, 1600] .+ 273.0) .* 1e4
 
-    ax2 = Axis(f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right,
-        xlabel="T (ᴼC)", xgridvisible=false,
-        xtickformat=x -> string.(round.((1e4 ./ x) .- 273)), xticklabelsize=8,
-        backgroundcolor=(:magenta, 0.05))
+    ax2 = Axis(
+        f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+        xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+        xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
     ax2.xticks = xts
     hidespines!(ax2)
     hideydecorations!(ax2)
@@ -375,17 +370,16 @@ units = ["(Pa s)"]
 
 ax_coords = [(1, 1), (1, 2)]
 for i in eachindex(resp_fields)
-    ax = Axis(f[ax_coords[i]...];
-        xlabel="10⁴/T (K⁻¹)", ylabel=string(resp_fields[i]) * " $(units[i])",
-        yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-        backgroundcolor=(:magenta, 0.052))
+    ax = Axis(f[ax_coords[i]...]; xlabel="10⁴/T (K⁻¹)",
+        ylabel=string(resp_fields[i]) * " $(units[i])",
+        yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.052))
 
     xts = inv.([600, 800, 1000, 1200, 1600] .+ 273.0) .* 1e4
 
-    ax2 = Axis(f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right,
-        xlabel="T (ᴼC)", xgridvisible=false,
-        xtickformat=x -> string.(round.((1e4 ./ x) .- 273)), xticklabelsize=8,
-        backgroundcolor=(:magenta, 0.05))
+    ax2 = Axis(
+        f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+        xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+        xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
     ax2.xticks = xts
     hidespines!(ax2)
     hideydecorations!(ax2)
@@ -451,17 +445,16 @@ units = ["(Pa s)"]
 
 ax_coords = [(1, 1), (1, 2)]
 for i in eachindex(resp_fields)
-    ax = Axis(f[ax_coords[i]...];
-        xlabel="10⁴/T (K⁻¹)", ylabel=string(resp_fields[i]) * " $(units[i])",
-        yticks=LogTicks(WilkinsonTicks(6; k_min=5)),
-        backgroundcolor=(:magenta, 0.052))
+    ax = Axis(f[ax_coords[i]...]; xlabel="10⁴/T (K⁻¹)",
+        ylabel=string(resp_fields[i]) * " $(units[i])",
+        yticks=LogTicks(WilkinsonTicks(6; k_min=5)), backgroundcolor=(:magenta, 0.052))
 
     xts = inv.([600, 800, 1000, 1200, 1600] .+ 273.0) .* 1e4
 
-    ax2 = Axis(f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right,
-        xlabel="T (ᴼC)", xgridvisible=false,
-        xtickformat=x -> string.(round.((1e4 ./ x) .- 273)), xticklabelsize=8,
-        backgroundcolor=(:magenta, 0.05))
+    ax2 = Axis(
+        f[ax_coords[i]...]; xaxisposition=:top, yaxisposition=:right, xlabel="T (ᴼC)",
+        xgridvisible=false, xtickformat=x -> string.(round.((1e4 ./ x) .- 273)),
+        xticklabelsize=8, backgroundcolor=(:magenta, 0.05))
     ax2.xticks = xts
     hidespines!(ax2)
     hideydecorations!(ax2)

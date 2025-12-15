@@ -14,8 +14,8 @@ The dry solidus temperature can be obtained as a function of pressure `P` throug
 
 ```@example sol_plts
 f = Figure()
-ax1 = Axis(f[1, 1]; xlabel="solidus temp (K)",
-    ylabel="depth (km)", backgroundcolor=(:magenta, 0.05))
+ax1 = Axis(f[1, 1]; xlabel="solidus temp (K)", ylabel="depth (km)", backgroundcolor=(
+    :magenta, 0.05))
 ax1.yreversed = true
 
 xtfn(x) = @. string(round((x - 5) / 30.2; digits=2))
@@ -208,31 +208,31 @@ P = 3.0
 T_solidus = solidus_Hirschmann2000((; P)).T_solidus
 T = [1460, 1480, 1500, 1520] .+ 273.0
 
-Ch2o = reshape(collect(0.:10:5000.), 1, :)
-Cco2 = reshape(collect(0.:100:10000.), 1, 1, :)
+Ch2o = reshape(collect(0.0:10:5000.0), 1, :)
+Cco2 = reshape(collect(0.0:100:10000.0), 1, 1, :)
 
 ps_nt = (; P, T, T_solidus, Ch2o, Cco2)
 ϕ = get_melt_fraction(ps_nt).ϕ;
 size(ϕ)
 
-fig = Figure(size = (800, 900))
-ax1 = Axis(fig[1,1], xlabel = "bulk water conc. (ppm)", ylabel = "bulk CO₂ conc. (ppm)", title = "$(T[1]) K")
-ax2 = Axis(fig[1,2], xlabel = "bulk water conc. (ppm)", ylabel = "bulk CO₂ conc. (ppm)", title = "$(T[2]) K")
-ax3 = Axis(fig[2,1], xlabel = "bulk water conc. (ppm)", ylabel = "bulk CO₂ conc. (ppm)", title = "$(T[3]) K")
-ax4 = Axis(fig[2,2], xlabel = "bulk water conc. (ppm)", ylabel = "bulk CO₂ conc. (ppm)", title = "$(T[4]) K")
+fig = Figure(; size=(800, 900))
+ax1 = Axis(fig[1, 1]; xlabel="bulk water conc. (ppm)", ylabel="bulk CO₂ conc. (ppm)", title="$(T[1]) K")
+ax2 = Axis(fig[1, 2]; xlabel="bulk water conc. (ppm)", ylabel="bulk CO₂ conc. (ppm)", title="$(T[2]) K")
+ax3 = Axis(fig[2, 1]; xlabel="bulk water conc. (ppm)", ylabel="bulk CO₂ conc. (ppm)", title="$(T[3]) K")
+ax4 = Axis(fig[2, 2]; xlabel="bulk water conc. (ppm)", ylabel="bulk CO₂ conc. (ppm)", title="$(T[4]) K")
 
 crange = extrema(ϕ)
 cmap = :thermal
-heatmap!(ax1, vec(Ch2o), vec(Cco2), ϕ[1,:,:], colorrange = crange, colormap = cmap)
-contour!(ax1, vec(Ch2o), vec(Cco2), ϕ[1,:,:], labels = true, color = :white, labelsize = 14)
-heatmap!(ax2, vec(Ch2o), vec(Cco2), ϕ[2,:,:], colorrange = crange, colormap = cmap)
-contour!(ax2, vec(Ch2o), vec(Cco2), ϕ[2,:,:], labels = true, color = :white, labelsize = 14)
-heatmap!(ax3, vec(Ch2o), vec(Cco2), ϕ[3,:,:], colorrange = crange, colormap = cmap)
-contour!(ax3, vec(Ch2o), vec(Cco2), ϕ[3,:,:], labels = true, color = :black, labelsize = 14)
-h = heatmap!(ax4, vec(Ch2o), vec(Cco2), ϕ[4,:,:], colorrange = crange, colormap = cmap)
-contour!(ax4, vec(Ch2o), vec(Cco2), ϕ[4,:,:], labels = true, color = :black, labelsize = 14)
-Colorbar(fig[3,:], h, vertical = false, label = "melt fraction")
-Label(fig[0,:], "melt fraction at dry solidus temp :  $(Int(round(T_solidus))) K", fontsize = 20)
+heatmap!(ax1, vec(Ch2o), vec(Cco2), ϕ[1, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax1, vec(Ch2o), vec(Cco2), ϕ[1, :, :]; labels=true, color=:white, labelsize=14)
+heatmap!(ax2, vec(Ch2o), vec(Cco2), ϕ[2, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax2, vec(Ch2o), vec(Cco2), ϕ[2, :, :]; labels=true, color=:white, labelsize=14)
+heatmap!(ax3, vec(Ch2o), vec(Cco2), ϕ[3, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax3, vec(Ch2o), vec(Cco2), ϕ[3, :, :]; labels=true, color=:black, labelsize=14)
+h = heatmap!(ax4, vec(Ch2o), vec(Cco2), ϕ[4, :, :]; colorrange=crange, colormap=cmap)
+contour!(ax4, vec(Ch2o), vec(Cco2), ϕ[4, :, :]; labels=true, color=:black, labelsize=14)
+Colorbar(fig[3, :], h; vertical=false, label="melt fraction")
+Label(fig[0, :], "melt fraction at dry solidus temp :  $(Int(round(T_solidus))) K"; fontsize=20)
 nothing # hide
 ```
 
