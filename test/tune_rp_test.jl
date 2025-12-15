@@ -19,7 +19,10 @@
     sample_type(modelD) <: two_phase_modelType
     params_ = (; m1=default_params(SEO3), m2=default_params(Gaillard2008))
 
-    @inferred forward_helper(sample_type(modelD), ps_nt, [], (; σ=no_tf), params_)
-    @test_opt forward_helper(sample_type(modelD), ps_nt, [], (; σ=no_tf), params_)
-    @test_call forward_helper(sample_type(modelD), ps_nt, [], (; σ=no_tf), params_)
+    @inferred forward_helper(
+        sample_type(modelD), (; ps_nt..., fn_list), [], (; σ=no_tf), params_)
+    @test_opt forward_helper(
+        sample_type(modelD), (; ps_nt..., fn_list), [], (; σ=no_tf), params_)
+    @test_call forward_helper(
+        sample_type(modelD), (; ps_nt..., fn_list), [], (; σ=no_tf), params_)
 end

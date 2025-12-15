@@ -32,6 +32,8 @@ jobs:
           - "anelastic"
           - "phase_mixing"
           - "combine_models"
+          - "tune_rp"
+          - "thermals"
     steps:
       - uses: actions/checkout@v4
 

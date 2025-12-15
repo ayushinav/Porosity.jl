@@ -109,9 +109,10 @@ function ΔT_h2o_Katz2003(ps_nt)
     γ = 0.75f0
     K = 43.0f0
 
-    Ch2o_m_sat = @. 12 * P^(0.6f0) + P
-    # C_w = (Ch2o_m <= Ch2o_m_sat) ? (Ch2o_m) : Ch2o_m # worth investigating
-    Ch2o_m_ = @. ifelse(Ch2o_m * 1.0f-4 < Ch2o_m_sat, Ch2o_m * 1.0f-4, Ch2o_m_sat)
+    etype_ = eltype(P .+ Ch2o_m)
+
+    Ch2o_m_sat = @. etype_(12 * P^(0.6f0) + P)
+    Ch2o_m_ = @. ifelse(Ch2o_m * 1.0f-4 < Ch2o_m_sat, etype_(Ch2o_m * 1.0f-4), etype_(Ch2o_m_sat))
     dT = @. K * (Ch2o_m_)^γ
     T_solidus = @. T_solidus - dT
     return (; T_solidus)
@@ -379,9 +380,10 @@ function get_melt_fraction_core(
     if f1 * f2 > 0
         return zero(etype_)
     else
-        prob_init = IntervalNonlinearProblem(f, (exp10(-15 * one(etype_)), one(etype_)), p)
+        prob_init = IntervalNonlinearProblem{false}(f, (exp10(-15 * one(etype_)), one(etype_)), p)
         sol = solve(prob_init)
-        return sol.u
+        return etype_(sol.u)
+        return 1 + zero(etype_)
     end
 end
 
@@ -425,7 +427,7 @@ get_melt_fraction(ps_nt)
 ```
 """
 function get_melt_fraction(ps_nt; H2O_suppress_fn=ΔT_h2o_Blatter2022, CO2_suppress_fn=ΔT_co2_Dasgupta2013)
-    ps_nt = (; Ch2o=0.0f0, Cco2=0.0f0, Cco2_sat=38.0f4, D=0.005, ps_nt...)
+    ps_nt = (; Ch2o=0.0f0, Cco2=0.0f0, Cco2_sat=38.0f4, D=0.005f0, ps_nt...)
     @unpack Cco2, Cco2_sat, Ch2o, T, T_solidus, P, D = ps_nt
 
     ϕ = broadcast(get_melt_fraction_core, T, T_solidus, Ch2o, Cco2,
