@@ -12,7 +12,8 @@
     @report_opt m(ps_nt)
     @report_call m(ps_nt)
 
-    m_dist_ = two_phase_modelDistributionType(SEO3Distribution, Gaillard2008Distribution, HS1962_plus)
+    m_dist_ = two_phase_modelDistributionType(
+        SEO3Distribution, Gaillard2008Distribution, HS1962_plus)
     m_dist = tune_rp_modelDistributionType(fn_list, m_dist_)
     modelD = m_dist(ps_nt)
 

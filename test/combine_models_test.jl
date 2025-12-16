@@ -20,7 +20,8 @@
     @test resp.elastic.Vp == resp_anharmonic.Vp
     @test resp.elastic.Vs == resp_anharmonic.Vs
 
-    m_dist = multi_rp_modelDistributionType(SEO3Distribution, anharmonicDistribution, Nothing, Nothing)
+    m_dist = multi_rp_modelDistributionType(
+        SEO3Distribution, anharmonicDistribution, Nothing, Nothing)
     modelD = m_dist(ps_nt)
 
     sample_type(modelD) <: multi_rp_modelType

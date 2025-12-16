@@ -1,6 +1,5 @@
 function SubsurfaceCore.forward(m::andrade_psp, p, params=default_params_andrade_psp)
-    @unpack n, β, τ_MR, E, G_UR, TR, PR, dR, Vstar, M, melt_alpha, ϕ_c,
-    elastic_type, params_elastic, melt_enhancement = params
+    @unpack n, β, τ_MR, E, G_UR, TR, PR, dR, Vstar, M, melt_alpha, ϕ_c, elastic_type, params_elastic, melt_enhancement = params
 
     resp_elastic = forward_for_anelastic(m, elastic_type, params_elastic)
 
@@ -29,8 +28,7 @@ function SubsurfaceCore.forward(m::andrade_psp, p, params=default_params_andrade
 end
 
 function SubsurfaceCore.forward(m::eburgers_psp, p, params=default_params_eburgers_psp)
-    @unpack integration_params, elastic_type, params_elastic, params_btype, viscous_type,
-    params_viscous, JF10_visc, melt_enhancement = params
+    @unpack integration_params, elastic_type, params_elastic, params_btype, viscous_type, params_viscous, JF10_visc, melt_enhancement = params
     @unpack alf, DeltaB, DeltaP, sig = params_btype
 
     ω = 2.0f0π .* m.f
@@ -40,18 +38,14 @@ function SubsurfaceCore.forward(m::eburgers_psp, p, params=default_params_eburge
 
     Ju = @. inv(G)
 
-    τ_maxwell, τ_L,
-    τ_H,
-    τ_P = calc_maxwell_times(
+    τ_maxwell, τ_L, τ_H, τ_P = calc_maxwell_times(
         G, m, params_btype, JF10_visc, params_viscous, viscous_type, melt_enhancement)
 
     J1_int_fn(x, ω) = x^(alf - 1) / (1 + (ω * x)^2)
     J2_int_fn(x, ω) = x^alf / (1 + (ω * x)^2)
 
     int1 = broadcast(
-        (l,
-            h,
-            omega) -> integrate_s(J1_int_fn,
+        (l, h, omega) -> integrate_s(J1_int_fn,
             omega,
             (l=l, h=h, N=integration_params.τ_integration_points,
                 rule=integration_params.integration_method)),
@@ -59,9 +53,7 @@ function SubsurfaceCore.forward(m::eburgers_psp, p, params=default_params_eburge
         τ_H,
         ω)
     int2 = broadcast(
-        (l,
-            h,
-            omega) -> integrate_s(J2_int_fn,
+        (l, h, omega) -> integrate_s(J2_int_fn,
             omega,
             (l=l, h=h, N=integration_params.τ_integration_points,
                 rule=integration_params.integration_method)),
@@ -79,8 +71,7 @@ function SubsurfaceCore.forward(m::eburgers_psp, p, params=default_params_eburge
             inv(x) * (exp(-0.5f0 * log(x / tau_p) * inv(sig))^2) * inv(1 + (ω * x)^2)
         end
         int11 = broadcast(
-            (omega,
-                tau_p) -> integrate_s((x, omega) -> J1_int_fn2(x, omega, tau_p), omega,
+            (omega, tau_p) -> integrate_s((x, omega) -> J1_int_fn2(x, omega, tau_p), omega,
                 (l=eps(typeof(omega))^40, h=Inf, N=1, rule=Val(:quadgk));
                 rtol=1.0f16 * eps(eltype(ω))),
             ω,
@@ -92,9 +83,8 @@ function SubsurfaceCore.forward(m::eburgers_psp, p, params=default_params_eburge
             (exp(-0.5f0 * log(x / tau_p) * inv(sig))^2) * inv(1 + (ω * x)^2)
         end
         int22 = broadcast(
-            (omega,
-                tau_p) -> integrate_s((x, omega) -> J2_int_fn2(x, omega, tau_p), omega,
-                (l=0.0f0, h=Inf, N=1, rule=Val(:quadgk))),
+            (omega, tau_p) -> integrate_s((x, omega) -> J2_int_fn2(x, omega, tau_p),
+                omega, (l=0.0f0, h=Inf, N=1, rule=Val(:quadgk))),
             ω,
             τ_P) # TODO : check this case
 
@@ -114,7 +104,8 @@ function SubsurfaceCore.forward(m::eburgers_psp, p, params=default_params_eburge
     return RockphyAnelastic(J1, J2, Qinv, Ma, Va, Vave)
 end
 
-function SubsurfaceCore.forward(m::premelt_anelastic, p, params=default_params_premelt_anelastic)
+function SubsurfaceCore.forward(
+        m::premelt_anelastic, p, params=default_params_premelt_anelastic)
     @unpack params_xfit, elastic_type, params_elastic, viscous_params = params
     @unpack include_direct_melt_effect, β_B, poro_Λ, α_B, A_B, τ_pp = params_xfit
 
@@ -163,8 +154,7 @@ function SubsurfaceCore.forward(m::premelt_anelastic, p, params=default_params_p
 end
 
 function SubsurfaceCore.forward(m::xfit_mxw, p, params=default_params_xfit_mxw)
-    @unpack α_a, α_b, α_c, α_τn, α2, β1, β2, τ_cutoff, melt_alpha, ϕ_c,
-    elastic_type, params_elastic, viscous_type, viscous_params = params
+    @unpack α_a, α_b, α_c, α_τn, α2, β1, β2, τ_cutoff, melt_alpha, ϕ_c, elastic_type, params_elastic, viscous_type, viscous_params = params
 
     resp_elastic = forward_for_anelastic(m, elastic_type, params_elastic)
     @unpack G, K, Vp, Vs = resp_elastic
@@ -185,8 +175,8 @@ function SubsurfaceCore.forward(m::xfit_mxw, p, params=default_params_xfit_mxw)
     J_int_fn(x, _) = inv(x) * xfit_mxw_func(x, α_a, α_b, α_c, α2, β1, β2, α_τn, τ_cutoff)
 
     int1 = broadcast(
-        tau_norm_f -> integrate_s(J_int_fn, 0.0f0, (
-            l=10.0f0^(-30.0f0), h=tau_norm_f, N=1, rule=Val(:quadgk))),
+        tau_norm_f -> integrate_s(
+            J_int_fn, 0.0f0, (l=10.0f0^(-30.0f0), h=tau_norm_f, N=1, rule=Val(:quadgk))),
         τ_norm_f) # TODO : check this case
 
     int2 = broadcast(J_int_fn, τ_norm_f, 0.0f0)
@@ -204,9 +194,9 @@ function SubsurfaceCore.forward(m::xfit_mxw, p, params=default_params_xfit_mxw)
     return RockphyAnelastic(J1, J2, Qinv, Ma, Va, Vave)
 end
 
-function SubsurfaceCore.forward(m::andrade_analytical, p, params=default_params_andrade_analytical)
-    @unpack α, β, η_ss, viscosity_method, viscosity_mech, elastic_type,
-    params_elastic, viscous_type, viscous_params = params
+function SubsurfaceCore.forward(
+        m::andrade_analytical, p, params=default_params_andrade_analytical)
+    @unpack α, β, η_ss, viscosity_method, viscosity_mech, elastic_type, params_elastic, viscous_type, viscous_params = params
 
     resp_elastic = forward_for_anelastic(m, elastic_type, params_elastic)
     @unpack G, K, Vp, Vs = resp_elastic

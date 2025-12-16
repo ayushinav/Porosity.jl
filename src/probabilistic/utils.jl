@@ -138,7 +138,8 @@ function SubsurfaceCore.to_dist_nt(d::T) where {T <: multi_phase_modelDistributi
 end
 
 function SubsurfaceCore.to_dist_nt(d::T) where {T <: multi_rp_modelDistribution}
-    return merge(to_dist_nt(d.cond), to_dist_nt(d.elastic), to_dist_nt(d.visc), to_dist_nt(d.anelastic))
+    return merge(to_dist_nt(d.cond), to_dist_nt(d.elastic),
+        to_dist_nt(d.visc), to_dist_nt(d.anelastic))
 end
 
 function SubsurfaceCore.to_dist_nt(d::T) where {T <: multi_rp_responseDistribution}

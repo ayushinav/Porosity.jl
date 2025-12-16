@@ -14,8 +14,8 @@ The dry solidus temperature can be obtained as a function of pressure `P` throug
 
 ```@example sol_plts
 f = Figure()
-ax1 = Axis(f[1, 1]; xlabel="solidus temp (K)", ylabel="depth (km)", backgroundcolor=(
-    :magenta, 0.05))
+ax1 = Axis(f[1, 1]; xlabel="solidus temp (K)",
+    ylabel="depth (km)", backgroundcolor=(:magenta, 0.05))
 ax1.yreversed = true
 
 xtfn(x) = @. string(round((x - 5) / 30.2; digits=2))
@@ -216,10 +216,14 @@ ps_nt = (; P, T, T_solidus, Ch2o, Cco2, D)
 size(ϕ)
 
 fig = Figure(; size=(800, 900))
-ax1 = Axis(fig[1, 1]; xlabel="bulk water conc. (ppm)", ylabel="bulk CO₂ conc. (ppm)", title="$(T[1]) K")
-ax2 = Axis(fig[1, 2]; xlabel="bulk water conc. (ppm)", ylabel="bulk CO₂ conc. (ppm)", title="$(T[2]) K")
-ax3 = Axis(fig[2, 1]; xlabel="bulk water conc. (ppm)", ylabel="bulk CO₂ conc. (ppm)", title="$(T[3]) K")
-ax4 = Axis(fig[2, 2]; xlabel="bulk water conc. (ppm)", ylabel="bulk CO₂ conc. (ppm)", title="$(T[4]) K")
+ax1 = Axis(fig[1, 1]; xlabel="bulk water conc. (ppm)",
+    ylabel="bulk CO₂ conc. (ppm)", title="$(T[1]) K")
+ax2 = Axis(fig[1, 2]; xlabel="bulk water conc. (ppm)",
+    ylabel="bulk CO₂ conc. (ppm)", title="$(T[2]) K")
+ax3 = Axis(fig[2, 1]; xlabel="bulk water conc. (ppm)",
+    ylabel="bulk CO₂ conc. (ppm)", title="$(T[3]) K")
+ax4 = Axis(fig[2, 2]; xlabel="bulk water conc. (ppm)",
+    ylabel="bulk CO₂ conc. (ppm)", title="$(T[4]) K")
 
 crange = extrema(ϕ)
 cmap = :thermal
@@ -232,7 +236,8 @@ contour!(ax3, vec(Ch2o), vec(Cco2), ϕ[3, :, :]; labels=true, color=:black, labe
 h = heatmap!(ax4, vec(Ch2o), vec(Cco2), ϕ[4, :, :]; colorrange=crange, colormap=cmap)
 contour!(ax4, vec(Ch2o), vec(Cco2), ϕ[4, :, :]; labels=true, color=:black, labelsize=14)
 Colorbar(fig[3, :], h; vertical=false, label="melt fraction")
-Label(fig[0, :], "melt fraction at dry solidus temp :  $(Int(round(T_solidus))) K"; fontsize=20)
+Label(fig[0, :], "melt fraction at dry solidus temp :  $(Int(round(T_solidus))) K";
+    fontsize=20)
 nothing # hide
 ```
 

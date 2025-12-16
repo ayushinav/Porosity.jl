@@ -75,7 +75,8 @@ model_anelastic = premelt_anelastic
 model_visc = xfit_premelt
 
 # combining the above models
-model_combine = multi_rp_modelType(model_two_phase, model_elastic, model_visc, model_anelastic)
+model_combine = multi_rp_modelType(
+    model_two_phase, model_elastic, model_visc, model_anelastic)
 ```
 
  2. **Input the rheological properties**: The next step is then to input the parameters as required by the models, e.g., for dry olivine only temperature is required and can be input as:
@@ -113,7 +114,8 @@ rdist = RockphyCondDistribution(normal_dist)
 
 n_samples = 10_000
 mcmc_strategy = mcmc_cache(mdist, rdist, n_samples, MH())
-mcmc_chain = stochastic_inverse(RockphyCond([log_cond_val]), RockphyCond([log_cond_var]), [], mcmc_strategy)
+mcmc_chain = stochastic_inverse(
+    RockphyCond([log_cond_val]), RockphyCond([log_cond_var]), [], mcmc_strategy)
 ```
 
 Here we demonstrate the inference of rock physics parameters to replicate the results presented in @Blatter2022 in \autoref{fig:demo_blatter}

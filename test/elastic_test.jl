@@ -1,4 +1,4 @@
-@testitem "elastic tests" tags = [:elastic] begin
+@testitem "elastic tests" tags=[:elastic] begin
     using JET
     T = collect(1273.0f0:30:1573.0f0)
     ρ = collect(3300.0f0:100.0f0:4300.0f0)

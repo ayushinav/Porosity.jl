@@ -1,4 +1,4 @@
-@testitem "anelastic tests" tags = [:anelastic] begin
+@testitem "anelastic tests" tags=[:anelastic] begin
     using JET
     T = collect(1073.0f0:30:1373.0f0)
     P = 2 .+ zero(T)
@@ -97,7 +97,8 @@
         @test_opt forward(model, [])
         @test_call forward(model, [])
         for k in fieldnames(RockphyAnelastic)
-            @test all(isapprox.(log10.(getfield(out_, k)), log10.(getfield(outs[m], k)), rtol=1.5f-2),)
+            @test all(isapprox.(
+                log10.(getfield(out_, k)), log10.(getfield(outs[m], k)), rtol=1.5f-2),)
         end
         modelD = methodsD_list[i](inps[m]...)
         @test sample_type(modelD) <: methods_list[i]

@@ -112,7 +112,8 @@ function ΔT_h2o_Katz2003(ps_nt)
     etype_ = eltype(P .+ Ch2o_m)
 
     Ch2o_m_sat = @. etype_(12 * P^(0.6f0) + P)
-    Ch2o_m_ = @. ifelse(Ch2o_m * 1.0f-4 < Ch2o_m_sat, etype_(Ch2o_m * 1.0f-4), etype_(Ch2o_m_sat))
+    Ch2o_m_ = @. ifelse(
+        Ch2o_m * 1.0f-4 < Ch2o_m_sat, etype_(Ch2o_m * 1.0f-4), etype_(Ch2o_m_sat))
     dT = @. K * (Ch2o_m_)^γ
     T_solidus = @. T_solidus - dT
     return (; T_solidus)
@@ -359,8 +360,10 @@ function f_melt(u, p, H2O_suppress_fn, CO2_suppress_fn)
     Ch2o_m = Ch2o * inv(D + u * (1 - D))
     Cco2_m = get_Cco2_m((; ϕ=u, Cco2, Cco2_sat)).Cco2_m
 
-    T_new_H2O = H2O_suppress_fn((; T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D, Ch2o_m)).T_solidus
-    T_new_CO2 = CO2_suppress_fn((; T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D, Cco2_m)).T_solidus
+    T_new_H2O = H2O_suppress_fn((;
+        T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D, Ch2o_m)).T_solidus
+    T_new_CO2 = CO2_suppress_fn((;
+        T, T_solidus, Ch2o, Cco2, Cco2_sat, P, D, Cco2_m)).T_solidus
     T_solidus_new = T_solidus - (2T_solidus - T_new_H2O - T_new_CO2)
     ΔT = max(zero(T - T_solidus_new), T - T_solidus_new)
     dTdF = -40 * P + 450
@@ -380,8 +383,8 @@ function get_melt_fraction_core(
     if f1 * f2 > 0
         return zero(etype_)
     else
-        prob_init = IntervalNonlinearProblem{false}(f, (
-            exp10(-15 * one(etype_)), one(etype_)), p)
+        prob_init = IntervalNonlinearProblem{false}(
+            f, (exp10(-15 * one(etype_)), one(etype_)), p)
         sol = solve(prob_init)
         return etype_(sol.u)
     end
@@ -426,7 +429,8 @@ get_melt_fraction(ps_nt)
 (ϕ = [0.041345720244193085, 0.05481061353960702, 0.072300827427471, 0.09337629457529527, 0.1171677298066955],)
 ```
 """
-function get_melt_fraction(ps_nt; H2O_suppress_fn=ΔT_h2o_Blatter2022, CO2_suppress_fn=ΔT_co2_Dasgupta2013)
+function get_melt_fraction(
+        ps_nt; H2O_suppress_fn=ΔT_h2o_Blatter2022, CO2_suppress_fn=ΔT_co2_Dasgupta2013)
     ps_nt = (; Ch2o=0.0f0, Cco2=0.0f0, Cco2_sat=38.0f4, D=0.005f0, ps_nt...)
     @unpack Cco2, Cco2_sat, Ch2o, T, T_solidus, P, D = ps_nt
 

@@ -8,8 +8,8 @@ const model_names_definition = (
     Ch2o_cpx="Water concentration in clinopyroxene (ppm)",
     Cco2_m="CO₂ concentration in melt (ppm)", T_solidus="Solidus Temperature (K)")
 
-function Base.show(io::IO, ::MIME"text/plain", m::model) where {model <:
-                                                                AbstractRockphyModel}
+function Base.show(
+        io::IO, ::MIME"text/plain", m::model) where {model <: AbstractRockphyModel}
     println(io, "Model : ", typeof(m).name.name)
     for k in propertynames(m)
         println(io, model_names_definition[k], " : ", getfield(m, k))
@@ -24,8 +24,8 @@ const resp_names_definition = (
     J2="Imaginary part of dynamic compliance (Pa⁻¹)", Qinv="Attenuation", M="Modulus (Pa)",
     V="Anelastic S-wave velocity : (m/s)", Vave="Frequency averaged S-wave velocity (m/s)")
 
-function Base.show(io::IO, ::MIME"text/plain", m::model) where {model <:
-                                                                AbstractRockphyResponse}
+function Base.show(
+        io::IO, ::MIME"text/plain", m::model) where {model <: AbstractRockphyResponse}
     println(io, "Rock physics Response : ", typeof(m).name.name)
     for k in propertynames(m)
         println(io, resp_names_definition[k], " : ", getfield(m, k))
