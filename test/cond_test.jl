@@ -1,4 +1,4 @@
-@testitem "conductivity tests" tags = [:cond] begin
+@testitem "conductivity tests" tags=[:cond] begin
     using JET
 
     T = collect(1273.0f0:30:1573.0f0)

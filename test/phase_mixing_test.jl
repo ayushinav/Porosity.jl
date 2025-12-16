@@ -1,4 +1,4 @@
-@testitem "two_phase" tags = [:phase_mixing] begin
+@testitem "two_phase" tags=[:phase_mixing] begin
     using JET
     m1 = two_phase_modelType(SEO3, Gaillard2008, HS1962_plus)
     ps_nt = (; T=[1200.0f0, 1400.0f0] .+ 273, P=3.0f0, ρ=3300.0f0, Ch2o_m=100.0f0, ϕ=0.1f0)
@@ -13,7 +13,8 @@
     resp = forward(model, [])
     @test :σ ∈ propertynames(resp)
 
-    m1dist = two_phase_modelDistributionType(SEO3Distribution, Gaillard2008Distribution, HS1962_plus)
+    m1dist = two_phase_modelDistributionType(
+        SEO3Distribution, Gaillard2008Distribution, HS1962_plus)
     modelD = m1dist(ps_nt)
     @test sample_type(modelD) <: two_phase_modelType
 
@@ -24,7 +25,7 @@
     @test_call forward_helper(sample_type(modelD), ps_nt, [], (; σ=no_tf), params_)
 end
 
-@testitem "multi_phase" tags = [:phase_mixing] begin
+@testitem "multi_phase" tags=[:phase_mixing] begin
     using JET
     m1 = multi_phase_modelType(SEO3, Sifre2014, Zhang2012, HS_minus_multi_phase)
     ps_nt = (; T=[1200.0f0] .+ 273, Ch2o_ol=[1.0f0], Ch2o_m=[1000.0f0],

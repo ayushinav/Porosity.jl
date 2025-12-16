@@ -29,12 +29,7 @@ function SubsurfaceCore.forward(m::HK2003, p, params=default_params_HK2003)
 
     for mech in keys(mechs)
         sr = broadcast(
-            (T,
-                P,
-                σ,
-                d,
-                ϕ,
-                fH2O) -> sr_flow_law_calculation_HK2003(
+            (T, P, σ, d, ϕ, fH2O) -> sr_flow_law_calculation_HK2003(
                 T, P * 1.0f9, σ, d, ϕ, fH2O, getfield(x_ϕ_c_vec, mech), mechs, mech),
             m.T,
             P,
