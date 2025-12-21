@@ -156,17 +156,17 @@ function mix_models(σs, ϕ, ::single_phase)
 end
 
 function mix_models(σs, ϕ, ::HS_plus_multi_phase)
-    σ_min = minimum(σs)
+    σ_max = maximum(σs)
 
-    σ = inv(sum([ϕ[i] * inv(σs[i] + 2σ_min) for i in eachindex(σs)])) - 2σ_min
+    σ = inv(sum([ϕ[i] * inv(σs[i] + 2σ_max) for i in eachindex(σs)])) - 2σ_max
 
     return σ
 end
 
 function mix_models(σs, ϕ, ::HS_minus_multi_phase)
-    σ_max = maximum(σs)
+    σ_min = minimum(σs)
 
-    σ = inv(sum([ϕ[i] * inv(σs[i] + 2σ_max) for i in eachindex(σs)])) - 2σ_max
+    σ = inv(sum([ϕ[i] * inv(σs[i] + 2σ_min) for i in eachindex(σs)])) - 2σ_min
 
     return σ
 end
