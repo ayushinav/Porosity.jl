@@ -1,10 +1,9 @@
 
 function SubsurfaceCore.forward(m::anharmonic, p, params=default_params_anharmonic)
-    @unpack T_K_ref, P_Pa_ref, Gu_0_ol, dG_dT, dG_dP, ν, Gu_0_crust,
-    dG_dT_crust, dG_dP_crust, Gu_tp_fn, Ku_tp_fn = params
+    @unpack T_K_ref, P_Pa_ref, Gu_0_ol, dG_dT, dG_dP, ν, Gu_0_crust, dG_dT_crust, dG_dP_crust, Gu_tp_fn, Ku_tp_fn = params
 
-    Gu₀, dG_dT₀,
-    dG_dP₀ = @. calc_Gu₀(Gu_0_ol, dG_dT, dG_dP, Gu_0_crust, dG_dT_crust, dG_dP_crust) #since χ is 1., we are always using ol
+    Gu₀, dG_dT₀, dG_dP₀ = @. calc_Gu₀(
+        Gu_0_ol, dG_dT, dG_dP, Gu_0_crust, dG_dT_crust, dG_dP_crust) #since χ is 1., we are always using ol
 
     ΔT = @. m.T - T_K_ref # K
     ΔP = @. m.P * 1.0f9 - P_Pa_ref # Pa
@@ -19,7 +18,8 @@ function SubsurfaceCore.forward(m::anharmonic, p, params=default_params_anharmon
     return RockphyElastic(Gu_tp, Ku_tp, Vp, Vs)
 end
 
-function SubsurfaceCore.forward(m::anharmonic_poro, p, params=default_params_anharmonic_poro)
+function SubsurfaceCore.forward(
+        m::anharmonic_poro, p, params=default_params_anharmonic_poro)
     @unpack m_A, m_K, ν, p_anharmonic = params
 
     anh_p = forward(anharmonic(m.T, m.P, m.ρ), [], p_anharmonic)
