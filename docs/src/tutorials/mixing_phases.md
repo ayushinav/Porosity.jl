@@ -182,7 +182,6 @@ m = multi_phase_modelType(UHO2014, Dai_Karato2009, Sifre2014, HS_plus_multi_phas
 logsig_mat = zeros(length(T), length(ϕ1), length(ϕ2))
 
 for i in eachindex(ϕ1), j in eachindex(ϕ2)
-
     ϕ = [ϕ1[i], ϕ2[j]]
     ps_nt = (; ps_nt_..., ϕ)
     model = m(ps_nt)
@@ -192,10 +191,14 @@ end
 fig = Figure(; size=(800, 900))
 crange = extrema(logsig_mat)
 cmap = :thermal
-ax1 = Axis(fig[1, 1]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[1]) K")
-ax2 = Axis(fig[1, 2]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[2]) K")
-ax3 = Axis(fig[2, 1]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[3]) K")
-ax4 = Axis(fig[2, 2]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[4]) K")
+ax1 = Axis(fig[1, 1]; xlabel="ol. vol. fraction",
+    ylabel="opx. vol. fraction", title="Temp : $(T[1]) K")
+ax2 = Axis(fig[1, 2]; xlabel="ol. vol. fraction",
+    ylabel="opx. vol. fraction", title="Temp : $(T[2]) K")
+ax3 = Axis(fig[2, 1]; xlabel="ol. vol. fraction",
+    ylabel="opx. vol. fraction", title="Temp : $(T[3]) K")
+ax4 = Axis(fig[2, 2]; xlabel="ol. vol. fraction",
+    ylabel="opx. vol. fraction", title="Temp : $(T[4]) K")
 
 heatmap!(ax1, ϕ1, ϕ2, logsig_mat[1, :, :]; colorrange=crange, colormap=cmap)
 contour!(ax1, ϕ1, ϕ2, logsig_mat[1, :, :]; color=:black)
@@ -229,7 +232,6 @@ m = multi_phase_modelType(UHO2014, Dai_Karato2009, Sifre2014, HS_minus_multi_pha
 logsig_mat = zeros(length(T), length(ϕ1), length(ϕ2))
 
 for i in eachindex(ϕ1), j in eachindex(ϕ2)
-
     ϕ = [ϕ1[i], ϕ2[j]]
     ps_nt = (; ps_nt_..., ϕ)
     model = m(ps_nt)
@@ -239,10 +241,14 @@ end
 fig = Figure(; size=(800, 900))
 crange = extrema(logsig_mat)
 cmap = :thermal
-ax1 = Axis(fig[1, 1]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[1]) K")
-ax2 = Axis(fig[1, 2]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[2]) K")
-ax3 = Axis(fig[2, 1]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[3]) K")
-ax4 = Axis(fig[2, 2]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[4]) K")
+ax1 = Axis(fig[1, 1]; xlabel="ol. vol. fraction",
+    ylabel="opx. vol. fraction", title="Temp : $(T[1]) K")
+ax2 = Axis(fig[1, 2]; xlabel="ol. vol. fraction",
+    ylabel="opx. vol. fraction", title="Temp : $(T[2]) K")
+ax3 = Axis(fig[2, 1]; xlabel="ol. vol. fraction",
+    ylabel="opx. vol. fraction", title="Temp : $(T[3]) K")
+ax4 = Axis(fig[2, 2]; xlabel="ol. vol. fraction",
+    ylabel="opx. vol. fraction", title="Temp : $(T[4]) K")
 
 heatmap!(ax1, ϕ1, ϕ2, logsig_mat[1, :, :]; colorrange=crange, colormap=cmap)
 contour!(ax1, ϕ1, ϕ2, logsig_mat[1, :, :]; color=:black)
@@ -280,7 +286,6 @@ m = multi_phase_modelType(UHO2014, Dai_Karato2009, Sifre2014, GAL)
 logsig_mat = zeros(length(T), length(ϕ1), length(ϕ2))
 
 for i in eachindex(ϕ1), j in eachindex(ϕ2)
-
     ϕ = [ϕ1[i], ϕ2[j]]
     ps_nt = (; ps_nt_..., ϕ, m_GAL=[5.0, 4.0, 1.2])
     model = m(ps_nt)
@@ -290,10 +295,14 @@ end
 fig = Figure(; size=(800, 900))
 crange = extrema(logsig_mat)
 cmap = :thermal
-ax1 = Axis(fig[1, 1]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[1]) K")
-ax2 = Axis(fig[1, 2]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[2]) K")
-ax3 = Axis(fig[2, 1]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[3]) K")
-ax4 = Axis(fig[2, 2]; xlabel="ol. vol. fraction", ylabel="opx. vol. fraction", title="Temp : $(T[4]) K")
+ax1 = Axis(fig[1, 1]; xlabel="ol. vol. fraction",
+    ylabel="opx. vol. fraction", title="Temp : $(T[1]) K")
+ax2 = Axis(fig[1, 2]; xlabel="ol. vol. fraction",
+    ylabel="opx. vol. fraction", title="Temp : $(T[2]) K")
+ax3 = Axis(fig[2, 1]; xlabel="ol. vol. fraction",
+    ylabel="opx. vol. fraction", title="Temp : $(T[3]) K")
+ax4 = Axis(fig[2, 2]; xlabel="ol. vol. fraction",
+    ylabel="opx. vol. fraction", title="Temp : $(T[4]) K")
 
 heatmap!(ax1, ϕ1, ϕ2, logsig_mat[1, :, :]; colorrange=crange, colormap=cmap)
 contour!(ax1, ϕ1, ϕ2, logsig_mat[1, :, :]; color=:black)

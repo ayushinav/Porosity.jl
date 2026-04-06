@@ -49,7 +49,7 @@ When functions and complex expressions are needed to be performed, `@.` can be u
 ```@repl
 x = [10, 20, 30, 40, 50]
 y = exp.(sin.(x ./ 10))
-y = @. exp(sin(x/10))
+y = @. exp(sin(x / 10))
 ```
 
 ## Functions
@@ -70,8 +70,8 @@ Creating new functions is also similar to MATLAB, and is done via the following 
 
 ```@repl
 function f(x, y)
-    a = x/(1 + x^2)
-    b = y/(1 + y^2)
+    a = x / (1 + x^2)
+    b = y / (1 + y^2)
     z = a + b
     return z
 end
@@ -94,13 +94,13 @@ A lot of times, we want default arguments or named arguments. Consider the follo
 ```@example fn_demo
 function f(x, y, a=2; operation_type=2)
     if operation_type == 1
-        return x+y/a
+        return x + y / a
     elseif operation_type == 2
-        return x/(x^2 + a^2)
+        return x / (x^2 + a^2)
     elseif operation_type == 3
-        return x/(x^2 + a^2)
+        return x / (x^2 + a^2)
     else
-        return y/a
+        return y / a
     end
 end
 ```
