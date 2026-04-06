@@ -143,7 +143,7 @@ Refer to the documentation for usage examples.
 """
 mutable struct const_matrixDistribution{F <: Union{Distribution, AbstractArray}} <:
                AbstractCondModelDistribution
-    cond::F
+    σ::F
 end
 
 """
