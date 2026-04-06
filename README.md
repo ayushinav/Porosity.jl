@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/src/assets/logo.png" alt="Logo" width="20%">
+</p>
+
 # Porosity.jl
 
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://ayushinav.github.io/Porosity.jl/stable/)
@@ -6,6 +10,7 @@
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/ayushinav/Porosity.jl/Tests.yml)
 [![codecov](https://codecov.io/gh/ayushinav/Porosity.jl/graph/badge.svg?token=VQM6W3DUI4)](https://codecov.io/gh/ayushinav/Porosity.jl)
 [![](https://img.shields.io/badge/%F0%9F%9B%A9%EF%B8%8F_tested_with-JET.jl-233f9a)](https://github.com/aviatesk/JET.jl)
+[![DOI](https://zenodo.org/badge/1030654321.svg)](https://doi.org/10.5281/zenodo.18628493)
 
 ## Rock physics modeling
 
