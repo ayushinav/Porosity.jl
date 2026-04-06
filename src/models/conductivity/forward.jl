@@ -55,7 +55,8 @@ function SubsurfaceCore.forward(m::Jones2012, p, params=default_params_Jones2012
 end
 
 function SubsurfaceCore.forward(m::Poe2010, p, params=default_params_Poe2010)
-    @unpack S_H100, H_H100, a_H100, r_H100, S_H010, H_H010, a_H010, r_H010, S_H001, H_H001, a_H001, r_H001, S_A100, H_A100, S_A010, H_A010, S_A001, H_A001 = params
+    @unpack S_H100, H_H100, a_H100, r_H100, S_H010, H_H010, a_H010, r_H010, S_H001, H_H001,
+    a_H001, r_H001, S_A100, H_A100, S_A010, H_A010, S_A001, H_A001 = params
 
     # Anhydrous
     σ_A100 = @. arrh_dry(S_A100, H_A100, boltz_k, m.T)
