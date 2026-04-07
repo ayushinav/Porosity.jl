@@ -99,7 +99,8 @@ function SubsurfaceCore.forward(model::two_phase_model{V, T1, T2, M},
     @. σ1 = exp10(σ1)
     @. σ2 = exp10(σ2)
 
-    σ = broadcast((sig1, sig2, phi) -> mix_models([sig1, sig2], phi, model.mix), σ1, σ2, model.ϕ)
+    σ = broadcast(
+        (sig1, sig2, phi) -> mix_models([sig1, sig2], phi, model.mix), σ1, σ2, model.ϕ)
 
     return RockphyCond(log10.(σ))
 end
@@ -112,7 +113,8 @@ function SubsurfaceCore.forward(model::two_phase_model{V, T1, T2, M}, p,
     @. σ1 = exp10(σ1)
     @. σ2 = exp10(σ2)
 
-    σ = broadcast((sig1, sig2, phi) -> mix_models([sig1, sig2], phi, model.mix), σ1, σ2, model.ϕ)
+    σ = broadcast(
+        (sig1, sig2, phi) -> mix_models([sig1, sig2], phi, model.mix), σ1, σ2, model.ϕ)
 
     return RockphyCond(log10.(σ))
 end
@@ -359,7 +361,8 @@ function broadcast_helper_(m_tup, phi, mix, ::Val{2})
 end
 
 function broadcast_helper_(m_tup, phi, mix, ::Val{3})
-    broadcast((m1, m2, m3) -> mix_models((m1, m2, m3), phi, mix), m_tup[1], m_tup[2], m_tup[3])
+    broadcast(
+        (m1, m2, m3) -> mix_models((m1, m2, m3), phi, mix), m_tup[1], m_tup[2], m_tup[3])
 end
 
 function broadcast_helper_(m_tup, phi, mix, ::Val{4})
@@ -385,8 +388,8 @@ end
 
 function broadcast_helper_(m_tup, phi, mix, ::Val{8})
     broadcast(
-        (m1, m2, m3, m4, m5, m6, m7,
-            m8) -> mix_models((m1, m2, m3, m4, m5, m6, m7, m8), phi, mix),
+        (m1, m2, m3, m4, m5, m6, m7, m8) -> mix_models(
+            (m1, m2, m3, m4, m5, m6, m7, m8), phi, mix),
         m_tup[1],
         m_tup[2],
         m_tup[3],
@@ -401,13 +404,13 @@ function default_params(::Type{multi_phase_modelType{
         T1, T2, T3, T4, T5, T6, T7, T8, M}}) where {T1, T2, T3, T4, T5, T6, T7, T8, M}
     (;
         zip([:m1, :m2, :m3, :m4, :m5, :m6, :m7, :m8],
-        [default_params(T1), default_params(T2), default_params(T3),
-            default_params(T4), default_params(T5), default_params(T6),
-            default_params(T7), default_params(T8)])...)
+            [default_params(T1), default_params(T2), default_params(T3),
+                default_params(T4), default_params(T5), default_params(T6),
+                default_params(T7), default_params(T8)])...)
 end
 
-function SubsurfaceCore.from_nt(m::Type{T}, nt::NamedTuple) where {T <:
-                                                                   multi_phase_modelType}
+function SubsurfaceCore.from_nt(
+        m::Type{T}, nt::NamedTuple) where {T <: multi_phase_modelType}
     ϕ = nt.ϕ
     m1 = m.types[1].parameters[1]
     m2 = m.types[2].parameters[1]
@@ -429,8 +432,8 @@ function SubsurfaceCore.from_nt(m::Type{T}, nt::NamedTuple) where {T <:
 
     mix = from_nt(m.types[9].parameters[1], nt)
 
-    ϕ_vec = rearrange_ϕ(ϕ, multi_phase_modelType(
-        m1, m2, m3, m4, m5, m6, m7, m8, m.types[9].parameters[1]))
+    ϕ_vec = rearrange_ϕ(
+        ϕ, multi_phase_modelType(m1, m2, m3, m4, m5, m6, m7, m8, m.types[9].parameters[1]))
 
     return multi_phase_model(
         ϕ_vec, model1, model2, model3, model4, model5, model6, model7, model8, mix)

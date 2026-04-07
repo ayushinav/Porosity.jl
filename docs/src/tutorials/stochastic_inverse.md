@@ -78,7 +78,8 @@ f # hide
 Lets try to also infer the water content along with the temperature. Everything remains the same, except that now, in `ps_nt`, the vector corresponding to water content `Ch2o_ol` will be replaced by a corresponding distribution.
 
 ```@example rp_si
-mdist = Poe2010Distribution(MvNormal([1200.0], [400.0;]), product_distribution([Uniform(50.0, 150.0)]))
+mdist = Poe2010Distribution(
+    MvNormal([1200.0], [400.0;]), product_distribution([Uniform(50.0, 150.0)]))
 rdist = RockphyCondDistribution(Porosity.normal_dist)
 
 m_cache = mcmc_cache(mdist, rdist, 1000, Prior());
@@ -205,7 +206,8 @@ err_resp = multi_rp_response(RockphyCond(0.01 .* abs.(resp.cond.σ)),
 ps_nt_dist = (; T=product_distribution([Uniform(1200.0, 1400.0)]), P=[3.0], ρ=[3300.0],
     Ch2o_m=MvNormal([100.0], [20.0;]), ϕ=product_distribution([Uniform(0.01, 0.2)]))
 
-m1 = multi_rp_modelDistributionType(SEO3Distribution, anharmonic_poroDistribution, Nothing, Nothing)
+m1 = multi_rp_modelDistributionType(
+    SEO3Distribution, anharmonic_poroDistribution, Nothing, Nothing)
 mdist = m1(ps_nt_dist)
 # rdist = RockphyCondDistribution(Porosity.normal_dist)
 rdist = Porosity.multi_rp_responseDistribution(RockphyCondDistribution(normal_dist),
@@ -283,8 +285,10 @@ ps_nt_dist = (; T=product_distribution([Uniform(1270.0, 1670.0)]),
     Ch2o_m=product_distribution([Uniform(50.0, 150.0)]), Cco2_m=[100.0],
     ϕ=product_distribution([Uniform(0.01, 0.2)]), P=[3.0], ρ=[3300.0])
 
-m_mixdist = two_phase_modelDistributionType(SEO3Distribution, Sifre2014Distribution, HS1962_plus)
-m = multi_rp_modelDistributionType(typeof(m_mixdist), anharmonicDistribution, Nothing, Nothing)
+m_mixdist = two_phase_modelDistributionType(
+    SEO3Distribution, Sifre2014Distribution, HS1962_plus)
+m = multi_rp_modelDistributionType(
+    typeof(m_mixdist), anharmonicDistribution, Nothing, Nothing)
 
 mdist = m(ps_nt_dist);
 rdist = Porosity.multi_rp_responseDistribution(RockphyCondDistribution(normal_dist),
