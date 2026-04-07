@@ -77,7 +77,6 @@ See how the `plot_model` function returns a `figure` and an `axis`. If we want t
 
 arr3 = arr1 .^ 2
 lines!(arr1, arr3)
-
 ```
 
 We only needed to pass `ax` to plot on the same `axis`. This might also seem a bit intuitive as well. At this point, we want to encourage creating empty `figure` beforehand and then always using mutating functions. This gives us more control on how the axes are arranged among other stuff. Here's an example to make things clear.

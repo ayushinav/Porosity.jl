@@ -1,7 +1,6 @@
 <p align="center">
   <img src="docs/src/assets/logo.png" alt="Logo" width="20%">
 </p>
-
 # Porosity.jl
 
 [![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://ayushinav.github.io/Porosity.jl/stable/)

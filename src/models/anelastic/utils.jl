@@ -1,8 +1,7 @@
 # andrade_psp
 
 function calc_X̃(T, d, P, ϕ, params_anelastic)
-    @unpack n, β, τ_MR, E, G_UR, TR, PR, dR, Vstar, M, melt_alpha, ϕ_c,
-    elastic_type, params_elastic, melt_enhancement = params_anelastic
+    @unpack n, β, τ_MR, E, G_UR, TR, PR, dR, Vstar, M, melt_alpha, ϕ_c, elastic_type, params_elastic, melt_enhancement = params_anelastic
 
     X̃ = @. (d / dR)^(-M) * exp((-E / (gas_R * 1.0f3)) * (inv(T) - inv(TR)) -
                 Vstar / (gas_R * 1.0f3) * (P / T - PR / TR) * 1.0f9)
@@ -47,12 +46,7 @@ function get_η_diff(m, viscous_type::Val{HK2003}, params_viscous)
     x_ϕ_c_vec = get_melt_settings_for_x_ϕ_c(melt_enhancement)
     fH2O = @. calc_fH2O(m.Ch2o_ol, ch2o_o, P, m.T)
     ϵ_rate_diff = broadcast(
-        (T,
-            P,
-            σ,
-            d,
-            ϕ,
-            fH2O) -> sr_flow_law_calculation_HK2003(
+        (T, P, σ, d, ϕ, fH2O) -> sr_flow_law_calculation_HK2003(
             T, P * 1.0f9, σ, d, ϕ, fH2O, getfield(x_ϕ_c_vec, :diff), mechs, :diff),
         m.T,
         P,
@@ -66,15 +60,15 @@ function get_η_diff(m, viscous_type::Val{HK2003}, params_viscous)
 end
 
 function get_η_diff(m, viscous_type::Val{xfit_premelt}, params_viscous)
-    resp_xfit_premelt = forward(xfit_premelt(m.T, m.P, m.dg, m.σ, m.ϕ, m.T_solidus), [], params_viscous)
+    resp_xfit_premelt = forward(
+        xfit_premelt(m.T, m.P, m.dg, m.σ, m.ϕ, m.T_solidus), [], params_viscous)
 
     return resp_xfit_premelt.η
 end
 
 function calc_maxwell_times(Gu, m::eburgers_psp, params_btype, JF10_visc,
         params_viscous, viscous_type, melt_enhancement)
-    @unpack TR, PR, dR, E, Vstar, Tau_LR, Tau_HR, Tau_MR,
-    Tau_PR, m_a, m_v, melt_alpha, ϕ_c = params_btype
+    @unpack TR, PR, dR, E, Vstar, Tau_LR, Tau_HR, Tau_MR, Tau_PR, m_a, m_v, melt_alpha, ϕ_c = params_btype
     x_ϕ_c = getfield(get_melt_settings_for_x_ϕ_c(melt_enhancement), :diff)
 
     if JF10_visc
@@ -164,9 +158,7 @@ end
 # xfit_premelt aka premelt_anelastic
 
 function calc_Ap(Tn, ϕ, params)
-    @unpack α_B,
-    A_B, τ_pp, A_p_fac_1, A_p_fac_2, A_p_fac_3, σ_p_fac_1, σ_p_fac_2, σ_p_fac_3,
-    A_p_Tn_pts, σ_p_Tn_pts, include_direct_melt_effect, β, β_B, poro_Λ = params
+    @unpack α_B, A_B, τ_pp, A_p_fac_1, A_p_fac_2, A_p_fac_3, σ_p_fac_1, σ_p_fac_2, σ_p_fac_3, A_p_Tn_pts, σ_p_Tn_pts, include_direct_melt_effect, β, β_B, poro_Λ = params
 
     β_p = (include_direct_melt_effect) ? β : 0.0f0
 
@@ -189,9 +181,7 @@ function calc_Ap(Tn, ϕ, params)
 end
 
 function calc_σp(Tn, params)
-    @unpack α_B,
-    A_B, τ_pp, A_p_fac_1, A_p_fac_2, A_p_fac_3, σ_p_fac_1, σ_p_fac_2, σ_p_fac_3,
-    A_p_Tn_pts, σ_p_Tn_pts, include_direct_melt_effect, β, β_B, poro_Λ = params
+    @unpack α_B, A_B, τ_pp, A_p_fac_1, A_p_fac_2, A_p_fac_3, σ_p_fac_1, σ_p_fac_2, σ_p_fac_3, A_p_Tn_pts, σ_p_Tn_pts, include_direct_melt_effect, β, β_B, poro_Λ = params
 
     σ_p = 0.0f0
 
