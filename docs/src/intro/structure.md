@@ -18,7 +18,7 @@ model_type = SEO3
 m = model_type(T)
 
 # forward
-resp = forward(m, [])
+resp = forward(m, nothing)
 ```
 
 ```julia [Elastic]
@@ -29,7 +29,7 @@ model_type = anharmonic
 m = model_type(T, P, ρ)
 
 # forward
-resp = forward(m, [])
+resp = forward(m, nothing)
 ```
 
 ```julia [Viscous]
@@ -40,7 +40,7 @@ model_type = HK2003
 m = model_type(T, P, dg, σ, ϕ)
 
 # forward
-resp = forward(m, [])
+resp = forward(m, nothing)
 ```
 
 ```julia [Anelastic]
@@ -51,7 +51,7 @@ model_type = andrade_psp
 m = model_type(T, P, dg, σ, ϕ, ρ, f)
 
 # forward
-resp = forward(m, [])
+resp = forward(m, nothing)
 ```
 
 ```julia [Phase mixing type]
@@ -63,7 +63,7 @@ ps_nt = (; T, Ch2o_ol, Ch2o_m, Cco2_m)
 m = model_type(ps_nt)
 
 # forward
-resp = forward(m, [])
+resp = forward(m, nothing)
 ```
 
 ```julia [Combine models]
@@ -75,7 +75,7 @@ ps_nt = (; T, Ch2o_ol, P, ρ, dg, σ, ϕ, f)
 m = model_type(ps_nt)
 
 # forward
-resp = forward(m, [])
+resp = forward(m, nothing)
 ```
 
 ```julia [Tune models]
@@ -89,7 +89,7 @@ ps_nt = (; T, Ch2o, P)
 m = model_type(ps_nt)
 
 # forward
-resp = forward(m, [])
+resp = forward(m, nothing)
 ```
 
 :::

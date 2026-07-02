@@ -33,7 +33,7 @@ nothing # hide
 and then as usual get the response
 
 ```@example mix_phases
-resp = forward(model, [])
+resp = forward(model, nothing)
 nothing # hide
 ```
 
@@ -75,7 +75,7 @@ f # hide
 
 The above might seem complicated at the first sight but bears a very close analogy with the other rock physics types. Lets break it down bottom up :
 
-  - We had `forward(model, [])` similar to any other rock physics type, the last step to get the responses is to call the `forward` function.
+  - We had `forward(model, nothing)` similar to any other rock physics type, the last step to get the responses is to call the `forward` function.
   - Before that, we had `m(ps_nt)` where `ps_nt` had the parameters. This looks very much like `SEO3(1000. + 273)` or `anharmonic(T, P, ρ)`. Instead of passing the parameters as such, we now have to pass them through the `NamedTuple` called `ps_nt` because now, we do not know beforehand what parameters the mixed model will depend on. Had we used `SEO3` with `Gaillard2008`, we would have only needed temperature (and obviously melt fraction).
   - Before that, in the very first step, we had `two_phase_modelType(Yoshino2009, Sifre2014, HS1962_plus())`. Now, we do not have a comparison step here, but we do know that the output from this `m` is used in the similar fashion as `SEO3`, `Yoshino2009` or `Sifre2014`. The `two_phase_modelType` function allows us to create one of these "types". For two phase mixing, we require the two phases along with the mixing law. Once we know them, we can completely define the physics at play, similar to how `SEO3` or `Yoshino2009` defines it in their way.
 
@@ -96,19 +96,19 @@ m = two_phase_modelType(Yoshino2009, Sifre2014, HS1962_plus)
 ps_nt = (; ϕ=ϕ, T=T, Ch2o_ol=Ch2o_ol, Ch2o_m=Ch2o_m, Cco2_m=Cco2_m)
 model = m(ps_nt)
 
-sig1 = 10.0f0 .^ forward(model, []).σ
+sig1 = 10.0f0 .^ forward(model, nothing).σ
 
 m = two_phase_modelType(Yoshino2009, Sifre2014, HS1962_minus)
 ps_nt = (; ϕ=ϕ, T=T, Ch2o_ol=Ch2o_ol, Ch2o_m=Ch2o_m, Cco2_m=Cco2_m)
 model = m(ps_nt)
 
-sig2 = 10.0f0 .^ forward(model, []).σ
+sig2 = 10.0f0 .^ forward(model, nothing).σ
 
 m = two_phase_modelType(Yoshino2009, Sifre2014, MAL)
 ps_nt = (; ϕ=ϕ, T=T, Ch2o_ol=Ch2o_ol, Ch2o_m=Ch2o_m, Cco2_m=Cco2_m, m_MAL=1.2f0)
 model = m(ps_nt)
 
-sig3 = 10.0f0 .^ forward(model, []).σ
+sig3 = 10.0f0 .^ forward(model, nothing).σ
 
 # plots
 
@@ -186,7 +186,7 @@ for i in eachindex(ϕ1), j in eachindex(ϕ2)
     ϕ = [ϕ1[i], ϕ2[j]]
     ps_nt = (; ps_nt_..., ϕ)
     model = m(ps_nt)
-    logsig_mat[:, i, j] .= forward(model, []).σ
+    logsig_mat[:, i, j] .= forward(model, nothing).σ
 end
 
 fig = Figure(; size=(800, 900))
@@ -233,7 +233,7 @@ for i in eachindex(ϕ1), j in eachindex(ϕ2)
     ϕ = [ϕ1[i], ϕ2[j]]
     ps_nt = (; ps_nt_..., ϕ)
     model = m(ps_nt)
-    logsig_mat[:, i, j] .= forward(model, []).σ
+    logsig_mat[:, i, j] .= forward(model, nothing).σ
 end
 
 fig = Figure(; size=(800, 900))
@@ -284,7 +284,7 @@ for i in eachindex(ϕ1), j in eachindex(ϕ2)
     ϕ = [ϕ1[i], ϕ2[j]]
     ps_nt = (; ps_nt_..., ϕ, m_GAL=[5.0, 4.0, 1.2])
     model = m(ps_nt)
-    logsig_mat[:, i, j] .= forward(model, []).σ
+    logsig_mat[:, i, j] .= forward(model, nothing).σ
 end
 
 fig = Figure(; size=(800, 900))

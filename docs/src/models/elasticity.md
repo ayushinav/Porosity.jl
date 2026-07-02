@@ -23,7 +23,7 @@ T = (600:1600) .+ 273.0
 P = 2.0
 ρ = [2700, 2900, 3100, 3300]'
 m = anharmonic(T, P, ρ)
-resp = forward(m, []);
+resp = forward(m, nothing);
 
 resp_fields = [:K, :G, :Vp, :Vs]
 units = ["GPa", "GPa", "km/s", "km/s"]
@@ -85,7 +85,7 @@ P = 2.0
 ρ = 3300.0
 ϕ = [0.01, 0.03, 0.1, 0.3]'
 m = anharmonic_poro(T, P, ρ, ϕ)
-resp = forward(m, []);
+resp = forward(m, nothing);
 
 resp_fields = [:K, :G, :Vp, :Vs]
 units = ["GPa", "GPa", "km/s", "km/s"]
@@ -141,7 +141,7 @@ P = 2.0
 ρ = [2700, 2900, 3100, 3300]'
 ϕ = 0.1
 m = anharmonic_poro(T, P, ρ, ϕ)
-resp = forward(m, []);
+resp = forward(m, nothing);
 
 resp_fields = [:K, :G, :Vp, :Vs]
 units = ["GPa", "GPa", "km/s", "km/s"]
@@ -205,7 +205,7 @@ f = Figure(; size=(700, 700))
 T = (600:1600) .+ 273.0
 P = 2.0
 m = SLB2005(T, P)
-resp = forward(m, []);
+resp = forward(m, nothing);
 
 resp_fields = [:K, :G, :Vp, :Vs]
 units = ["GPa", "GPa", "km/s", "km/s"]

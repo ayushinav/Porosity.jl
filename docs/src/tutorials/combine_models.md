@@ -34,7 +34,7 @@ nothing # hide
 and then as usual get the response
 
 ```@example multi_rp
-resp = forward(model, [])
+resp = forward(model, nothing)
 nothing # hide
 ```
 
@@ -120,7 +120,7 @@ nothing # hide
 and then as usual get the response
 
 ```@example multi_rp
-resp = forward(model, [])
+resp = forward(model, nothing)
 nothing # hide
 ```
 

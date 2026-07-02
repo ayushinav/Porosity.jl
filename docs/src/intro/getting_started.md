@@ -20,7 +20,7 @@ model_SEO3 = SEO3(T)
 and then calling `forward` on it
 
 ```@example rp_intro
-forward(model_SEO3, [])
+forward(model_SEO3, nothing)
 ```
 
 The `[]` argument is needed to make the interface consistent. It is not used anywhere, and you can pass any value to it.
@@ -30,7 +30,7 @@ You can pass a whole vector for temperature and get the result :
 ```@example rp_intro
 T = (800:100:1200) .+ 273.0
 model_SEO3 = SEO3(T)
-forward(model_SEO3, [])
+forward(model_SEO3, nothing)
 ```
 
 ## Dimensions
@@ -45,7 +45,7 @@ dg = [1.0, 3.0, 10.0, 30.0]'
 ϕ = 0.015
 
 m = HZK2011(T, P, dg, σ, ϕ)
-resp = forward(m, []);
+resp = forward(m, nothing);
 println("size of T : ", size(T))
 println("size of broadcasted array (same as output): ", size(T .+ P .+ dg .+ σ .+ ϕ)) # 
 println("size of ϵ_rate : ", size(resp.ϵ_rate))
@@ -64,7 +64,7 @@ dg = collect(range(0.1; stop=30.0, length=length(T))) # same size as T
 ϕ = 0.015
 
 m = HZK2011(T, P, dg, σ, ϕ)
-resp = forward(m, []);
+resp = forward(m, nothing);
 
 println("size of T : ", size(T))
 println("size of P : ", size(P))
@@ -89,7 +89,7 @@ T_solidus = 1100 + 273.0
 f = 10 .^ -collect(range(-2, 4; length=100))'
 
 m = premelt_anelastic(T, P, dg, σ, ϕ, ρ, 0.0, T_solidus, f)
-resp = forward(m, [])
+resp = forward(m, nothing)
 
 println("size of T : ", size(T))
 println("size of P : ", size(P))
@@ -111,7 +111,7 @@ T_solidus = 1100 + 273.0
 f = 10 .^ -reshape(collect(range(-2, 4; length=100)), 1, 1, :)
 
 m = premelt_anelastic(T, P, dg, σ, ϕ, ρ, 0.0, T_solidus, f)
-resp = forward(m, [])
+resp = forward(m, nothing)
 
 println("size of T : ", size(T))
 println("size of P : ", size(P))
@@ -135,7 +135,7 @@ These default values are used by default for all the rock physics models. The `f
 ```@example rp_intro
 T = 1000 + 273.0
 m = SEO3(T)
-forward(m, [])
+forward(m, nothing)
 ```
 
 Above is same as :
@@ -143,7 +143,7 @@ Above is same as :
 ```@example rp_intro
 T = 1000 + 273.0
 m = SEO3(T)
-forward(m, [], default_ps_SEO3)
+forward(m, nothing, default_ps_SEO3)
 ```
 
 If you want to use different values for certain laws, you need to create another `params` object, eg. Let's change `S_bfe` and `S_bmg` to different values :
@@ -157,7 +157,7 @@ and then we should see a different output
 ```@example rp_intro
 T = 1000 + 273.0
 m = SEO3(T)
-forward(m, [], new_params_SEO3)
+forward(m, nothing, new_params_SEO3)
 ```
 
 Notice the change in outputs from `forward`.

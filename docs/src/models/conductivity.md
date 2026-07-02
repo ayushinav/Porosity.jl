@@ -35,7 +35,7 @@ linkyaxes!(ax, ax2)
 
 T = (700:1600) .+ 273.0
 m = SEO3(T)
-logsig = forward(m, []).σ
+logsig = forward(m, nothing).σ
 
 lines!(ax, inv.(T) .* 1e4, 10 .^ logsig)
 lines!(ax2, inv.(T) .* 1e4, 10 .^ logsig; alpha=0)
@@ -80,7 +80,7 @@ linkyaxes!(ax, ax2)
 T = (500:1400) .+ 273.0
 Ch2o = [0.0, 0.01, 0.03, 0.1]' .* 1e4
 m = Wang2006(T, Ch2o)
-logsig = forward(m, []).σ
+logsig = forward(m, nothing).σ
 
 for i in eachindex(Ch2o)
     w = Ch2o[i]
@@ -132,7 +132,7 @@ linkyaxes!(ax, ax2)
 T = (600:1600) .+ 273.0
 Ch2o = [0.0, 400, 600, 2000]'
 m = Yoshino2009(T, Ch2o)
-logsig = forward(m, []).σ
+logsig = forward(m, nothing).σ
 
 for i in eachindex(Ch2o)
     w = Ch2o[i]
@@ -184,7 +184,7 @@ linkyaxes!(ax, ax2)
 T = (200:1600) .+ 273.0
 Ch2o = [0.0, 400, 600, 2000]'
 m = Poe2010(T, Ch2o)
-logsig = forward(m, []).σ
+logsig = forward(m, nothing).σ
 
 for i in eachindex(Ch2o)
     w = Ch2o[i]
@@ -236,7 +236,7 @@ linkyaxes!(ax, ax2)
 T = (200:1600) .+ 273.0
 Ch2o = [0.0, 400, 600, 2000]'
 m = Jones2012(T, Ch2o)
-logsig = forward(m, []).σ
+logsig = forward(m, nothing).σ
 
 for i in eachindex(Ch2o)
     w = Ch2o[i]
@@ -288,7 +288,7 @@ linkyaxes!(ax, ax2)
 T = (600:1600) .+ 273.0
 Ch2o = [0.0, 400, 600, 2000]'
 m = Jones2012(T, Ch2o)
-logsig = forward(m, []).σ
+logsig = forward(m, nothing).σ
 
 for i in eachindex(Ch2o)
     w = Ch2o[i]
@@ -342,7 +342,7 @@ linkyaxes!(ax, ax2)
 T = (1000:1400) .+ 273.0
 Ch2o = [0.0, 0.01, 0.03, 0.1]' .* 1e4
 m = Ni2011(T, Ch2o)
-logsig = forward(m, []).σ
+logsig = forward(m, nothing).σ
 
 for i in eachindex(Ch2o)
     w = Ch2o[i]
@@ -395,7 +395,7 @@ T = (800:1400) .+ 273.0
 Ch2o = [0.0, 0.01, 0.03, 0.1]' .* 1e4
 Cco2_m = 1e3
 m = Sifre2014(T, Ch2o, Cco2_m)
-logsig = forward(m, []).σ
+logsig = forward(m, nothing).σ
 
 for i in eachindex(Ch2o)
     w = Ch2o[i]
@@ -422,7 +422,7 @@ T = (1000:1400) .+ 273.0
 Ch2o = 1e3
 Cco2_m = [0.0, 0.01, 0.03, 0.1]' .* 1e4
 m = Sifre2014(T, Ch2o, Cco2_m)
-logsig = forward(m, []).σ
+logsig = forward(m, nothing).σ
 
 for i in eachindex(Cco2_m)
     w = Cco2_m[i]
@@ -472,7 +472,7 @@ linkyaxes!(ax, ax2)
 
 T = (700:1600) .+ 273.0
 m = Gaillard2008(T)
-logsig = forward(m, []).σ
+logsig = forward(m, nothing).σ
 
 lines!(ax, inv.(T) .* 1e4, 10 .^ logsig)
 lines!(ax2, inv.(T) .* 1e4, 10 .^ logsig; alpha=0)
@@ -521,7 +521,7 @@ linkyaxes!(ax, ax2)
 T = (700:1300) .+ 273.0
 Ch2o = [0.0, 100, 200, 2000]'
 m = Dai_Karato2009(T, Ch2o)
-logsig = forward(m, []).σ
+logsig = forward(m, nothing).σ
 
 for i in eachindex(Ch2o)
     w = Ch2o[i]
@@ -572,7 +572,7 @@ linkyaxes!(ax, ax2)
 T = (700:2600) .+ 273.0
 Ch2o = [0.0, 1, 10, 100, 1000, 10000]'
 m = Zhang2012(T, Ch2o)
-logsig = forward(m, []).σ
+logsig = forward(m, nothing).σ
 
 for i in eachindex(Ch2o)
     w = Ch2o[i]
@@ -625,7 +625,7 @@ linkyaxes!(ax, ax2)
 T = (400:1300) .+ 273.0
 Ch2o = [0.0, 100, 200, 2000]'
 m = Yang2011(T, Ch2o)
-logsig = forward(m, []).σ
+logsig = forward(m, nothing).σ
 
 for i in eachindex(Ch2o)
     w = Ch2o[i]
