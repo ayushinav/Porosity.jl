@@ -15,7 +15,7 @@ Now that we know how to compute the rock physics responses, we move towards perf
 ```@example rp_si
 # Creating synthetic data
 m = Poe2010([1000.0], 100.0)
-resp = forward(m, [])
+resp = forward(m, nothing)
 err_resp = RockphyCond(0.01 .* abs.(resp.σ))
 ```
 
@@ -38,11 +38,9 @@ rdist = RockphyCondDistribution(Porosity.normal_dist)
 and putting everything together to perform the inference using `stochastic inverse`[@ref]
 
 ```@example rp_si
-m_cache = mcmc_cache(mdist, rdist, 1000, Prior());
-mcmc_chain_prior = stochastic_inverse(resp, err_resp, [], m_cache);
-
-m_cache = mcmc_cache(mdist, rdist, 1000, NUTS());
-mcmc_chain_posterior = stochastic_inverse(resp, err_resp, [], m_cache);
+m_cache = mcmc_cache(mdist, rdist);
+mcmc_chain_prior = stochastic_inverse(resp, err_resp, nothing, m_cache, Prior(), 1000);
+mcmc_chain_posterior = stochastic_inverse(resp, err_resp, nothing, m_cache, NUTS(), 1000);
 ```
 
 ```@raw html
@@ -81,11 +79,9 @@ Lets try to also infer the water content along with the temperature. Everything 
 mdist = Poe2010Distribution(MvNormal([1200.0], [400.0;]), product_distribution([Uniform(50.0, 150.0)]))
 rdist = RockphyCondDistribution(Porosity.normal_dist)
 
-m_cache = mcmc_cache(mdist, rdist, 1000, Prior());
-mcmc_chain_prior = stochastic_inverse(resp, err_resp, [], m_cache);
-
-m_cache = mcmc_cache(mdist, rdist, 1000, NUTS());
-mcmc_chain_posterior = stochastic_inverse(resp, err_resp, [], m_cache);
+m_cache = mcmc_cache(mdist, rdist);
+mcmc_chain_prior = stochastic_inverse(resp, err_resp, nothing, m_cache, Prior(), 1000);
+mcmc_chain_posterior = stochastic_inverse(resp, err_resp, nothing, m_cache, NUTS(), 1000);
 ```
 
 ```@raw html
@@ -135,7 +131,7 @@ Lets combine `SEO3` with `Sifre2014` and also try to infer the porosity.
 m = two_phase_modelType(SEO3, Sifre2014, HS1962_plus)
 ps_nt = (; T=[1400.0] .+ 273, Ch2o_m=[100.0], Cco2_m=[100.0], ϕ=[0.1])
 model = m(ps_nt)
-resp = forward(model, [])
+resp = forward(model, nothing)
 err_resp = RockphyCond(0.01 .* abs.(resp.σ))
 
 m = two_phase_modelDistributionType(SEO3Distribution, Sifre2014Distribution, HS1962_plus)
@@ -147,11 +143,9 @@ rdist = RockphyCondDistribution(Porosity.normal_dist)
 ```
 
 ```@example rp_si
-m_cache = mcmc_cache(mdist, rdist, 1000, Prior());
-mcmc_chain_prior = stochastic_inverse(resp, err_resp, [], m_cache);
-
-m_cache = mcmc_cache(mdist, rdist, 1000, NUTS());
-mcmc_chain_posterior = stochastic_inverse(resp, err_resp, [], m_cache);
+m_cache = mcmc_cache(mdist, rdist);
+mcmc_chain_prior = stochastic_inverse(resp, err_resp, nothing, m_cache, Prior(), 1000);
+mcmc_chain_posterior = stochastic_inverse(resp, err_resp, nothing, m_cache, NUTS(), 1000);
 ```
 
 ```@raw html
@@ -195,7 +189,7 @@ Things work similarly here, but we provide an example for convenience:
 m = multi_rp_modelType(SEO3, anharmonic_poro, Nothing, Nothing)
 ps_nt = (; T=[1000.0] .+ 273, P=3.0, ρ=3300.0, Ch2o_m=1000.0, ϕ=0.1)
 model = m(ps_nt)
-resp = forward(model, [])
+resp = forward(model, nothing)
 err_resp = multi_rp_response(RockphyCond(0.01 .* abs.(resp.cond.σ)),
     RockphyElastic(0.01 .* resp.elastic.K, 0.01 .* resp.elastic.G,
         0.01 .* resp.elastic.Vp, 0.01 .* resp.elastic.Vs),
@@ -209,19 +203,15 @@ m1 = multi_rp_modelDistributionType(SEO3Distribution, anharmonic_poroDistributio
 mdist = m1(ps_nt_dist)
 # rdist = RockphyCondDistribution(Porosity.normal_dist)
 rdist = Porosity.multi_rp_responseDistribution(RockphyCondDistribution(normal_dist),
-    RockphyElasticDistribution(normal_dist, normal_dist, normal_dist, normal_dist),
+    RockphyElasticDistribution(nothing, nothing, normal_dist, normal_dist),
     Nothing, Nothing)
 nothing # hide
 ```
 
 ```@example rp_si
-m_cache = mcmc_cache(mdist, rdist, 1000, Prior());
-mcmc_chain_prior = stochastic_inverse(
-    resp, err_resp, [], m_cache; response_fields=[:Vp, :Vs, :σ]);
-
-m_cache = mcmc_cache(mdist, rdist, 1000, NUTS());
-mcmc_chain_posterior = stochastic_inverse(
-    resp, err_resp, [], m_cache; response_fields=[:Vp, :Vs, :σ]);
+m_cache = mcmc_cache(mdist, rdist);
+mcmc_chain_prior = stochastic_inverse(resp, err_resp, nothing, m_cache, Prior(), 1000);
+mcmc_chain_posterior = stochastic_inverse(resp, err_resp, nothing, m_cache, NUTS(), 1000);
 ```
 
 ```@raw html
@@ -269,7 +259,7 @@ m = multi_rp_modelType(typeof(m_mix), anharmonic, Nothing, Nothing)
 ps_nt = (; T=[1200.0] .+ 273, Ch2o_m=[100.0], Cco2_m=[100.0], ϕ=[0.1], P=[3.0], ρ=[3300.0])
 
 model = m(ps_nt)
-resp = forward(model, [])
+resp = forward(model, nothing)
 
 err_resp = multi_rp_response(RockphyCond(0.01 .* abs.(resp.cond.σ)),
     RockphyElastic(0.01 .* resp.elastic.K, 0.01 .* resp.elastic.G,
@@ -288,16 +278,12 @@ m = multi_rp_modelDistributionType(typeof(m_mixdist), anharmonicDistribution, No
 
 mdist = m(ps_nt_dist);
 rdist = Porosity.multi_rp_responseDistribution(RockphyCondDistribution(normal_dist),
-    RockphyElasticDistribution(normal_dist, normal_dist, normal_dist, normal_dist),
+    RockphyElasticDistribution(nothing, nothing, normal_dist, normal_dist),
     Nothing, Nothing)
 
-m_cache = mcmc_cache(mdist, rdist, 1000, Prior());
-mcmc_chain_prior = stochastic_inverse(
-    resp, err_resp, [], m_cache; response_fields=[:Vp, :Vs, :σ]);
-
-m_cache = mcmc_cache(mdist, rdist, 1000, NUTS());
-mcmc_chain_posterior = stochastic_inverse(
-    resp, err_resp, [], m_cache; response_fields=[:Vp, :Vs, :σ]);
+m_cache = mcmc_cache(mdist, rdist);
+mcmc_chain_prior = stochastic_inverse(resp, err_resp, nothing, m_cache, Prior(), 1000);
+mcmc_chain_posterior = stochastic_inverse(resp, err_resp, nothing, m_cache, NUTS(), 1000);
 nothing # hide
 ```
 

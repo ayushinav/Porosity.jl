@@ -15,7 +15,7 @@ m = UHO2014(1000.0, 100.0)
 ```
 
 ```@example example_ad
-resp = forward(m, [])
+resp = forward(m, nothing)
 ```
 
 For AD, we use the [`DifferentiationInterface`](https://juliadiff.org/DifferentiationInterface.jl/DifferentiationInterface/stable/) library with [`Enzyme`](https://enzyme.mit.edu/julia/stable/) backend.
@@ -23,7 +23,7 @@ For AD, we use the [`DifferentiationInterface`](https://juliadiff.org/Differenti
 ```
 using DifferentiationInterface, Enzyme
 
-f(T) = forward(UHO2014(T, 100.) , []).σ
+f(T) = forward(UHO2014(T, 100.) , nothing).σ
 ad_wrt_T = derivative(f, AutoEnzyme(), 1000.)
 ```
 
@@ -36,7 +36,7 @@ fd_wrt_T = 0.5 * (f(1001.) - f(999.))
 Similarly, we can do the same for water content :
 
 ```
-f(Cw) = forward(UHO2014(1000., Cw) , []).σ
+f(Cw) = forward(UHO2014(1000., Cw) , nothing).σ
 ad_wrt_Cw = derivative(f, AutoEnzyme(), 100.)
 ```
 
@@ -50,7 +50,7 @@ If you can imagine the input as a vector, you can obtain the  gradient to get th
 function f(p)
     T = p[1]
     Cw = p[2]
-    forward(UHO2014(T, Cw) , []).σ
+    forward(UHO2014(T, Cw) , nothing).σ
 end
 
 ad_p = DifferentiationInterface.gradient(f, AutoEnzyme(), [1000., 100.])
@@ -72,7 +72,7 @@ using Porosity, Lux
 function f(p)
     T = p[1, :]
     Cw = p[2, :]
-    forward(UHO2014(T, Cw), []).σ
+    forward(UHO2014(T, Cw), nothing).σ
 end
 
 nn = Chain(Dense(1 => 4, tanh), Dense(4 => 4, tanh), Dense(4 => 2), f)

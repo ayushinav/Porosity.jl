@@ -42,7 +42,7 @@ nothing # hide
 Calculating the forward response is then done as usual :
 
 ```@example tune_rp
-resp = forward(model, [])
+resp = forward(model, nothing)
 nothing # hide
 ```
 
@@ -111,7 +111,7 @@ nothing # hide
 and again forward response can be calculated as usual :
 
 ```@example tune_rp
-resp = forward(model, [])
+resp = forward(model, nothing)
 nothing # hide
 ```
 

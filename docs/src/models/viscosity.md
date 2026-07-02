@@ -28,7 +28,7 @@ dg = [1.0, 3.0, 10.0, 30.0]'
 ϕ = 0.015
 
 m = HK2003(T, P, dg, σ, ϕ)
-resp = forward(m, []);
+resp = forward(m, nothing);
 
 resp_fields = [:ϵ_rate, :η]
 units = ["", "(Pa s)"]
@@ -92,7 +92,7 @@ dg = 4.0
 ϕ = [0.01, 0.03, 0.1, 0.3]'
 
 m = HK2003(T, P, dg, σ, ϕ)
-resp = forward(m, []);
+resp = forward(m, nothing);
 
 resp_fields = [:ϵ_rate, :η]
 units = ["", "(Pa⋅s)"]
@@ -156,7 +156,7 @@ dg = 4.0
 Ch2o = [0.0, 100.0, 300.0, 1000.0]'
 
 m = HK2003(T, P, dg, σ, ϕ, Ch2o)
-resp = forward(m, []);
+resp = forward(m, nothing);
 
 resp_fields = [:ϵ_rate, :η]
 units = ["", "(Pa⋅s)"]
@@ -225,7 +225,7 @@ dg = [1.0, 3.0, 10.0, 30.0]'
 ϕ = 0.015
 
 m = HZK2011(T, P, dg, σ, ϕ)
-resp = forward(m, []);
+resp = forward(m, nothing);
 
 resp_fields = [:ϵ_rate, :η]
 units = ["", "(Pa s)"]
@@ -289,7 +289,7 @@ dg = 4.0
 ϕ = [0.01, 0.03, 0.1, 0.3]'
 
 m = HZK2011(T, P, dg, σ, ϕ)
-resp = forward(m, []);
+resp = forward(m, nothing);
 
 resp_fields = [:ϵ_rate, :η]
 units = ["", "(Pa⋅s)"]
@@ -363,7 +363,7 @@ dg = [1.0, 3.0, 10.0, 30.0]'
 T_solidus = 1200 + 273
 
 m = xfit_premelt(T, P, dg, σ, ϕ, T_solidus)
-resp = forward(m, []);
+resp = forward(m, nothing);
 
 resp_fields = [:η]
 units = ["(Pa s)"]
@@ -438,7 +438,7 @@ dg = 4.0
 T_solidus = 1200 + 273
 
 m = xfit_premelt(T, P, dg, σ, ϕ, T_solidus)
-resp = forward(m, []);
+resp = forward(m, nothing);
 
 resp_fields = [:η]
 units = ["(Pa s)"]

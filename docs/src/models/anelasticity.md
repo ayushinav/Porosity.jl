@@ -42,7 +42,7 @@ new_params = (; params..., params_elastic=new_params_elastic)
 
 m = andrade_psp(T, P, dg, σ, ϕ, ρ, f')
 
-resp = forward(m, [], new_params);
+resp = forward(m, nothing, new_params);
 size(resp.J1)
 
 fig = Figure()
@@ -101,7 +101,7 @@ dg = 3.1
 f = 10 .^ -collect(range(-2, 4; length=100))
 
 m = eburgers_psp(T, P, dg, σ, ϕ, ρ, f')
-resp = forward(m, []);
+resp = forward(m, nothing);
 size(resp.J1)
 
 fig = Figure()
@@ -174,7 +174,7 @@ new_params = (; params..., params_elastic=new_params_elastic,
 
 m = eburgers_psp(T, P, dg, σ, ϕ, ρ, f')
 
-resp = forward(m, [], new_params);
+resp = forward(m, nothing, new_params);
 size(resp.J1)
 
 fig = Figure(; size=(700, 400))
@@ -236,7 +236,7 @@ f = 10 .^ -collect(range(-2, 4; length=100))
 
 m = premelt_anelastic(T, P, dg, σ, ϕ, ρ, 0.0, T_solidus, f')
 
-resp = forward(m, []);
+resp = forward(m, nothing);
 size(resp.J1)
 
 fig = Figure()
@@ -299,7 +299,7 @@ f = 10 .^ -collect(range(-2, 4; length=100))
 
 m = xfit_mxw(T, P, dg, σ, ϕ, ρ, Ch2o_ol, T_solidus, f')
 
-resp = forward(m, []);
+resp = forward(m, nothing);
 size(resp.J1)
 
 fig = Figure()
@@ -362,7 +362,7 @@ f = 10 .^ -collect(range(-2, 4; length=100))
 
 m = andrade_analytical(T, P, dg, σ, ϕ, ρ, Ch2o_ol, T_solidus, f')
 
-resp = forward(m, []);
+resp = forward(m, nothing);
 size(resp.J1)
 
 fig = Figure()
